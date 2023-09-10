@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import AddService from "./pages/addService/addService"
+import Login from "./pages/login/Login"
+import Register from "./pages/register/Register"
 
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
-      <h1 className="text-3xl font-bold underline" onClick={() => setCount(count + 1)}>
-        Hello world!   {count}
-      </h1>
-    </>
+  <main>
+    <Login/>
+    <Register/>
+    <AddService/>
+  </main>
   )
 }
 
