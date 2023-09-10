@@ -18,7 +18,7 @@
   line-height: 26px;
   letter-spacing: 0px;
   text-align: left;
-  color: ;
+  color: black;
 }
 
 .about__left h1 {
@@ -33,7 +33,7 @@
   line-height: 18px;
   letter-spacing: 0px;
   text-align: left;
-  color: ;
+  color: black;
 }
 
 .about__cards {
@@ -49,20 +49,21 @@
 .card.about__card {
   padding: 1rem;
   text-align: center;
-  color: ;
-  border-bottom: 1px solid;
+
+  color: black;
+  border-bottom: 1px solid black;
 }
 .card.about__card1 img {
   filter: brightness(2);
   -webkit-filter: brightness(2);
 }
 .card.about__card:nth-child(odd) {
-  border-right: 1px solid;
+  border-right: 1px solid black;
 }
 
 .card.about__card:hover,
 .card.card__active {
-  color: ;
+  color: white;
 }
 .card.about__card:hover img,
 .card.card__active img {
@@ -73,16 +74,19 @@
 .about__card-icon {
   width: fit-content;
   margin-inline: auto;
-  color: ;
-  transition: ;
-  -webkit-transition: ;
-  -moz-transition: ;
-  -ms-transition: ;
-  -o-transition: ;
+  transition: 5s;
+  -webkit-transition: 5s;
+  -moz-transition: 5s;
+  -ms-transition: 5s;
+  -o-transition: 5s;
 }
 
 .card.about__card:hover .about__card-icon {
-  color: ;
+  color: black;
+}
+
+.card.about__card:hover .about__card-icon {
+  color: lightgray;
 }
 .card__info {
   display: flex;
@@ -135,7 +139,7 @@
 }
 
 .slider__circle.active {
-  background-color: ;
+  background-color: lightgray;
 }
 /* wide screen */
 @media (min-width: 1920px) {
