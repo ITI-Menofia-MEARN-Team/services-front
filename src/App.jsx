@@ -1,16 +1,14 @@
-import { useState } from 'react'
-
+import Home from "./pages/Home";
+// import Company from "./pages/Company";
+// import "./styles/main.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1 className="text-3xl font-bold underline" onClick={() => setCount(count + 1)}>
-        Hello world!   {count}
-      </h1>
+      <Home />
+      {/* <Company /> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
