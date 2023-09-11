@@ -1,13 +1,10 @@
-import Home from "./pages/Home";
-// import Company from "./pages/Company";
-// import "./styles/main.css";
+import { RouterProvider } from 'react-router-dom';
 
-function App() {
+function App({ router }) {
   return (
-    <>
-      <Home />
-      {/* <Company /> */}
-    </>
+    <div className="font-cairo">
+      <RouterProvider router={router} />
+    </div>
   );
 }
 

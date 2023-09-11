@@ -13,7 +13,7 @@
 }
 .about__left h3,
 .about__left h1 {
-  font-family: "Diodrum Arabic", sans-serif;
+  font-family: 'Diodrum Arabic', sans-serif;
   font-weight: 400;
   line-height: 26px;
   letter-spacing: 0px;
@@ -27,7 +27,7 @@
   padding: 36px 0 75px;
 }
 .about__left p {
-  font-family: "Sharp Sans No1 Medium", sans-serif;
+  font-family: 'Sharp Sans No1 Medium', sans-serif;
   font-size: 18px;
   font-weight: 600;
   line-height: 18px;
@@ -93,7 +93,7 @@
   flex-direction: column;
 }
 .card.about__card h5 {
-  font-family: "Diodrum Arabic", sans-serif;
+  font-family: 'Diodrum Arabic', sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 25px;
@@ -101,7 +101,7 @@
   text-align: center;
 }
 .card.about__card small {
-  font-family: "Sharp Sans No1 Medium", sans-serif;
+  font-family: 'Sharp Sans No1 Medium', sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 23px;
