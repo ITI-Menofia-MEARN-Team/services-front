@@ -1,10 +1,8 @@
-// import "../../styles/userInfo.css";
-
 const UserInfo = () => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-center gap-5">
       <p> اسم المستخدم</p>
-      <div className="mr-5 w-20 h-20 bg-black rounded-full"></div>
+      <div className="w-10 h-10 bg-black rounded-full"></div>
     </div>
   );
 };

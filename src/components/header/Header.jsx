@@ -1,11 +1,10 @@
-import { useState } from "react";
-// import "../../styles/header.css";
-import AuthenticationButtons from "./AuthenticationButtons";
-import UserInfo from "./UserInfo";
+import { useState } from 'react';
+import AuthenticationButtons from './AuthenticationButtons';
+import UserInfo from './UserInfo';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const renderUserInfo = () => {
     if (isLoggedIn) {
@@ -13,27 +12,36 @@ const Header = () => {
     }
     return <AuthenticationButtons />;
   };
+
+  const isActiveLink = ({ isActive }) => {
+    return `text-20 font-bold ${isActive ? ' text-primary' : '	text-gray-600'}`;
+  };
+
   return (
-    <div className="w-5/6 mx-auto px-16 py-4 flex justify-between items-center bg-gray-300	">
-      <h3 className="text-3xl font-bold">لوجو</h3>
-      <ul className="w-40 flex justify-between items-center">
-        <li>
-          <a href="/" className="text-20 font-bold">
-            الخدمات
-          </a>
-        </li>
-        <li>
-          <a href="/" className="text-20 font-bold">
-            تست
-          </a>
-        </li>
-        <li>
-          <a href="/" className="text-20 font-bold">
-            تست
-          </a>
-        </li>
-      </ul>
-      {renderUserInfo()}
+    <div className="w-full bg-gray-300 h-[10vh]">
+      <div className="w-5/6 mx-auto h-full">
+        <div className="h-full flex justify-between items-center">
+          <h3 className="text-xl font-bold">لوجو</h3>
+          <ul className="flex justify-between items-center gap-8">
+            <li>
+              <NavLink to={'/'} className={isActiveLink}>
+                الخدمات
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={'/join-request'} className={isActiveLink}>
+                طلب الانضمام
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={'/test'} className={isActiveLink}>
+                تست
+              </NavLink>
+            </li>
+          </ul>
+          {renderUserInfo()}
+        </div>
+      </div>
     </div>
   );
 };
