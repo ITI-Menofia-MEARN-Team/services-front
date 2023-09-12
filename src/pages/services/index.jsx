@@ -2,22 +2,51 @@ import React from 'react';
 import SearchForm from '../../components/seacrhForm/SearchForm';
 import Categories from '../../components/categories/Categories';
 import Card from '../../components/card/Card';
-
+import exPic from '../../assets/react.svg';
 const Services = () => {
+  const cardData = [
+    {
+      imageUrl: exPic,
+      header: 'Card Header',
+      description: 'This is a generic card component with a photo, header, and description.',
+    },
+    {
+      imageUrl: exPic,
+      header: 'Card Header',
+      description: 'This is a generic card component with a photo, header, and description.',
+    },
+    {
+      imageUrl: exPic,
+      header: 'Card Header',
+      description: 'This is a generic card component with a photo, header, and description.',
+    },
+    {
+      imageUrl: exPic,
+      header: 'Card Header',
+      description: 'This is a generic card component with a photo, header, and description.',
+    },
+    {
+      imageUrl: exPic,
+      header: 'Card Header',
+      description: 'This is a generic card component with a photo, header, and description.',
+    },
+    {
+      imageUrl: exPic,
+      header: 'Card Header',
+      description: 'This is a generic card component with a photo, header, and description.',
+    },
+  ];
   return (
     <>
       <SearchForm />
-      <div className="w-4/5 mx-auto flex">
+      <div className=" flex gap-4">
         <Categories />
-        <Card>
-          <span className="about__card-icon"> Icon</span>
-
-          <div className="card__info">
-            <h5>title </h5>
-
-            <small>Description </small>
-          </div>
-        </Card>
+        <div className="cards flex flex-wrap gap-4 ">
+          {cardData &&
+            cardData.map((card) => (
+              <Card imageUrl={card.imageUrl} header={card.header} description={card.description} />
+            ))}
+        </div>
       </div>
     </>
   );
