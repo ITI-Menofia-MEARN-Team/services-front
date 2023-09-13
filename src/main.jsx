@@ -5,9 +5,10 @@ import './index.css';
 import userRouter from './routers/userRouter.jsx';
 import companyRouter from './routers/companyRouter.jsx';
 import guestRouter from './routers/guestRouter.jsx';
+import DarkModeProvider from './contexts/DarkMode.jsx';
 
 // user roles => ["User","Company","Admin"]
-const user = 'Guest';
+const user = 'User';
 let router = userRouter;
 if (user === 'User') router = userRouter;
 else if (user === 'Company') router = companyRouter;
@@ -16,6 +17,8 @@ else router = guestRouter;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App router={router} />
+    <DarkModeProvider>
+      <App router={router} />
+    </DarkModeProvider>
   </React.StrictMode>
 );
