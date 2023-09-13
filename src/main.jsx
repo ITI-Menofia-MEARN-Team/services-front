@@ -9,7 +9,6 @@ import DarkModeProvider from './contexts/DarkMode.jsx';
 
 // user roles => ["User","Company","Admin"]
 
-
 const user = 'Company';
 let router = userRouter;
 if (user === 'User') router = userRouter;

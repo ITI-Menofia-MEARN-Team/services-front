@@ -36,9 +36,9 @@ const Login = () => {
         </div>
       )}
 
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen ">
         <div className="login__right w-1/3">
-          <h1 className="text-4xl mb-4">تسجيل الدخول</h1>
+          <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">تسجيل الدخول</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             <input
               id="name"

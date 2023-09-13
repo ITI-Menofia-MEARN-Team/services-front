@@ -46,9 +46,12 @@ const AddService = () => {
 
       <div className="max-w-xl mx-auto mt-5">
         <div className="AddService__right">
-          <h1 className="text-4xl mb-4">اضف خدمه جديده</h1>
+          <h1 className="text-4xl mb-4  dark:text-gray-400">اضف خدمه جديده</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
-            <label htmlFor="name"> عنوان الخدمه</label>
+            <label className="inline-flex items-center text-gray-600 dark:text-gray-400" htmlFor="name">
+              {' '}
+              عنوان الخدمه
+            </label>
             <input
               id="name"
               name="name"
@@ -63,7 +66,10 @@ const AddService = () => {
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
-            <label htmlFor="desc"> الخصائص</label>
+            <label className="inline-flex items-center text-gray-600 dark:text-gray-400" htmlFor="desc">
+              {' '}
+              الخصائص
+            </label>
             <input
               id="desc"
               name="desc"
@@ -78,7 +84,9 @@ const AddService = () => {
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
-            <label htmlFor="descPlus">الخصائص الاضافيه </label>
+            <label className="inline-flex items-center text-gray-600 dark:text-gray-400" htmlFor="descPlus">
+              الخصائص الاضافيه{' '}
+            </label>
             <div className="flex gap-2">
               <div className="flex flex-col">
                 <input
@@ -122,7 +130,7 @@ const AddService = () => {
             <label htmlFor="picture" className="flex gap-2 items-center ">
               <label
                 htmlFor="picture"
-                className=" py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple px-4 mb-6"
+                className=" py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple px-4 mb-6 cursor-pointer"
               >
                 رفع صوره
               </label>
@@ -143,7 +151,9 @@ const AddService = () => {
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
-            <label htmlFor="serDesc">وصف الخدمه</label>
+            <label className="inline-flex items-center text-gray-600 dark:text-gray-400" htmlFor="serDesc">
+              وصف الخدمه
+            </label>
             <textarea
               id="serDesc"
               name="serDesc"

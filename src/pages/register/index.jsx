@@ -44,7 +44,7 @@ const Register = () => {
 
       <div className="flex justify-center items-center h-screen">
         <div className="Register__right w-1/3">
-          <h1 className="text-4xl mb-4">التسجيل</h1>
+          <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">التسجيل</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             <input
               id="fname"
