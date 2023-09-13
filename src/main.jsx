@@ -7,7 +7,7 @@ import companyRouter from './routers/companyRouter.jsx';
 import guestRouter from './routers/guestRouter.jsx';
 
 // user roles => ["User","Company","Admin"]
-const user = 'Guest';
+const user = 'Company';
 let router = userRouter;
 if (user === 'User') router = userRouter;
 else if (user === 'Company') router = companyRouter;

@@ -52,12 +52,12 @@ const Register = () => {
               placeholder="الاسم بالكامل"
               disabled={loading}
               {...formik.getFieldProps('fname')}
-              className="p-4 border-2 border-primary w-full outline-none "
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
             />
             {formik.errors.name ? (
-              <div className="h-6 text-red-500">{formik.errors.name}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
             <input
               id="name"
@@ -65,26 +65,26 @@ const Register = () => {
               placeholder="اسم المستخدم"
               disabled={loading}
               {...formik.getFieldProps('name')}
-              className="p-4 border-2 border-primary w-full outline-none "
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
             />
             {formik.errors.name ? (
-              <div className="h-6 text-red-500">{formik.errors.name}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
             <input
               id="email"
               name="email"
               type="email"
               placeholder="Email ID"
-              className="p-4 border-2 border-primary w-full outline-none "
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
               disabled={loading}
               {...formik.getFieldProps('email')}
             />
             {formik.errors.email ? (
-              <div className="h-6 text-red-500">{formik.errors.email}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.email}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
             <input
@@ -92,14 +92,14 @@ const Register = () => {
               name="phoneNumber"
               type="text"
               placeholder="Phone number"
-              className="p-4 border-2 border-primary w-full outline-none "
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
               disabled={loading}
               {...formik.getFieldProps('phoneNumber')}
             />
             {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-              <div className="h-6 text-red-500">{formik.errors.phoneNumber}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.phoneNumber}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
             <input
               id="password"
@@ -107,18 +107,18 @@ const Register = () => {
               placeholder="كلمه المرور"
               disabled={loading}
               {...formik.getFieldProps('password')}
-              className="p-4 border-2 border-primary w-full outline-none"
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2"
             />
             {formik.errors.name ? (
-              <div className="h-6 text-red-500">{formik.errors.password}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.password}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
             <button
               type="submit"
               id="submitBtn"
-              className="btn submit-btn bg-primary text-secondary w-full outline-none border-primary p-4"
+              className="w-full px-4 py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               disabled={loading}
             >
               {loading ? 'جاري التسجيل' : 'تسجيل'}
