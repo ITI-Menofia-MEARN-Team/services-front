@@ -55,12 +55,12 @@ const AddService = () => {
               placeholder=" عنوان الخدمه"
               disabled={loading}
               {...formik.getFieldProps('name')}
-              className="p-4 border-2 border-primary w-full outline-none "
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
             />
             {formik.errors.name ? (
-              <div className="h-6 text-red-500">{formik.errors.name}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
             <label htmlFor="desc"> الخصائص</label>
@@ -70,12 +70,12 @@ const AddService = () => {
               placeholder=" وصف الخاصيه"
               disabled={loading}
               {...formik.getFieldProps('desc')}
-              className="p-4 border-2 border-primary w-full outline-none "
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
             />
             {formik.errors.name ? (
-              <div className="h-6 text-red-500">{formik.errors.name}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
             <label htmlFor="descPlus">الخصائص الاضافيه </label>
@@ -87,12 +87,12 @@ const AddService = () => {
                   placeholder=" وصف الخاصيه"
                   disabled={loading}
                   {...formik.getFieldProps('descPlus')}
-                  className="p-4 border-2 border-primary w-full outline-none "
+                  className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
                 />
                 {formik.errors.name ? (
-                  <div className="h-6 text-red-500">{formik.errors.name}</div>
+                  <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
                 ) : (
-                  <div className="h-6 text-red-500"></div>
+                  <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
                 )}
               </div>
               <div className="flex flex-col w-1/3">
@@ -102,23 +102,28 @@ const AddService = () => {
                   placeholder=" السعر "
                   disabled={loading}
                   {...formik.getFieldProps('price')}
-                  className="p-4 border-2 border-primary w-full outline-none "
+                  className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
                 />
                 {formik.errors.name ? (
-                  <div className="h-6 text-red-500">{formik.errors.name}</div>
+                  <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
                 ) : (
-                  <div className="h-6 text-red-500"></div>
+                  <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
                 )}
               </div>
 
-              <button className=" bg-primary text-secondary  outline-none border-primary px-4 mb-6" disabled={loading}>
+              <button
+                className="  py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple px-4 mb-6"
+                disabled={loading}
+              >
                 +
               </button>
             </div>
 
-            <label htmlFor="picture" className="flex gap-2 items-center">
-              اضافه صوره
-              <label htmlFor="picture" className="block  text-secondary bg-primary py-2 px-8 rounded cursor-pointer">
+            <label htmlFor="picture" className="flex gap-2 items-center ">
+              <label
+                htmlFor="picture"
+                className=" py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple px-4 mb-6"
+              >
                 رفع صوره
               </label>
               <input
@@ -133,9 +138,9 @@ const AddService = () => {
             </label>
 
             {formik.errors.picture ? (
-              <div className="h-6 text-red-500">{formik.errors.picture}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.picture}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
             <label htmlFor="serDesc">وصف الخدمه</label>
@@ -145,18 +150,18 @@ const AddService = () => {
               placeholder="وصف الخدمه"
               disabled={loading}
               {...formik.getFieldProps('serDesc')}
-              className="p-4 border-2 border-primary w-full outline-none"
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
             />
             {formik.errors.serDesc ? (
-              <div className="h-6 text-red-500">{formik.errors.serDesc}</div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.serDesc}</div>
             ) : (
-              <div className="h-6 text-red-500"></div>
+              <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
 
             <button
               type="submit"
               id="submitBtn"
-              className="btn submit-btn bg-primary text-secondary w-full outline-none border-primary p-4"
+              className="w-full px-4 py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               disabled={loading}
             >
               {loading ? 'جاري الاضافه' : 'اضافه'}

@@ -8,7 +8,7 @@ import guestRouter from './routers/guestRouter.jsx';
 import DarkModeProvider from './contexts/DarkMode.jsx';
 
 // user roles => ["User","Company","Admin"]
-const user = 'User';
+const user = 'Guest';
 let router = userRouter;
 if (user === 'User') router = userRouter;
 else if (user === 'Company') router = companyRouter;
