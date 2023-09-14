@@ -42,7 +42,7 @@ const Register = () => {
         </div>
       )}
 
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-[90.8vh]">
         <div className="Register__right w-1/3">
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">التسجيل</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
@@ -76,7 +76,7 @@ const Register = () => {
               id="email"
               name="email"
               type="email"
-              placeholder="Email ID"
+              placeholder="البريد الإلكتروني"
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
               disabled={loading}
               {...formik.getFieldProps('email')}
@@ -91,7 +91,7 @@ const Register = () => {
               id="phoneNumber"
               name="phoneNumber"
               type="text"
-              placeholder="Phone number"
+              placeholder="رقم الهاتف"
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
               disabled={loading}
               {...formik.getFieldProps('phoneNumber')}
