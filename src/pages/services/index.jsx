@@ -7,44 +7,119 @@ const Services = () => {
   const cardData = [
     {
       imageUrl: exPic,
-      header: 'Card Header',
-      description: 'This is a generic card component with a photo, header, and description.',
+      heading: 'الخصائص',
+      description: [
+        {
+          id: 0,
+          value: 'الخاصية الاولى ',
+        },
+        {
+          id: 1,
+          value: 'الخاصية الثانية ',
+        },
+        {
+          id: 2,
+          value: 'الخاصية الثالثة ',
+        },
+      ],
     },
     {
       imageUrl: exPic,
-      header: 'Card Header',
-      description: 'This is a generic card component with a photo, header, and description.',
+      heading: 'الخصائص',
+      description: [
+        {
+          id: 0,
+          value: 'الخاصية الاولى ',
+        },
+        {
+          id: 1,
+          value: 'الخاصية الثانية ',
+        },
+      ],
     },
     {
       imageUrl: exPic,
-      header: 'Card Header',
-      description: 'This is a generic card component with a photo, header, and description.',
+      heading: 'الخصائص',
+      description: [
+        {
+          id: 0,
+          value: 'الخاصية الاولى ',
+        },
+        {
+          id: 1,
+          value: 'الخاصية الثانية ',
+        },
+        {
+          id: 2,
+          value: 'الخاصية الثالثة ',
+        },
+        {
+          id: 3,
+          value: 'الخاصية الرابعه ',
+        },
+        {
+          id: 4,
+          value: 'الخاصية الخامسة ',
+        },
+      ],
     },
     {
       imageUrl: exPic,
-      header: 'Card Header',
-      description: 'This is a generic card component with a photo, header, and description.',
+      heading: 'الخصائص',
+      description: [
+        {
+          id: 0,
+          value: 'الخاصية الاولى ',
+        },
+        {
+          id: 1,
+          value: 'الخاصية الثانية ',
+        },
+        {
+          id: 2,
+          value: 'الخاصية الثالثة ',
+        },
+        {
+          id: 3,
+          value: 'الخاصية الرابعه ',
+        },
+      ],
     },
     {
       imageUrl: exPic,
-      header: 'Card Header',
-      description: 'This is a generic card component with a photo, header, and description.',
+      heading: 'الخصائص',
+      description: [
+        {
+          id: 0,
+          value: 'الخاصية الاولى ',
+        },
+        {
+          id: 1,
+          value: 'الخاصية الثانية ',
+        },
+      ],
     },
     {
       imageUrl: exPic,
-      header: 'Card Header',
-      description: 'This is a generic card component with a photo, header, and description.',
+      heading: 'الخصائص',
+      description: [
+        {
+          id: 0,
+          value: 'الخاصية الاولى ',
+        },
+      ],
     },
   ];
   return (
     <>
-      <SearchForm />
-      <div className=" flex gap-4">
+      {/* <SearchForm /> */}
+      <div className=" w-[90%] mx-auto bg-gray-50	 flex  flex-col md:flex-row  justify-center md:justify-evenly gap-12 p-6 ">
         <Categories />
-        <div className="cards flex flex-wrap gap-4 ">
+
+        <div className="cards w-[80%]   flex flex-wrap gap-6  justify-center content-center text-center   items-center sm:items-stretch  ">
           {cardData &&
             cardData.map((card) => (
-              <Card imageUrl={card.imageUrl} header={card.header} description={card.description} />
+              <Card imageUrl={card.imageUrl} heading={card.heading} description={card.description} />
             ))}
         </div>
       </div>
