@@ -20,11 +20,11 @@ const Login = () => {
         formik.resetForm();
         setLoading(false);
         setMessage(null);
-      }, 5000);
+      }, 2000);
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Required'),
-      password: Yup.string().required('Required'),
+      name: Yup.string().required('مطلوب'),
+      password: Yup.string().required('مطلوب'),
     }),
   });
 
@@ -48,7 +48,7 @@ const Login = () => {
               {...formik.getFieldProps('name')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2"
             />
-            {formik.errors.name ? (
+            {formik.touched.name && formik.errors.name ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
@@ -62,7 +62,7 @@ const Login = () => {
               {...formik.getFieldProps('password')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
             />
-            {formik.errors.name ? (
+            {formik.touched.password && formik.errors.name ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.password}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
