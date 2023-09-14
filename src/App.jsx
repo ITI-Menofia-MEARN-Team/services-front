@@ -9,7 +9,7 @@ function App({ router }) {
 
   // jsx
   return (
-    <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo`}>
+    <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900`}>
       <RouterProvider router={router} fallbackElement={<Spinner />} />
     </div>
   );
