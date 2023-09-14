@@ -23,14 +23,14 @@ const Register = () => {
         formik.resetForm();
         setLoading(false);
         setMessage(null);
-      }, 5000);
+      }, 2000);
     },
     validationSchema: Yup.object({
-      fname: Yup.string().required('Required'),
-      name: Yup.string().required('Required'),
-      password: Yup.string().required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
-      phoneNumber: Yup.string().required('Required'),
+      fname: Yup.string().required('مطلوب'),
+      name: Yup.string().required('مطلوب'),
+      password: Yup.string().required('مطلوب'),
+      email: Yup.string().email('عنوان بريد إلكتروني غير صالح').required('مطلوب'),
+      phoneNumber: Yup.string().required('مطلوب'),
     }),
   });
 
@@ -43,7 +43,7 @@ const Register = () => {
       )}
 
       <div className="flex justify-center items-center h-[90.8vh]">
-        <div className="Register__right w-1/3">
+        <div className=" w-1/3">
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">التسجيل</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             <input
@@ -54,7 +54,7 @@ const Register = () => {
               {...formik.getFieldProps('fname')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
             />
-            {formik.errors.name ? (
+            {formik.touched.fname && formik.errors.fname ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
@@ -67,7 +67,7 @@ const Register = () => {
               {...formik.getFieldProps('name')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
             />
-            {formik.errors.name ? (
+            {formik.touched.name && formik.errors.name ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
@@ -81,7 +81,7 @@ const Register = () => {
               disabled={loading}
               {...formik.getFieldProps('email')}
             />
-            {formik.errors.email ? (
+            {formik.touched.email && formik.errors.email ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.email}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
@@ -109,7 +109,7 @@ const Register = () => {
               {...formik.getFieldProps('password')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2"
             />
-            {formik.errors.name ? (
+            {formik.touched.password && formik.errors.password ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.password}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
