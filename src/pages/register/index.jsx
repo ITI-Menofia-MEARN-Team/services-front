@@ -1,11 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { AuthContext } from '../../contexts/Auth';
 
 const Register = () => {
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const { login } = useContext(AuthContext);
 
   const registerUser = async (url, data) => {
     try {
@@ -43,7 +45,11 @@ const Register = () => {
       registerUser('http://localhost:8000/auth/register', values)
         .then((res) => {
           console.log('res: ', res);
-          setMessage(`success`);
+          if (res.errors) setMessage('Error');
+          if (res.data) {
+            login(res.data);
+            setMessage(`success`);
+          }
           setLoading(false);
         })
         .catch((err) => {
@@ -69,9 +75,7 @@ const Register = () => {
   return (
     <section id="Register">
       {message && (
-        <div className={`message ${message.includes('Error') ? 'afterMessage error' : 'afterMessage success'}`}>
-          {message}
-        </div>
+        <div className={`message ${message.includes('Error') ? 'bg-red-500' : 'bg-green-600'}`}>{message}</div>
       )}
 
       <div className="flex justify-center items-center h-[90.8vh]">
@@ -136,6 +140,7 @@ const Register = () => {
             <input
               id="password"
               name="password"
+              type="password"
               placeholder="كلمه المرور"
               disabled={loading}
               {...formik.getFieldProps('password')}

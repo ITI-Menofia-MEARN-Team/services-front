@@ -1,29 +1,61 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { AuthContext } from '../../contexts/Auth';
 
 const Login = () => {
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const { login } = useContext(AuthContext);
+
+  const logInUser = async (url, data) => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        setMessage('Error: ' + response.status);
+      }
+
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setMessage(JSON.stringify(error));
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      email: '',
       password: '',
     },
     onSubmit: (values) => {
       console.log(values);
       setLoading(true);
-      setMessage(`success`);
-      setTimeout(() => {
-        formik.resetForm();
-        setLoading(false);
-        setMessage(null);
-      }, 2000);
+      logInUser('http://localhost:8000/auth/login', values)
+        .then((res) => {
+          console.log('res: ', res);
+          if (res.errors) setMessage('Error');
+          if (res.data) {
+            login(res.data);
+            setMessage(`success`);
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log('err: ', err);
+          setMessage(JSON.stringify(err));
+        });
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('مطلوب'),
+      email: Yup.string().required('مطلوب'),
       password: Yup.string().required('مطلوب'),
     }),
   });
@@ -31,9 +63,7 @@ const Login = () => {
   return (
     <section id="Login">
       {message && (
-        <div className={`message ${message.includes('Error') ? 'afterMessage error' : 'afterMessage success'}`}>
-          {message}
-        </div>
+        <div className={`message ${message.includes('Error') ? 'bg-red-500' : 'bg-green-600'}`}>{message}</div>
       )}
 
       <div className="flex justify-center items-center h-[90.8vh] ">
@@ -41,15 +71,15 @@ const Login = () => {
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">تسجيل الدخول</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             <input
-              id="name"
-              name="name"
-              placeholder="اسم المستخدم"
+              id="email"
+              name="email"
+              placeholder="البريد الإلكتروني"
               disabled={loading}
-              {...formik.getFieldProps('name')}
+              {...formik.getFieldProps('email')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2"
             />
-            {formik.touched.name && formik.errors.name ? (
-              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
+            {formik.touched.email && formik.errors.email ? (
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.email}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
@@ -57,6 +87,7 @@ const Login = () => {
             <input
               id="password"
               name="password"
+              type="password"
               placeholder="كلمه المرور"
               disabled={loading}
               {...formik.getFieldProps('password')}

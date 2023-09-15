@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/Auth';
 
 const ProfileMenu = () => {
+  // toggle Menu
   const [menuOpen, setMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setMenuOpen((menuOpen) => !menuOpen);
   };
+
+  // isLogged
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <>
       <button onClick={toggleMenu} className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
         <img
           className="object-cover w-10 h-10 rounded-full"
-          src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+          src={`http://localhost:8000/${user.user.picture}`}
           alt=""
         />
       </button>
@@ -35,7 +39,7 @@ const ProfileMenu = () => {
               >
                 <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
-              <span>الملف الشخصى</span>
+              <span>{user.user.full_name}</span>
             </Link>
           </li>
 
@@ -43,6 +47,7 @@ const ProfileMenu = () => {
             <Link
               className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
               to={'/'}
+              onClick={logout}
             >
               <svg
                 className="w-4 h-4 ml-3"

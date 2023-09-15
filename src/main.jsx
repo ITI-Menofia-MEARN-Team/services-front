@@ -6,24 +6,14 @@ import userRouter from './routers/userRouter.jsx';
 import companyRouter from './routers/companyRouter.jsx';
 import guestRouter from './routers/guestRouter.jsx';
 import DarkModeProvider from './contexts/DarkMode.jsx';
-
-// user roles => ["User","Company","Admin"]
-// guest : User Without Any Credits/Authentictions
-// user : User With Credits/Authentictions
-// admin : User With Credits/Authentictions And Cant Manage Web Site
-// Company : Company With Credits/Authentictions
-
-const user = 'Guest';
-let router = userRouter;
-if (user === 'User') router = userRouter;
-else if (user === 'Company') router = companyRouter;
-// else "Admin"
-else router = guestRouter;
+import { AuthProvider } from './contexts/Auth.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <DarkModeProvider>
-      <App router={router} />
-    </DarkModeProvider>
+    <AuthProvider>
+      <DarkModeProvider>
+        <App />
+      </DarkModeProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
