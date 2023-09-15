@@ -113,10 +113,10 @@ const Services = () => {
   return (
     <>
       {/* <SearchForm /> */}
-      <div className=" w-[90%] mx-auto bg-gray-50	 flex  flex-col md:flex-row  justify-center md:justify-evenly gap-12 p-6 ">
+      <div className=" w-[90%] mx-auto bg-gray-50	 flex  flex-col md:flex-row  justify-center md:justify-evenly gap-12 p-6 dark:bg-gray-800">
         <Categories />
 
-        <div className="cards w-[80%]   flex flex-wrap gap-6  justify-center content-center text-center   items-center sm:items-stretch  ">
+        <div className="cards w-[80%]   flex flex-wrap gap-6  justify-center content-center text-center   items-center sm:items-stretch   text-gray-600 dark:text-gray-400">
           {cardData &&
             cardData.map((card) => (
               <Card imageUrl={card.imageUrl} heading={card.heading} description={card.description} />

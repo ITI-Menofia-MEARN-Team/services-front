@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = ({ imageUrl, heading, description }) => {
   return (
-    <div className="w-[90%] mx-auto sm:w-[80%] md:w-[32%] text-center md:text-start px-6 py-4 bg-white rounded-lg  shadow-xs dark:bg-gray-800 ">
+    <div className="w-[90%] mx-auto sm:w-[80%] md:w-[32%] text-center md:text-start px-6 py-4 bg-white rounded-lg dark:bg-gray-900 shadow-xs  text-gray-600 dark:text-gray-400">
       <img src={imageUrl} className="w-80 h-20  " />
       <div className="flex flex-col justify-between h-[80%] px-6 py-4">
         <h2 className="font-bold text-xl mb-2">{heading}</h2>
