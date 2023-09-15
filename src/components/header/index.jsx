@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthenticationButtons from './AuthenticationButtons';
 import { NavLink } from 'react-router-dom';
 import React, { useContext } from 'react';
 import { DarkModeContext } from '../../contexts/DarkMode';
 import ProfileMenu from '../profile-menu';
+import { AuthContext } from '../../contexts/Auth';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user } = useContext(AuthContext);
+  console.log('user: ', user);
+
+  useEffect(() => {
+    if (user) setIsLoggedIn(true);
+    else setIsLoggedIn(false);
+  }, [user]);
 
   const isActiveLink = ({ isActive }) => {
     return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${
