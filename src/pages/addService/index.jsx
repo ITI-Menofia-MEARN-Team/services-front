@@ -62,7 +62,7 @@ const AddService = () => {
         </div>
       )}
 
-      <div className="max-w-xl mx-auto mt-5">
+      <div className="max-w-xl mx-auto mt-5 ">
         <div className="AddService__right">
           <h1 className="text-4xl mb-4  dark:text-gray-400">اضف خدمه جديده</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">

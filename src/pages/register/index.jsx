@@ -7,30 +7,62 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
+  const registerUser = async (url, data) => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        setMessage('Error: ' + response.status);
+      }
+
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setMessage(error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
-      fname: '',
-      name: '',
+      full_name: '',
+      username: '',
       email: '',
-      phoneNumber: '',
+      phone_number: '',
       password: '',
     },
     onSubmit: (values) => {
       console.log(values);
       setLoading(true);
-      setMessage(`success`);
-      setTimeout(() => {
-        formik.resetForm();
-        setLoading(false);
-        setMessage(null);
-      }, 2000);
+      registerUser('http://localhost:8000/auth/register', values)
+        .then((res) => {
+          console.log('res: ', res);
+          setMessage(`success`);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log('err: ', err);
+          setMessage(err);
+        });
+
+      // setTimeout(() => {
+      //   formik.resetForm();
+
+      //   setMessage(null);
+      // }, 2000);
     },
     validationSchema: Yup.object({
-      fname: Yup.string().required('مطلوب'),
-      name: Yup.string().required('مطلوب'),
+      full_name: Yup.string().required('مطلوب'),
+      username: Yup.string().required('مطلوب'),
       password: Yup.string().required('مطلوب'),
       email: Yup.string().email('عنوان بريد إلكتروني غير صالح').required('مطلوب'),
-      phoneNumber: Yup.string().required('مطلوب'),
+      phone_number: Yup.string().required('مطلوب'),
     }),
   });
 
@@ -47,28 +79,28 @@ const Register = () => {
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">التسجيل</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             <input
-              id="fname"
-              name="fname"
+              id="full_name"
+              name="full_name"
               placeholder="الاسم بالكامل"
               disabled={loading}
-              {...formik.getFieldProps('fname')}
+              {...formik.getFieldProps('full_name')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
             />
-            {formik.touched.fname && formik.errors.fname ? (
-              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
+            {formik.touched.full_name && formik.errors.full_name ? (
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.full_name}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
             <input
-              id="name"
-              name="name"
+              id="username"
+              name="username"
               placeholder="اسم المستخدم"
               disabled={loading}
-              {...formik.getFieldProps('name')}
+              {...formik.getFieldProps('username')}
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
             />
-            {formik.touched.name && formik.errors.name ? (
-              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.name}</div>
+            {formik.touched.username && formik.errors.username ? (
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.username}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
@@ -88,16 +120,16 @@ const Register = () => {
             )}
 
             <input
-              id="phoneNumber"
-              name="phoneNumber"
+              id="phone_number"
+              name="phone_number"
               type="text"
               placeholder="رقم الهاتف"
               className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  border-gray-300 border-2 "
               disabled={loading}
-              {...formik.getFieldProps('phoneNumber')}
+              {...formik.getFieldProps('phone_number')}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.phoneNumber}</div>
+            {formik.touched.phone_number && formik.errors.phone_number ? (
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.phone_number}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}

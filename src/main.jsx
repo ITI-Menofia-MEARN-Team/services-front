@@ -13,8 +13,7 @@ import DarkModeProvider from './contexts/DarkMode.jsx';
 // admin : User With Credits/Authentictions And Cant Manage Web Site
 // Company : Company With Credits/Authentictions
 
-
-const user = 'Company';
+const user = 'Guest';
 let router = userRouter;
 if (user === 'User') router = userRouter;
 else if (user === 'Company') router = companyRouter;
