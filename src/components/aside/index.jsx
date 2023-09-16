@@ -5,13 +5,13 @@ const Aside = () => {
   const { pathname } = useLocation();
   const ActiveLinkElement = () => (
     <span
-      className="absolute inset-y-0 right-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+      className="absolute inset-y-0 right-0 w-2 bg-purple-600 rounded-tr-lg rounded-br-lg"
       aria-hidden="true"
     ></span>
   );
   const activeLinkStyle = 'text-gray-800 dark:text-gray-100';
   const linkStyle =
-    'inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200';
+    'inline-flex items-center w-full text-md font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200';
   const linkClassName = ({ isActive }) => {
     return `${linkStyle} ${isActive ? activeLinkStyle : ''}`;
   };
@@ -21,6 +21,27 @@ const Aside = () => {
       <div className="h-full  grid grid-rows-[50px_1fr_100px]  py-4 text-gray-500 dark:text-gray-400">
         <a className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</a>
         <ul className=" mt-10">
+          <li className="relative px-6 py-3">
+            {pathname === '/orders' && <ActiveLinkElement />}
+            <NavLink to={'/orders'} className={linkClassName}>
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  d="m22 8c0-.478-.379-1-1-1h-13c-.62 0-1 .519-1 1v13c0 .621.52 1 1 1h13c.478 0 1-.379 1-1zm-16-2h13.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-13.75c-.53 0-1 .47-1 1v13.75c0 .414.336.75.75.75s.75-.336.75-.75zm-2.5-2.5h13.75c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.25c-.53 0-1 .47-1 1v14.25c0 .414.336.75.75.75s.75-.336.75-.75z"
+                  fill-rule="nonzero"
+                />
+              </svg>
+              <span className="mr-4">طلبات</span>
+            </NavLink>
+          </li>
           <li className="relative px-6 py-3">
             {pathname === '/' && <ActiveLinkElement />}
             <NavLink to={'/'} className={linkClassName}>
@@ -61,7 +82,7 @@ const Aside = () => {
             </NavLink>
           </li>
         </ul>
-        <div className="px-6 my-6  ">
+        {/* <div className="px-6 my-6  ">
           <button className="flex items-center justify-between w-full px-4 py-2 text-lg font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
             تسجيل الخروج
             <span className="mr-2" aria-hidden="true">
@@ -70,7 +91,7 @@ const Aside = () => {
               </svg>
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
     </aside>
   );
