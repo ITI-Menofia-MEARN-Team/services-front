@@ -5,7 +5,7 @@ import Register from '../pages/register';
 import Login from '../pages/login';
 import Error from '../pages/Error';
 import JoinRequest from '../pages/join-request';
-
+import DetailedCard from '../pages/detailedCard';
 // guest Routes
 const guestRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +14,7 @@ const guestRouter = createBrowserRouter(
       <Route path="join-request" element={<JoinRequest />} />
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
+      <Route path="detailed-card" element={<DetailedCard />} />
       <Route path="*" element={<Navigate to={'/'} />} />
     </Route>
   )
