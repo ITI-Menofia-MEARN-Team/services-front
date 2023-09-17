@@ -3,8 +3,13 @@ const getServices = async (companyID) => {
   return response.json();
 };
 
-const getOrders = async (companyID) => {
-  const response = await fetch(`http://localhost:8000/order/company/${companyID}`);
+const getOrders = async (companyID, token) => {
+  const response = await fetch(`http://localhost:8000/order/company/${companyID}`, {
+    method: 'GET',
+    headers: {
+      token: token,
+    },
+  });
   return response.json();
 };
 
