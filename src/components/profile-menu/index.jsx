@@ -17,7 +17,7 @@ const ProfileMenu = () => {
       <button onClick={toggleMenu} className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
         <img
           className="object-cover w-10 h-10 rounded-full"
-          src={`http://localhost:8000/${user.user.picture}`}
+          src={`http://localhost:8000/uploads/user/${user.user.picture}`}
           alt=""
         />
       </button>

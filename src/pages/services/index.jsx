@@ -1,126 +1,38 @@
-import React from 'react';
-import SearchForm from '../../components/seacrhForm/SearchForm';
+import React, { useEffect, useState } from 'react';
+
 import Categories from '../../components/categories/Categories';
-import Card from '../../components/card/Card';
-import exPic from '../../assets/react.svg';
+
+import { getAllServices } from '../../server/guest';
+import ServiceCard from '../../components/service';
 const Services = () => {
-  const cardData = [
-    {
-      imageUrl: exPic,
-      heading: 'الخصائص',
-      description: [
-        {
-          id: 0,
-          value: 'الخاصية الاولى ',
-        },
-        {
-          id: 1,
-          value: 'الخاصية الثانية ',
-        },
-        {
-          id: 2,
-          value: 'الخاصية الثالثة ',
-        },
-      ],
-    },
-    {
-      imageUrl: exPic,
-      heading: 'الخصائص',
-      description: [
-        {
-          id: 0,
-          value: 'الخاصية الاولى ',
-        },
-        {
-          id: 1,
-          value: 'الخاصية الثانية ',
-        },
-      ],
-    },
-    {
-      imageUrl: exPic,
-      heading: 'الخصائص',
-      description: [
-        {
-          id: 0,
-          value: 'الخاصية الاولى ',
-        },
-        {
-          id: 1,
-          value: 'الخاصية الثانية ',
-        },
-        {
-          id: 2,
-          value: 'الخاصية الثالثة ',
-        },
-        {
-          id: 3,
-          value: 'الخاصية الرابعه ',
-        },
-        {
-          id: 4,
-          value: 'الخاصية الخامسة ',
-        },
-      ],
-    },
-    {
-      imageUrl: exPic,
-      heading: 'الخصائص',
-      description: [
-        {
-          id: 0,
-          value: 'الخاصية الاولى ',
-        },
-        {
-          id: 1,
-          value: 'الخاصية الثانية ',
-        },
-        {
-          id: 2,
-          value: 'الخاصية الثالثة ',
-        },
-        {
-          id: 3,
-          value: 'الخاصية الرابعه ',
-        },
-      ],
-    },
-    {
-      imageUrl: exPic,
-      heading: 'الخصائص',
-      description: [
-        {
-          id: 0,
-          value: 'الخاصية الاولى ',
-        },
-        {
-          id: 1,
-          value: 'الخاصية الثانية ',
-        },
-      ],
-    },
-    {
-      imageUrl: exPic,
-      heading: 'الخصائص',
-      description: [
-        {
-          id: 0,
-          value: 'الخاصية الاولى ',
-        },
-      ],
-    },
-  ];
+  const [data, setData] = useState([]);
+  const myArray = data?.data?.services;
+  const [services, setServices] = useState(myArray);
+
+  console.log('services: ', services);
+  useEffect(() => {
+    getAllServices().then((res) => {
+      setData(res);
+      setServices(res?.data?.services);
+    });
+  }, []);
+
+  const handleFilter = (categoryID) => {
+    if (categoryID === 'all') return setServices(myArray);
+    const filteredArray = myArray?.filter((service) => {
+      return service?.category?._id === categoryID;
+    });
+    setServices(filteredArray);
+  };
+
   return (
     <>
       {/* <SearchForm /> */}
-      <div className=" w-[90%] mx-auto bg-gray-50	 flex  flex-col md:flex-row  justify-center md:justify-evenly gap-12 p-6 dark:bg-gray-800">
-        <Categories />
+      <div className=" w-[95%] flex flex-col md:flex-row justify-start  gap-10 py-5 bg-gray-50	dark:bg-gray-900">
+        <Categories handleFilter={handleFilter} />
 
-        <div className="cards w-[80%]   flex flex-wrap gap-6  justify-center content-center text-center   items-center sm:items-stretch   text-gray-600 dark:text-gray-400">
-          {cardData &&
-            cardData.map((card) => (
-              <Card imageUrl={card.imageUrl} heading={card.heading} description={card.description} />
-            ))}
+        <div className="w-full grid grid-cols-4 gap-4 justify-start items-center sm:items-stretch   text-gray-600 dark:text-gray-400">
+          {services && services.map((service) => <ServiceCard service={service} />)}
         </div>
       </div>
     </>

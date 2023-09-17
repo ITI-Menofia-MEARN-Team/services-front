@@ -14,7 +14,7 @@ const guestRouter = createBrowserRouter(
       <Route path="join-request" element={<JoinRequest />} />
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
-      <Route path="detailed-card" element={<DetailedCard />} />
+      <Route path="service/:id" element={<DetailedCard />} />
       <Route path="*" element={<Navigate to={'/'} />} />
     </Route>
   )

@@ -6,6 +6,7 @@ import { getServices } from '../../server/company';
 const CompanyService = () => {
   const [data, setData] = useState([]);
   const { user } = useContext(AuthContext);
+  console.log('user: ', user);
 
   const services = data?.data?.services;
   console.log('services: ', services);
@@ -20,7 +21,7 @@ const CompanyService = () => {
     timeZone: 'Africa/Cairo',
   };
   useEffect(() => {
-    getServices(user.user._id).then((response) => {
+    getServices(user.user.id).then((response) => {
       setData(response);
     });
   });
@@ -34,7 +35,7 @@ const CompanyService = () => {
               <th className="px-4 py-3">الخدمة</th>
               <th className="px-4 py-3">السعر</th>
               <th className="px-4 py-3">الوصف</th>
-              <th className="px-4 py-3">تاريخ التعديل</th>
+              <th className="px-4 py-3"> اخر تعديل</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
@@ -65,7 +66,7 @@ const CompanyService = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm">L.E {service.price}</td>
+                    <td className="px-4 py-3 text-sm">{service.price}جنيه </td>
                     <td className="px-4 py-3 text-xs">
                       <span className="px-2 py-1 font-semibold text-gray-600 dark:text-gray-400">
                         {service.description.slice(0, 20)}....

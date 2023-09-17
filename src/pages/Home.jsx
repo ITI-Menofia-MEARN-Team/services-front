@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <Header />
-      <div className="bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-[90.8vh] bg-gray-50 dark:bg-gray-900">
         <Outlet />
       </div>
     </>
