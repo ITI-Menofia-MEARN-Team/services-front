@@ -9,7 +9,7 @@ import DetailedCard from '../pages/detailedCard';
 // guest Routes
 const guestRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Home />} errorElement={<Navigate to={'/'} />}>
+    <Route path="/" element={<Home />}>
       <Route index element={<Services />} />
       <Route path="join-request" element={<JoinRequest />} />
       <Route path="register" element={<Register />} />

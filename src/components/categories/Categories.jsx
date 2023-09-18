@@ -10,13 +10,13 @@ const Categories = ({ handleFilter }) => {
     getAllCategories().then((res) => setData(res));
   }, []);
 
-  const [check, setCheck] = useState(null);
+  const [check, setCheck] = useState('all');
   useEffect(() => {
     handleFilter(check);
   }, [check]);
 
   return (
-    <div className="sticky w-[90%]  md:w-[20%]  shadow-xs  text-gray-600 dark:text-gray-400  ">
+    <div className="sticky w-[90%] px-2 md:w-[20%]  shadow-xs  text-gray-600 dark:text-gray-400  ">
       <h1 className="rounded-full border border-indigo-600 rounded-r-none px-12 py-1 text-2xl font-medium text-indigo-600 text-center">
         الفئات
       </h1>
@@ -24,14 +24,14 @@ const Categories = ({ handleFilter }) => {
         <li
           key={'all'}
           onClick={() => setCheck('all')}
-          className={`w-full flex justify-between items-center mb-3 cursor-pointer ${
-            check === 'all' ? 'text-green-400 ' : 'fill-gray-500'
+          className={`w-full flex justify-between items-center p-1 mb-3 cursor-pointer transition-all ease-in duration-50 hover:bg-cool-gray-900 hover:rounded-lg hover:shadow-md ${
+            check === 'all' ? 'text-green-400 bg-cool-gray-900 rounded-lg shadow-md  ' : 'text-gray-500'
           }`}
         >
           <span className="w-4/5 cursor-pointer">الكل</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={`w-10 transition duration-300 ease-in-out stroke-none ${
+            className={`w-8 transition duration-300 ease-in-out stroke-none ${
               check === 'all' ? 'fill-green-400 ' : 'fill-gray-500'
             }`}
             fill="none"
@@ -50,14 +50,14 @@ const Categories = ({ handleFilter }) => {
               <li
                 key={category._id}
                 onClick={() => setCheck(category._id)}
-                className={`w-full flex justify-between items-center mb-3 cursor-pointer ${
-                  check === category._id ? 'text-green-400 ' : 'fill-gray-500'
+                className={`w-full flex justify-between items-center mb-3 cursor-pointer p-1 transition-all ease-in duration-50 hover:bg-cool-gray-900 hover:rounded-lg hover:shadow-md ${
+                  check === category._id ? 'text-green-400 bg-cool-gray-900 rounded-lg shadow-md ' : 'fill-gray-500'
                 }`}
               >
                 <span className="w-4/5 cursor-pointer">{category.name}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`w-10 transition duration-300 ease-in-out stroke-none ${
+                  className={`w-8 transition duration-300 ease-in-out stroke-none ${
                     check === category._id ? 'fill-green-400 ' : 'fill-gray-500'
                   }`}
                   fill="none"

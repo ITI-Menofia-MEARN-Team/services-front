@@ -2,6 +2,8 @@ import { useState, useRef, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../../contexts/Auth';
+import Spinner from '../../components/spinner';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const formRef = useRef();
@@ -45,16 +47,39 @@ const Register = () => {
       registerUser('http://localhost:8000/auth/register', values)
         .then((res) => {
           console.log('res: ', res);
-          if (res.errors) setMessage('Error');
+          if (res.errors) {
+            setMessage('Error');
+            res.errors.forEach((error) =>
+              toast.error(error.msg, {
+                position: toast.POSITION.TOP_LEFT,
+              })
+            );
+          }
+          if (res.status === 'failed') {
+            setMessage('Error');
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
           if (res.data) {
             login(res.data);
             setMessage(`success`);
+            toast.success('تم انشاء الحساب', {
+              position: toast.POSITION.TOP_LEFT,
+            });
+            setMessage(`success`);
+            toast.success('تم تسجيل الدخول بنجاح', {
+              position: toast.POSITION.TOP_LEFT,
+            });
           }
           setLoading(false);
         })
         .catch((err) => {
           console.log('err: ', err);
-          setMessage(err);
+          setMessage(JSON.stringify(err));
+          toast.error(err.msg, {
+            position: toast.POSITION.TOP_LEFT,
+          });
         });
 
       // setTimeout(() => {
@@ -74,9 +99,9 @@ const Register = () => {
 
   return (
     <section id="Register">
-      {message && (
+      {/* {message && (
         <div className={`message ${message.includes('Error') ? 'bg-red-500' : 'bg-green-600'}`}>{message}</div>
-      )}
+      )} */}
 
       <div className="flex justify-center items-center h-[90.8vh]">
         <div className=" w-1/3">
@@ -155,10 +180,10 @@ const Register = () => {
             <button
               type="submit"
               id="submitBtn"
-              className="w-full px-4 py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              className="w-full px-4 py-2 text-md font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple disabled:bg-gray-400"
               disabled={loading}
             >
-              {loading ? 'جاري التسجيل' : 'تسجيل'}
+              {loading ? <Spinner /> : 'دخول'}
             </button>
           </form>
         </div>
