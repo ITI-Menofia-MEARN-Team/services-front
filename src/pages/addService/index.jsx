@@ -1,8 +1,8 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../../contexts/Auth';
-import { addNewExtraProps, addNewService } from '../../server/company';
+import { addNewExtraProps, addNewService, getCategory } from '../../server/company';
 
 const AddService = () => {
   const formRef = useRef();
@@ -15,8 +15,23 @@ const AddService = () => {
   const token = user ? user.token : null;
   const companyId = user ? user.user.id : null;
   const [selectedImages, setSelectedImages] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [showInput, setShowInput] = useState(false);
 
-  console.log(token);
+  const toggleInput = () => {
+    setShowInput(!showInput);
+  };
+
+  useEffect(() => {
+    getCategory()
+      .then((data) => {
+        const categoriesArray = data.data.categories;
+        setCategories(categoriesArray);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -26,7 +41,7 @@ const AddService = () => {
       descPlusArray: [{ price: '', description: '' }],
       price: '',
       images: selectedImages,
-      // category: "",
+      category: '',
     },
     onSubmit: (values) => {
       values.extra_props = values.descPlusArray.map((item) => ({
@@ -80,24 +95,11 @@ const AddService = () => {
   };
 
   const handleSubmit = async (values) => {
-    console.log('in handle');
     try {
-      console.log('in try');
-      console.log(values.extra_props);
       const extraPropsResponse = await addNewExtraProps(values.extra_props, token);
       const extraProps = extraPropsResponse.data.extraProps.map((item) => item._id);
-      console.log(extraPropsResponse);
-      console.log(extraProps);
-      const data = {
-        title: values.title,
-        props: values.descArray,
-        extra_props: extraProps,
-        price: 500,
-        description: values.description,
-        images: values.images,
-        category: '6505d507da9e39dc8ef1730a',
-        company: companyId,
-      };
+      const categoriesId = categories.find((categoryObj) => categoryObj.name === values.category);
+
       const formData = new FormData();
 
       formData.append('title', values.title);
@@ -105,14 +107,14 @@ const AddService = () => {
       formData.append('price', 500);
       formData.append('extra_props', extraProps);
       formData.append('props', values.descArray);
-      formData.append('category', '6505d507da9e39dc8ef1730a');
+      formData.append('category', categoriesId._id);
       formData.append('company', companyId);
 
       const imageFiles = values.images;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('images', imageFiles[i]);
       }
-      console.log(data);
+
       console.log(formData);
       const serviceResponse = await addNewService(formData, token);
       console.log(serviceResponse);
@@ -327,20 +329,42 @@ const AddService = () => {
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
             )}
-            {/* <select
-            id="category"
-            name="category"
-            disabled={loading}
-            {...formik.getFieldProps("category")}
-          >
-            <option value="">Choose your bugdet</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-          {formik.touched.category && formik.errors.category ? (
-            <div className="">{formik.errors.category}</div>
-          ) :<div className=""></div>} */}
+            <div className="flex gap-3">
+              <select
+                id="category"
+                name="category"
+                disabled={loading || showInput}
+                className="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mb-6 cursor-pointer border-gray-300 border-2"
+                {...formik.getFieldProps('category')}
+              >
+                <option value="">التصنيفات</option>
+                {categories &&
+                  categories.map((category, index) => (
+                    <option key={index} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+              </select>
+              <button
+                type="button"
+                onClick={toggleInput}
+                className="w-1/3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple px-4 mb-6 "
+              >
+                اضافه تصنيف
+              </button>
+            </div>
+            {showInput && (
+              <input
+                type="text"
+                placeholder="اضافه تصنيف"
+                className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 mb-6"
+              />
+            )}
+            {formik.touched.category && formik.errors.category ? (
+              <div className="">{formik.errors.category}</div>
+            ) : (
+              <div className=""></div>
+            )}
 
             <button
               type="submit"

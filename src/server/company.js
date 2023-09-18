@@ -36,5 +36,20 @@ const addNewService = async (data, token) => {
   });
   return response.json();
 };
+const getCategory = async () => {
+  const response = await fetch(`http://localhost:8000/category`);
+  return response.json();
+};
 
-export { getServices, getOrders, addNewExtraProps, addNewService };
+const addCategory = async (data, token) => {
+  const response = await fetch('http://localhost:8000/category', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      token: token,
+    },
+    body: JSON.stringify({ data: data }),
+  });
+  return response.json();
+};
+export { getServices, getOrders, addNewExtraProps, addNewService, getCategory, addCategory };
