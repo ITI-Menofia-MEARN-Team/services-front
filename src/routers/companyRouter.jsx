@@ -7,7 +7,7 @@ import CompanyOrders from '../pages/companyOrders';
 // Company Routes
 const companyRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Company />} errorElement={<Navigate to={'/'} />}>
+    <Route path="/" element={<Company />}>
       <Route index element={<CompanyService />} />
       <Route path="add-service" element={<AddService />} />
       <Route path="orders" element={<CompanyOrders />} />

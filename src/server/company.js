@@ -14,25 +14,25 @@ const getOrders = async (companyID, token) => {
 };
 
 const addNewExtraProps = async (data, token) => {
-  const response = await fetch('', {
+  const response = await fetch('http://localhost:8000/extraProp/addMany', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       token: token,
     },
-    body: JSON.stringify({ data }),
+    body: JSON.stringify({ data: data }),
   });
   return response.json();
 };
 
 const addNewService = async (data, token) => {
-  const response = await fetch('', {
+  console.log(data);
+  const response = await fetch('http://localhost:8000/service/', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       token: token,
     },
-    body: JSON.stringify(data),
+    body: data,
   });
   return response.json();
 };
