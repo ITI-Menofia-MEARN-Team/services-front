@@ -4,12 +4,14 @@ import Services from '../pages/services';
 import Error from '../pages/Error';
 import JoinRequest from '../pages/join-request';
 import Profile from '../pages/profile';
+import DetailedCard from '../pages/detailedCard';
 
 // User Routes
 const userRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Home />} errorElement={<Navigate to={'/'} />}>
+    <Route path="/" element={<Home />}>
       <Route index element={<Services />} />
+      <Route path="service/:id" element={<DetailedCard />} />
       <Route path="join-request" element={<JoinRequest />} />
       <Route path="profile" element={<Profile />} />
       <Route path="*" element={<Navigate to={'/'} />} />

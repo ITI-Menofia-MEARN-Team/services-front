@@ -2,6 +2,8 @@ import { useState, useRef, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../../contexts/Auth';
+import { toast } from 'react-toastify';
+import Spinner from '../../components/spinner';
 
 const Login = () => {
   const formRef = useRef();
@@ -42,16 +44,35 @@ const Login = () => {
       logInUser('http://localhost:8000/auth/login', values)
         .then((res) => {
           console.log('res: ', res);
-          if (res.errors) setMessage('Error');
+          if (res.errors) {
+            setMessage('Error');
+            res.errors.forEach((error) =>
+              toast.error(error.msg, {
+                position: toast.POSITION.TOP_LEFT,
+              })
+            );
+          }
+          if (res.status === 'failed') {
+            setMessage('Error');
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
           if (res.data) {
             login(res.data);
             setMessage(`success`);
+            toast.success('تم تسجيل الدخول بنجاح', {
+              position: toast.POSITION.TOP_LEFT,
+            });
           }
           setLoading(false);
         })
         .catch((err) => {
           console.log('err: ', err);
           setMessage(JSON.stringify(err));
+          toast.error(err.msg, {
+            position: toast.POSITION.TOP_LEFT,
+          });
         });
     },
     validationSchema: Yup.object({
@@ -62,9 +83,9 @@ const Login = () => {
 
   return (
     <section id="Login">
-      {message && (
+      {/* {message && (
         <div className={`message ${message.includes('Error') ? 'bg-red-500' : 'bg-green-600'}`}>{message}</div>
-      )}
+      )} */}
 
       <div className="flex justify-center items-center h-[90.8vh] ">
         <div className="login__right w-1/3">
@@ -91,9 +112,9 @@ const Login = () => {
               placeholder="كلمه المرور"
               disabled={loading}
               {...formik.getFieldProps('password')}
-              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
+              className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
             />
-            {formik.touched.password && formik.errors.name ? (
+            {formik.touched.password && formik.errors.password ? (
               <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.password}</div>
             ) : (
               <div className="h-6 text-xs text-red-600 dark:text-red-400"></div>
@@ -102,10 +123,10 @@ const Login = () => {
             <button
               type="submit"
               id="submitBtn"
-              className="w-full px-4 py-2  text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              className="w-full px-4 py-2 text-md font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple disabled:bg-gray-400"
               disabled={loading}
             >
-              {loading ? 'جاري الارسال' : 'دخول'}
+              {loading ? <Spinner /> : 'دخول'}
             </button>
           </form>
         </div>

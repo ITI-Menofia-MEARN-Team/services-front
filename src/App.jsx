@@ -6,6 +6,8 @@ import { AuthContext } from './contexts/Auth';
 import userRouter from './routers/userRouter';
 import companyRouter from './routers/companyRouter';
 import guestRouter from './routers/guestRouter';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // user roles => ["User","Company","Admin"]
 // guest : User Without Any Credits/Authentictions
@@ -32,6 +34,7 @@ function App() {
   // jsx
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900`}>
+      <ToastContainer />
       <RouterProvider router={router} fallbackElement={<Spinner />} />
     </div>
   );
