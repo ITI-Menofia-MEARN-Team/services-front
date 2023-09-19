@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const AuthContext = createContext();
 
 // Create the Auth Provider Component
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -35,3 +35,5 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={authContextValues}>{children}</AuthContext.Provider>;
 };
+
+export default AuthProvider;
