@@ -48,7 +48,7 @@ const addCategory = async (data, token) => {
       'Content-Type': 'application/json',
       token: token,
     },
-    body: JSON.stringify({ data: data }),
+    body: JSON.stringify(data),
   });
   return response.json();
 };

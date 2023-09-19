@@ -2,7 +2,7 @@ import { useState, useRef, useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../../contexts/Auth';
-import { addNewExtraProps, addNewService, getCategory } from '../../server/company';
+import { addCategory, addNewExtraProps, addNewService, getCategory } from '../../server/company';
 
 const AddService = () => {
   const formRef = useRef();
@@ -38,7 +38,7 @@ const AddService = () => {
       title: '',
       description: '',
       descArray: descArray,
-      descPlusArray: [{ price: '', description: '' }],
+      descPlusArray: '' ,
       price: '',
       images: selectedImages,
       category: '',
@@ -70,13 +70,13 @@ const AddService = () => {
   });
 
   const handleAddDescArray = () => {
-    setDescArray('descArray', [...formik.values.descArray, '']);
+    setDescArray( [...descArray, []]);
   };
 
   const handleRemoveDescArray = (index) => {
-    const updatedDescArray = [...formik.values.descArray];
+    const updatedDescArray = [...descArray];
     updatedDescArray.splice(index, 1);
-    setDescArray('descArray', updatedDescArray);
+    setDescArray( updatedDescArray);
   };
 
   const handleAddDescriptionPlus = () => {
@@ -96,23 +96,30 @@ const AddService = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const extraPropsResponse = await addNewExtraProps(values.extra_props, token);
-      const extraProps = extraPropsResponse.data.extraProps.map((item) => item._id);
-      const categoriesId = categories.find((categoryObj) => categoryObj.name === values.category);
+      let extraPropsResponse;
+      if(values.extra_props[0].price !== 0){
+        extraPropsResponse = await addNewExtraProps(values.extra_props, token);
+      }
+      const addedCategories= await addCategory({name:values.category}, token);
+      const extraProps = extraPropsResponse?.data?.extraProps.map((item) => item._id);
+      const categoriesId =!showInput? categories.find((categoryObj) => categoryObj.name === values.category): addedCategories.data.category._id;
 
       const formData = new FormData();
 
       formData.append('title', values.title);
       formData.append('description', values.description);
       formData.append('price', 500);
-      formData.append('extra_props', extraProps);
-      formData.append('props', values.descArray);
-      formData.append('category', categoriesId._id);
+      extraPropsResponse && formData.append('extra_props', extraProps);
+      formData.append('category', categoriesId);
       formData.append('company', companyId);
 
       const imageFiles = values.images;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('images', imageFiles[i]);
+      }
+      const props = values.descArray;
+      for (let i = 0; i < props.length; i++) {
+        formData.append('props[]', props[i]);
       }
 
       console.log(formData);
@@ -164,7 +171,7 @@ const AddService = () => {
               الخصائص
             </label>
             {descArray.map((desc, index) => (
-              <div className="flex gap-2" key={`descArray-${index}`}>
+              <div className="flex gap-2 m-2" key={`descArray-${index}`}>
                 <input
                   id={`descArray-${index}`}
                   name={`descArray[${index}]`}
@@ -358,6 +365,8 @@ const AddService = () => {
                 type="text"
                 placeholder="اضافه تصنيف"
                 className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 mb-6"
+                disabled={loading}
+                {...formik.getFieldProps('category')}
               />
             )}
             {formik.touched.category && formik.errors.category ? (
