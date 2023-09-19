@@ -27,13 +27,18 @@ Before you begin, ensure you have the following tools installed on your system:
    ```bash
    npm install
    ```
+   or
+   
+   ```bash
+   npm install --force
+   ```
 
-4. Configure the project:
+5. Configure the project:
 
    Rename the .env.example file to .env.<br>
    Open the .env file and update the configuration values according to your environment.
 
-5. Start the local development server:
+6. Start the local development server:
 
    ```bash
    npm run dev
