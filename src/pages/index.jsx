@@ -1,0 +1,11 @@
+export { default as AddService } from './AddService';
+export { default as CompanyService } from './CompanyService';
+export { default as CompanyOrders } from './CompanyOrders';
+export { default as ErrorPage } from './ErrorPage';
+export { default as JoinRequest } from './JoinRequest';
+export { default as Profile } from './Profile';
+export { default as Register } from './Register';
+export { default as Login } from './Login';
+export { default as ServiceDetails } from './ServiceDetails';
+export { default as Services } from './Services';
+export { default as AddNewCompany } from './AddNewCompany';
