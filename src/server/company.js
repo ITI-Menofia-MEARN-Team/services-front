@@ -26,7 +26,6 @@ const addNewExtraProps = async (data, token) => {
 };
 
 const addNewService = async (data, token) => {
-  console.log(data);
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/service/`, {
     method: 'POST',
     headers: {
