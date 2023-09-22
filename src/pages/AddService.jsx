@@ -63,9 +63,9 @@ const AddService = () => {
       values.extra_props =
         typeof values.descPlusArray !== 'string'
           ? values.descPlusArray.map((item) => ({
-            price: Number(item.price),
-            description: item.description,
-          }))
+              price: Number(item.price),
+              description: item.description,
+            }))
           : [];
       values.props = values.descArray.map((item) => item);
       values.images = selectedImages;
@@ -296,7 +296,7 @@ const AddService = () => {
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
                   />
                   {formik.touched[`descPlusArray[${index}].description`] &&
-                    formik.errors[`descPlusArray[${index}].description`] ? (
+                  formik.errors[`descPlusArray[${index}].description`] ? (
                     <div className="h-6 text-xs text-red-600 dark:text-red-400">
                       {formik.errors[`descPlusArray[${index}].description`]}
                     </div>
