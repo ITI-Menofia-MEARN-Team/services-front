@@ -99,6 +99,7 @@ function App() {
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
           <Route path="orders/:user" element={<ServiceDetails />} />
+          <Route path="profile" element={<Profile isCompany />} />
           <Route
             path="add-new-company"
             element={
