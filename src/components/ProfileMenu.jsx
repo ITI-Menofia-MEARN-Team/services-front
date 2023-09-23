@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/Auth';
 import { toast } from 'react-toastify';
 
 const ProfileMenu = () => {
+  // route
   const navigate = useNavigate();
   // toggle Menu
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,6 +14,8 @@ const ProfileMenu = () => {
 
   // isLogged
   const { user, logout } = useContext(AuthContext);
+  const isCompany = user?.user?.role === 'Company';
+  const isAdmin = user?.user?.role === 'Admin';
 
   return (
     <>
@@ -28,7 +31,7 @@ const ProfileMenu = () => {
           <li className="flex">
             <Link
               className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-              to={'/profile'}
+              to={`${isAdmin || isCompany ? '/dashboard/profile' : '/profile'}`}
             >
               <svg
                 className="w-4 h-4 ml-3"
