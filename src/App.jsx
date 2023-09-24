@@ -1,11 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {
-  Navigate,
-  Route,
-
-  Routes,
-
-} from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,16 +17,11 @@ import {
   Profile,
   Register,
   ServiceDetails,
-
 } from './pages';
 import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
 
-
-
 function App() {
-
-
   // dark mode context
   const { isDarkMode } = useContext(DarkModeContext);
 
@@ -44,12 +33,8 @@ function App() {
   const isAdmin = user?.user?.role === 'Admin';
   const isGuest = !isUser && !isCompany && !isAdmin;
 
-
-
-
   // jsx
   return (
-
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
       <ToastContainer />
       <Routes>
@@ -125,9 +110,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
-
   );
 }
-
 
 export default App;

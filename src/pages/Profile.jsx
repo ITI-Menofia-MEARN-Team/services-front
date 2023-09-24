@@ -1,39 +1,219 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../contexts';
+import { useEffect } from 'react';
+import { getUserProfileData, updateUserProfile } from '../server/user';
+import { Spinner } from '../components';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 
 const Profile = ({ isCompany = false }) => {
+  const [loading, setLoading] = useState(false);
+  const [profileData, setProfileData] = useState({});
+
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const getProfile = async () => {
+      const response = user && (await getUserProfileData(user?.user?.id, user?.token));
+      setProfileData(response?.data?.user);
+      console.log('🚀 ~ file: Profile.jsx:8 ~ Profile ~ profileData:', profileData);
+
+      // profileForm.setFieldValue('full_name', response?.data?.user.full_name);
+      // // profileForm.setFieldValue('email', response?.data?.user.email);
+      // profileForm.setFieldValue('phone_number', response?.data?.user.phone_number);
+      // // profileForm.setFieldValue('username', response?.data?.user.username);
+      // profileForm.setFieldValue('social_links.facebook', response?.data?.user.social_links?.facebook);
+      // profileForm.setFieldValue('social_links.twitter', response?.data?.user.social_links?.twitter);
+      // profileForm.setFieldValue('social_links.instagram', response?.data?.user.social_links?.instagram);
+      // profileForm.setFieldValue('social_links.youtube', response?.data?.user.social_links?.youtube);
+    };
+    getProfile();
+  }, [user]);
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone: 'Africa/Cairo',
+  };
+
   const inputClasses =
     ' block w-full  placeholder: text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input bg-gray-100 my-5 ';
 
+  const profileForm = useFormik({
+    initialValues: {
+      full_name: '',
+      email: '',
+      image: '',
+      phone_number: '',
+      username: '',
+      password: null,
+      social_links: {
+        facebook: '',
+        twitter: '',
+        instagram: '',
+        youtube: '',
+      },
+    },
+    validationSchema: Yup.object({
+      full_name: Yup.string().min(3, 'الاسم يجب ان يحتوي علي 3 احرف او اكثر').optional(),
+      email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').optional(),
+      phone_number: Yup.string().optional(),
+      username: Yup.string().optional(),
+      image: Yup.mixed()
+        .optional()
+        .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
+          if (file) {
+            // Allow any image MIME type
+            console.log(file);
+            return ['image/jpg', 'image/png', 'image/jpeg', 'image/svg', 'image/webp'].includes(file[0].type);
+          }
+          return true; // No file selected, so no type to check
+        }),
+
+      social_links: Yup.object().shape({
+        facebook: Yup.string().url('رابط فيسبوك يجب أن يكون رابط صحيح'),
+        twitter: Yup.string().url('رابط تويتر يجب أن يكون رابط صحيح'),
+        instagram: Yup.string().url('رابط انستجرام يجب أن يكون رابط صحيح'),
+        youtube: Yup.string().url('رابط يوتيوب يجب أن يكون رابط صحيح'),
+      }),
+    }),
+    onSubmit: (values) => {
+      setLoading(true);
+      console.log('values: ', values);
+      const formData = new FormData();
+      values.full_name && formData.append('full_name', values.full_name);
+      values.username && formData.append('username', values.username);
+      values.email && formData.append('email', values.email);
+      values.phone_number && formData.append('phone_number', values.phone_number);
+      // formData.append('image', values.image);
+      // Append social_links to the FormData
+      Object.keys(values.social_links).forEach((key) => {
+        values.social_links[key] && formData.append(`social_links.${key}`, values.social_links[key]);
+      });
+
+      const imageFiles = values.image;
+      for (let i = 0; i < imageFiles.length; i++) {
+        imageFiles[i] && formData.append('image', imageFiles[i]);
+      }
+
+      console.log('formData: ', formData);
+
+      updateUserProfile(formData, user?.token, user?.user?.id)
+        .then((res) => {
+          console.log(res);
+          if (res.errors) {
+            res.errors.forEach((error) =>
+              toast.error(error.msg, {
+                position: toast.POSITION.TOP_LEFT,
+              })
+            );
+          }
+          if (res.status === 'failed') {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
+          if (res.data) {
+            toast.success('تم ارسال طلبك بنجاح', {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.message, {
+            position: toast.POSITION.TOP_LEFT,
+          });
+          setLoading(false);
+        });
+    },
+  });
+
+  if (!profileData) return <Spinner />;
+
   return (
-    <div className="profile  flex flex-col md:flex-row justify-evenly p-10 bg-gray-100 min-h-screen dark:bg-gray-900 ">
-      <div className="info px-10 py-7 text-center w-full md:w-2/5 lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-4 md:mb-0">
-        <h3 className="userName mb-5  font-bold text-2xl"> الاسم </h3>
-        <p className="mb-4 text-sm">{isCompany ? 'اسم الشركه@' : 'اسم المستخدم@'}</p>
+    <form
+      autoComplete="off"
+      onSubmit={profileForm.handleSubmit}
+      className="profile flex flex-col lg:flex-row gap-3 justify-evenly p-5 bg-gray-100 min-h-[91vh] dark:bg-gray-900 "
+    >
+      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-4 md:mb-0">
+        <h3 className="userName mb-5  font-bold text-2xl"> {profileData.full_name} </h3>
+        <p className="mb-4 text-sm">{profileData.username}@</p>
         <div className="text-center mb-10">
-          <img src="assets/user.png" alt="" className="w-[70%] mx-auto" />
+          <img
+            src={
+              (profileForm.values?.image && URL.createObjectURL(profileForm.values?.image?.[0])) ||
+              `${import.meta.env.VITE_API_BASE_URL}/${profileData.picture}`
+            }
+            alt=""
+            className="w-[70%] mx-auto"
+          />
         </div>
-        <button className="py-2 mb-4 font-medium leading-5 transition-colors border border-transparent rounded-md focus:outline-none px-4  cursor-pointer placeholder:ease-in duration-300 hover:border-purple-400 hover:text-purple-600 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600 text-md">
-          {isCompany ? 'ارفع شعار' : '   ارفع صورة'}
-        </button>
+
+        {/* image */}
+        <div className="logo flex items-center	mt-3 justify-center ">
+          <label htmlFor="image">
+            <label
+              htmlFor="image"
+              className=" py-2  font-medium leading-5  transition-colors     border border-transparent rounded-md   focus:outline-none w-full  px-2 cursor-pointer placeholder: ease-in duration-300
+                hover:text-purple-600 
+                 focus:border-purple-400 
+                focus:shadow-outline-purple text-gray-300 dark:text-purple-500 
+                hover:border-purple-600 
+                bg-purple-600     
+                hover:bg-transparent
+                border-purple-600 text-md"
+            >
+              {isCompany ? 'ارفع شعار' : '   ارفع صورة'}{' '}
+            </label>
+            <input
+              onChange={(event) => {
+                profileForm.setFieldValue('image', event.currentTarget.files);
+              }}
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              className="hidden"
+            />
+          </label>
+          {profileForm.touched.image && profileForm.errors.image ? (
+            <div className="text-red-700 text-md mb-5">{profileForm.errors.image}</div>
+          ) : null}
+        </div>
+
         <p className="flex flex-col">
-          <span className="mb-2 font-bold text-lg">{isCompany ? 'شركة منذ' : 'مستخدم منذ '}</span>
-          19 سبتمبر 2019
+          <span className="mt-5 font-bold text-xs ">{isCompany ? 'شركة منذ' : 'مستخدم منذ '}</span>
+          {profileData.createdAt && new Intl.DateTimeFormat('ar-EG', options).format(new Date(profileData.createdAt))}
         </p>
       </div>
-      <div className="edit-info info px-10 py-7 w-full md:w-2/5  lg:w-3/5     bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
+      {/* section - 2 */}
+      <div className="edit-info info px-10 py-7 w-full   lg:w-4/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
         <h1 className=" font-bold text-lg">{isCompany ? ' تعديل بيانات الشركة' : '    تعديل الملف الشخصي'}</h1>
         <div className="form w-full flex flex-wrap flex-col lg:flex-row justify-between  py-8 mb-8 bg-white rounded-lg  dark:bg-gray-800  dark:text-gray-300">
           <div className="w-full lg:w-2/5">
             <label htmlFor="fullName" className="text-md">
               {isCompany ? ' اسم الشركة' : 'الاسم بالكامل'}
             </label>
-            <input id="fullName" type="text" className={inputClasses} />
+            <input {...profileForm.getFieldProps('full_name')} id="name" type="text" className={inputClasses} />
+            {profileForm.touched.full_name && profileForm.errors.full_name ? (
+              <div className="text-red-700 text-md mb-5">{profileForm.errors.full_name}</div>
+            ) : null}
           </div>
           <div className="w-full lg:w-2/5">
             <label htmlFor="userName" className="text-md">
               اسم المستخدم
             </label>
-            <input id="userName" type="text" className={inputClasses} />
+            <input {...profileForm.getFieldProps('username')} id="username" type="text" className={inputClasses} />
+            {profileForm.touched.username && profileForm.errors.username ? (
+              <div className="text-red-700 text-md mb-5">{profileForm.errors.username}</div>
+            ) : null}
           </div>
           <div className="w-full lg:w-2/5">
             <label htmlFor="password" className="text-md">
@@ -45,13 +225,24 @@ const Profile = ({ isCompany = false }) => {
             <label htmlFor="email" className="text-md">
               البريد الالكترونى
             </label>
-            <input id="email" type="email" className={inputClasses} />
+            <input {...profileForm.getFieldProps('email')} id="email" type="email" className={inputClasses} />
+            {profileForm.touched.email && profileForm.errors.email ? (
+              <div className="text-red-700 text-md mb-5">{profileForm.errors.email}</div>
+            ) : null}
           </div>
           <div className="w-full lg:w-2/5">
             <label htmlFor="phone" className="text-md">
               رقم الهاتف
             </label>
-            <input id="phone" type="text" className={inputClasses} />
+            <input
+              {...profileForm.getFieldProps('phone_number')}
+              id="phone_number"
+              type="text"
+              className={inputClasses}
+            />
+            {profileForm.touched.phone_number && profileForm.errors.phone_number ? (
+              <div className="text-red-700 text-md mb-5">{profileForm.errors.phone_number}</div>
+            ) : null}
           </div>
         </div>
         {isCompany ? (
@@ -63,7 +254,16 @@ const Profile = ({ isCompany = false }) => {
                 <label htmlFor="facebook" className="text-md">
                   رابط فيسبوك
                 </label>
-                <input name="social_links.facebook" id="facebook" type="text" className={inputClasses} />
+                <input
+                  name="social_links.facebook"
+                  {...profileForm.getFieldProps('social_links.facebook')}
+                  id="companyName"
+                  type="text"
+                  className={inputClasses}
+                />
+                {profileForm.touched.social_links?.facebook && profileForm.errors.social_links?.facebook ? (
+                  <div className="text-red-700 text-md mb-5">{profileForm.errors.social_links?.facebook}</div>
+                ) : null}
               </div>
               <div className="w-full lg:w-2/5 mb-5">
                 {' '}
@@ -71,7 +271,16 @@ const Profile = ({ isCompany = false }) => {
                 <label htmlFor="youtube" className="text-md mt-5">
                   رابط يوتيوب
                 </label>
-                <input name="social_links.youtube" id="youtube" type="text" className={inputClasses} />
+                <input
+                  name="social_links.youtube"
+                  {...profileForm.getFieldProps('social_links.youtube')}
+                  id="youtube"
+                  type="text"
+                  className={inputClasses}
+                />
+                {profileForm.touched.social_links?.youtube && profileForm.errors.social_links?.youtube ? (
+                  <div className="text-red-700 text-md mb-5">{profileForm.errors.social_links?.youtube}</div>
+                ) : null}
               </div>
               <div className="w-full lg:w-2/5 mb-5">
                 {' '}
@@ -79,23 +288,44 @@ const Profile = ({ isCompany = false }) => {
                 <label htmlFor="twitter" className="text-md mt-5">
                   رابط تويتر
                 </label>
-                <input name="social_links.twitter" id="twitter" type="text" className={inputClasses} />
+                <input
+                  name="social_links.twitter"
+                  {...profileForm.getFieldProps('social_links.twitter')}
+                  id="twitter"
+                  type="text"
+                  className={inputClasses}
+                />
+                {profileForm.touched.social_links?.twitter && profileForm.errors.social_links?.twitter ? (
+                  <div className="text-red-700 text-md mb-5">{profileForm.errors.social_links?.twitter}</div>
+                ) : null}
               </div>
               <div className="w-full lg:w-2/5 mb-5">
                 {/* Instagram */}
                 <label htmlFor="instagram" className="text-md mt-5">
                   رابط انستجرام
                 </label>
-                <input name="social_links.instagram" id="instagram" type="text" className={inputClasses} />
+                <input
+                  name="social_links.instagram"
+                  {...profileForm.getFieldProps('social_links.instagram')}
+                  id="instagram"
+                  type="text"
+                  className={inputClasses}
+                />
+                {profileForm.touched.social_links?.instagram && profileForm.errors.social_links?.instagram ? (
+                  <div className="text-red-700 text-md mb-5">{profileForm.errors.social_links?.instagram}</div>
+                ) : null}
               </div>
             </div>
           </div>
         ) : null}
-        <button className="py-2 mb-4 font-medium leading-5 transition-colors border border-transparent rounded-md focus:outline-none px-4  cursor-pointer placeholder:ease-in duration-300 hover:text-purple-600 hover:border-purple-400 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600 text-md">
-          تحديث البيانات
+        <button
+          type="submit"
+          className="py-2 mb-4 font-medium leading-5 transition-colors border border-transparent rounded-md focus:outline-none px-4  cursor-pointer placeholder:ease-in duration-300 hover:text-purple-600 hover:border-purple-400 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600 text-md"
+        >
+          {loading ? <Spinner /> : ' تحديث البيانات'}
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
