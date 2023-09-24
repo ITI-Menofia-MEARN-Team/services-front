@@ -13,7 +13,9 @@ const ServiceCard = ({ service }) => {
       <div className="relative h-3/5 pt-3  px-1">
         <div className="flex justify-between items-center my-2">
           <h6 className="text-gray-600 dark:text-gray-400 text-sm">{service.category?.name}</h6>
-          <Link to={`/company/${service.company?._id}`} className="text-blue-800 cursor-pointer text-sm">{service.company?.full_name.slice(0, 20)}..</Link>
+          <Link to={`/company/${service.company?._id}`} className="text-blue-800 cursor-pointer text-sm">
+            {service.company?.full_name.slice(0, 20)}..
+          </Link>
         </div>
         <h2 className="font-bold text-lg">{service.title}</h2>
         <p className="text-gray-600 dark:text-gray-400 text-sm ">{service.description.slice(0, 50)}.....</p>
