@@ -8,7 +8,7 @@ const Aside = () => {
   const { pathname } = useLocation();
   const ActiveLinkElement = () => (
     <span
-      className="absolute inset-y-0 right-0 w-2 bg-purple-600 rounded-tr-lg rounded-br-lg"
+      className="absolute inset-y-0 right-0 w-1 bg-purple-600 rounded-tl-lg rounded-bl-lg"
       aria-hidden="true"
     ></span>
   );

@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
-import Categories from '../components/Categories';
+import Categories from './Categories';
 
 import { getAllServices } from '../server/guest';
-import ServiceCard from '../components/ServiceCard';
+import ServiceCard from './ServiceCard';
+import { Spinner } from '.';
+import { useLocation } from 'react-router-dom';
 
-const Services = () => {
-  const [data, setData] = useState([]);
-  const myArray = data?.data?.services;
-  const [services, setServices] = useState(myArray);
+const Services = ({ servicesProp }) => {
 
-  console.log('services: ', services);
+  const { pathname } = useLocation()
+  const [myArray, setMyArray] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [services, setServices] = useState([]);
+
   useEffect(() => {
-    getAllServices().then((res) => {
-      setData(res);
-      setServices(res?.data?.services);
-    });
-  }, []);
+    setMyArray(servicesProp);
+    setServices(servicesProp);
+    console.log('myArray: ', myArray);
+    console.log('services: ', services);
+    setLoading(false)
+  }, [pathname, servicesProp]);
 
   const handleFilter = (categoryID) => {
     if (categoryID === 'all') return setServices(myArray);
@@ -26,14 +30,19 @@ const Services = () => {
     setServices(filteredArray);
   };
 
-  return (
+  if (loading) return <Spinner />
+
+  else return (
     <>
-      {/* <SearchForm /> */}
+
+
+
+      {/* services */}
       <div className=" w-[95%] flex flex-col md:flex-row justify-start  gap-10 py-5 bg-gray-50	dark:bg-gray-900">
         <Categories handleFilter={handleFilter} />
 
         <div className="w-full grid grid-cols-4 gap-4 justify-start items-center sm:items-stretch   text-gray-600 dark:text-gray-400">
-          {services && services.map((service) => <ServiceCard service={service} />)}
+          {services && services.map((service) => <ServiceCard key={service._id} service={service} />)}
         </div>
       </div>
     </>
