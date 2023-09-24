@@ -25,7 +25,7 @@ const CompanyService = () => {
     getServices(user.user.id).then((response) => {
       setData(response);
     });
-  });
+  }, []);
 
   return (
     <div className="w-full overflow-hidden rounded-lg shadow-xs mt-5">

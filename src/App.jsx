@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import {
   Navigate,
   Route,
-  RouterProvider,
+
   Routes,
-  createBrowserRouter,
-  createRoutesFromElements,
+
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +13,8 @@ import { ProtectedRoute, Spinner } from './components';
 import {
   AddNewCompany,
   AddService,
+  AllServices,
+  CompanyDetails,
   CompanyOrders,
   CompanyService,
   ErrorPage,
@@ -22,12 +23,16 @@ import {
   Profile,
   Register,
   ServiceDetails,
-  Services,
+
 } from './pages';
-import { LayoutAdmin, LayoutCompany, LayoutHome } from './layouts';
+import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
 
+
+
 function App() {
+
+
   // dark mode context
   const { isDarkMode } = useContext(DarkModeContext);
 
@@ -39,9 +44,13 @@ function App() {
   const isAdmin = user?.user?.role === 'Admin';
   const isGuest = !isUser && !isCompany && !isAdmin;
 
+
+
+
   // jsx
   return (
-    <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900`}>
+
+    <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
       <ToastContainer />
       <Routes>
         {/* User Routes */}
@@ -53,8 +62,9 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Services />} />
+          <Route index element={<AllServices />} />
           <Route path="service/:id" element={<ServiceDetails />} />
+          <Route path="company/:id" element={<CompanyDetails />} />
           <Route path="join-request" element={<JoinRequest />} />
           <Route
             path="register"
@@ -80,7 +90,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
 
         {/* Dashboard Routes */}
@@ -115,7 +125,9 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
+
   );
 }
+
 
 export default App;

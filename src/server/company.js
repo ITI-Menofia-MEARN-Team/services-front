@@ -51,4 +51,5 @@ const addCategory = async (data, token) => {
   });
   return response.json();
 };
+
 export { getServices, getOrders, addNewExtraProps, addNewService, getCategory, addCategory };

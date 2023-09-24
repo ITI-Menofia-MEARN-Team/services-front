@@ -17,11 +17,10 @@ const Header = () => {
   }, [user]);
 
   const isActiveLink = ({ isActive }) => {
-    return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${
-      isActive
+    return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${isActive
         ? 'font-bold text-purple-600 dark:text-purple-300  before:absolute before:top-[120%] before:w-full before:h-1 before:dark:bg-purple-300 before:bg-purple-600 '
         : 'text-gray-900 dark:text-white  '
-    }`;
+      }`;
   };
 
   // dark mode ?
