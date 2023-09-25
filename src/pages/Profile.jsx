@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 
+
 const Profile = ({ isCompany = false }) => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState({});
@@ -231,6 +232,7 @@ const Profile = ({ isCompany = false }) => {
             ) : null}
           </div>
           <div className="w-full lg:w-2/5">
+
             <label htmlFor="phone" className="text-md">
               رقم الهاتف
             </label>

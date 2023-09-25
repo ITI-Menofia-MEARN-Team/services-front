@@ -79,6 +79,12 @@ const CompanyOrders = () => {
                         <button className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray">
                           رفض
                         </button>
+                        <Link
+                          to={`/dashboard/service/${service._id}/fromService`}
+                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                        >
+                          عرض
+                        </Link>
                       </div>
                     </td>
                   </tr>

@@ -36,6 +36,7 @@ const JoinRequest = () => {
         instagram: Yup.string().url('رابط انستجرام يجب أن يكون رابط صحيح'),
         youtube: Yup.string().url('رابط يوتيوب يجب أن يكون رابط صحيح'),
       }),
+
       image: Yup.mixed()
         .required('برجاء رفع الصوره')
         .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
@@ -55,11 +56,13 @@ const JoinRequest = () => {
       formData.append('username', values.username);
       formData.append('email', values.email);
       formData.append('phone_number', values.phone_number);
+
       // formData.append('image', values.image);
       // Append social_links to the FormData
       Object.keys(values.social_links).forEach((key) => {
         formData.append(`social_links.${key}`, values.social_links[key]);
       });
+
 
       const imageFiles = values.image;
       for (let i = 0; i < imageFiles.length; i++) {
@@ -132,6 +135,7 @@ const JoinRequest = () => {
             <div className="text-red-700 text-md mb-5">{formik.errors.email}</div>
           ) : null}
 
+
           {/* image */}
           <div className="logo flex items-center	mt-3 ">
             <label htmlFor="image" className="text-md font-bold">
@@ -163,6 +167,7 @@ const JoinRequest = () => {
               />
 
               <div>
+
                 {formik.values?.image?.[0] && (
                   <img
                     src={URL.createObjectURL(formik.values?.image?.[0])}

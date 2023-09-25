@@ -3,6 +3,11 @@ const getServices = async (companyID) => {
   return response.json();
 };
 
+const getService = async (companyID) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/service/${companyID}`);
+  return response.json();
+};
+
 const getOrders = async (companyID, token) => {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/order/company/${companyID}`, {
     method: 'GET',
@@ -52,4 +57,5 @@ const addCategory = async (data, token) => {
   return response.json();
 };
 
-export { getServices, getOrders, addNewExtraProps, addNewService, getCategory, addCategory };
+export { getServices, getOrders, addNewExtraProps, addNewService, getCategory, addCategory, getService };
+

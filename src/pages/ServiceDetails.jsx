@@ -4,14 +4,30 @@ import { getSingleService } from '../server/guest';
 import { AuthContext } from '../contexts/Auth';
 import { placeOrder } from '../server/user';
 import { toast } from 'react-toastify';
+import { useFormik } from 'formik'; 
+
 
 const ServiceDetails = () => {
+ 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-
   const { user } = useContext(AuthContext);
-  console.log('user: ', user);
+  const { id , fromService} = useParams();
+  const [service, setService] = useState({});
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+
+  const initialValues = {
+    checkboxValue: false,
+  }
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (values) => {
+      console.log('Checkbox Value:', values.checkboxValue);
+    },
+  });
 
   const handleOrder = () => {
     setLoading(true);
@@ -39,22 +55,17 @@ const ServiceDetails = () => {
           position: toast.POSITION.TOP_LEFT,
         });
       }
-
+ 
       setTimeout(() => setSent(false), 2000);
     });
   };
 
-  const { id } = useParams();
-  console.log('id: ', id);
-  const [service, setService] = useState({});
-  console.log('service: ', service);
 
   useEffect(() => {
     getSingleService(id).then((res) => setService(res.data.service));
   }, []);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  
   const handleClickThumbnail = (index) => {
     setCurrentImageIndex(index);
   };
@@ -80,9 +91,9 @@ const ServiceDetails = () => {
     minute: 'numeric',
     timeZone: 'Africa/Cairo',
   };
-
+ 
   return (
-    <div className="flex min-h-[90vh] items-center justify-center">
+    <div className="flex min-h-[90vh]  justify-center">
       <div className="w-1/2 p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -95,14 +106,36 @@ const ServiceDetails = () => {
         </div>
         <p className="items-center text-gray-600 dark:text-gray-400">{service.description}</p>
         <div className="py-4">
-          {/* <ol>
+          <ol>
             {
-              service && service?.props?.map(prop => <li key={prop._id}>{prop.title}</li>)
+              service && service?.props?.map(prop => <li key={service._id}>{prop}</li>)
             }
-          </ol> */}
+          </ol>
+        </div>
+        <div className="py-4">
+        <table>
+  <tbody>
+    {service &&
+      service?.extra_props?.map((prop, index) => (
+        <tr key={index}>
+          <td className='px-2'>
+            <strong className='font-bold'>الخاصية:</strong> {prop.description}
+          </td>
+          <td className='px-2'>
+            <strong className='font-bold'>السعر:</strong> {prop.price}
+          </td>
+          {!fromService && (
+        <td className='cursor-pointer'>
+          <input className='cursor-pointer' type="checkbox" />
+        </td>
+      )}
+        </tr>
+      ))}
+  </tbody>
+</table>
         </div>
         <div className="flex justify-start items-center gap-4">
-          <button
+          {!fromService && <button
             onClick={handleOrder}
             disabled={loading}
             className="rounded border border-indigo-600 px-12 py-3 text-lg font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500 my-5 flex justify-center items-center gap-3 disabled:bg-indigo-900 disabled:opacity-[0.7] group"
@@ -117,7 +150,7 @@ const ServiceDetails = () => {
             >
               <path d="M20 0v2h-18v18h-2v-20h20zm4 22.15l-1.85 1.85-8.906-9.196 1.85-1.85 8.906 9.196zm-6.718-5.902l-2.188-2.189-.745.746 2.188 2.189.745-.746zm.147 5.752h-11.429v-16h16v11.21l2 2.065v-15.275h-20v20h15.366l-1.937-2zm.86-11.987c.253.825.898 1.471 1.724 1.723-.825.252-1.471.897-1.724 1.723-.251-.826-.897-1.471-1.723-1.723.826-.252 1.472-.898 1.723-1.723zm-8.017 4.243c.333 1.095 1.191 1.951 2.285 2.285-1.094.334-1.952 1.191-2.285 2.285-.335-1.094-1.191-1.951-2.285-2.285 1.095-.334 1.951-1.19 2.285-2.285zm3.138-3.739c.177.584.635 1.041 1.219 1.219-.584.178-1.042.635-1.219 1.219-.179-.584-.636-1.041-1.22-1.219.584-.178 1.041-.635 1.22-1.219z" />
             </svg>
-          </button>
+          </button>}
           {loading && (
             <div className=" flex items-center justify-center">
               <svg

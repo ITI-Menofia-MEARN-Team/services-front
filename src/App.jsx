@@ -89,12 +89,16 @@ function App() {
           }
         >
           <Route index element={<CompanyService />} />
-          <Route path="service/:id" element={<ServiceDetails />} />
+          <Route path="service/:id/:fromService" element={<ServiceDetails />} />
           <Route path="service/edit/:id" element={<AddService />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
-          <Route path="orders/:user" element={<ServiceDetails />} />
+
+          <Route path="orders/:user/:fromOrder" element={<ServiceDetails />} />
+
+//           <Route path="orders/:user" element={<ServiceDetails />} />
           <Route path="profile" element={<Profile isCompany />} />
+
           <Route
             path="add-new-company"
             element={

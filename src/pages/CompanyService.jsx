@@ -79,7 +79,7 @@ const CompanyService = () => {
                     <td className="px-4 py-3">
                       <div className="flex items-center space-x-4 text-sm">
                         <Link
-                          to={`/dashboard/service/${service._id}`}
+                          to={`/dashboard/orders/${service._id}/fromOrder`}
                           className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                         >
                           عرض
