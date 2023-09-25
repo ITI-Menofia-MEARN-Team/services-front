@@ -1,12 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {
-  Navigate,
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,6 +7,8 @@ import { ProtectedRoute, Spinner } from './components';
 import {
   AddNewCompany,
   AddService,
+  AllServices,
+  CompanyDetails,
   CompanyOrders,
   CompanyService,
   ErrorPage,
@@ -22,9 +17,8 @@ import {
   Profile,
   Register,
   ServiceDetails,
-  Services,
 } from './pages';
-import { LayoutAdmin, LayoutCompany, LayoutHome } from './layouts';
+import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
 
 function App() {
@@ -41,7 +35,7 @@ function App() {
 
   // jsx
   return (
-    <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900`}>
+    <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
       <ToastContainer />
       <Routes>
         {/* User Routes */}
@@ -53,8 +47,9 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Services />} />
+          <Route index element={<AllServices />} />
           <Route path="service/:id" element={<ServiceDetails />} />
+          <Route path="company/:id" element={<CompanyDetails />} />
           <Route path="join-request" element={<JoinRequest />} />
           <Route
             path="register"
@@ -80,7 +75,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
 
         {/* Dashboard Routes */}
@@ -98,7 +93,12 @@ function App() {
           <Route path="service/edit/:id" element={<AddService />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
+
           <Route path="orders/:user/:fromOrder" element={<ServiceDetails />} />
+
+//           <Route path="orders/:user" element={<ServiceDetails />} />
+          <Route path="profile" element={<Profile isCompany />} />
+
           <Route
             path="add-new-company"
             element={

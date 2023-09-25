@@ -15,7 +15,7 @@ const JoinRequest = () => {
     initialValues: {
       full_name: '',
       email: '',
-      picture: '',
+      image: '',
       phone_number: '',
       username: '',
       social_links: {
@@ -36,7 +36,8 @@ const JoinRequest = () => {
         instagram: Yup.string().url('رابط انستجرام يجب أن يكون رابط صحيح'),
         youtube: Yup.string().url('رابط يوتيوب يجب أن يكون رابط صحيح'),
       }),
-      picture: Yup.mixed()
+
+      image: Yup.mixed()
         .required('برجاء رفع الصوره')
         .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
           if (file) {
@@ -55,15 +56,17 @@ const JoinRequest = () => {
       formData.append('username', values.username);
       formData.append('email', values.email);
       formData.append('phone_number', values.phone_number);
-      // formData.append('picture', values.picture);
+
+      // formData.append('image', values.image);
       // Append social_links to the FormData
       Object.keys(values.social_links).forEach((key) => {
         formData.append(`social_links.${key}`, values.social_links[key]);
       });
 
-      const imageFiles = values.picture;
+
+      const imageFiles = values.image;
       for (let i = 0; i < imageFiles.length; i++) {
-        formData.append('picture', imageFiles[i]);
+        formData.append('image', imageFiles[i]);
       }
 
       console.log('formData: ', formData);
@@ -132,14 +135,15 @@ const JoinRequest = () => {
             <div className="text-red-700 text-md mb-5">{formik.errors.email}</div>
           ) : null}
 
-          {/* Picture */}
+
+          {/* image */}
           <div className="logo flex items-center	mt-3 ">
-            <label htmlFor="picture" className="text-md font-bold">
+            <label htmlFor="image" className="text-md font-bold">
               شعار
             </label>
-            <label htmlFor="picture" className="flex gap-2 items-center  ">
+            <label htmlFor="image" className="flex gap-2 items-center  ">
               <label
-                htmlFor="picture"
+                htmlFor="image"
                 className=" py-2  font-medium leading-5  transition-colors     border border-transparent rounded-md   focus:outline-none   px-4 mr-6 cursor-pointer placeholder: ease-in duration-300
                 hover:text-purple-600 
                  focus:border-purple-400 
@@ -153,26 +157,27 @@ const JoinRequest = () => {
               </label>
               <input
                 onChange={(event) => {
-                  formik.setFieldValue('picture', event.currentTarget.files);
+                  formik.setFieldValue('image', event.currentTarget.files);
                 }}
                 type="file"
-                id="picture"
-                name="picture"
+                id="image"
+                name="image"
                 accept="image/*"
                 className="hidden"
               />
 
               <div>
-                {formik.values?.picture?.[0] && (
+
+                {formik.values?.image?.[0] && (
                   <img
-                    src={URL.createObjectURL(formik.values?.picture?.[0])}
+                    src={URL.createObjectURL(formik.values?.image?.[0])}
                     className="w-10 h-10 rounded object-cover"
                   />
                 )}
               </div>
             </label>
-            {formik.touched.picture && formik.errors.picture ? (
-              <div className="text-red-700 text-md mb-5">{formik.errors.picture}</div>
+            {formik.touched.image && formik.errors.image ? (
+              <div className="text-red-700 text-md mb-5">{formik.errors.image}</div>
             ) : null}
           </div>
           {/* Phone Number */}
