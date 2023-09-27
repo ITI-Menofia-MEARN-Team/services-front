@@ -3,9 +3,17 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import { AuthContext } from '../contexts';
-import { addCategory, addNewExtraProps, addNewService, getCategory, getService } from '../server/company';
+import {
+  addCategory,
+  addNewExtraProps,
+  addNewService,
+  editService,
+  getCategory,
+  getImage,
+  getService,
+} from '../server/company';
 import { Spinner } from '../components';
-import {useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const BehaviorButton = ({ classes, svg, color, onClick, disabled, type, ...props }) => (
   <button
@@ -24,7 +32,7 @@ const AddService = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [descArray, setDescArray] = useState(['']);
-  const [descPlusArray, setDescPlusArray] = useState(['']);
+  const [descPlusArray, setDescPlusArray] = useState([{ price: '', description: '' }]);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const token = user ? user.token : null;
@@ -33,17 +41,18 @@ const AddService = () => {
   const [categories, setCategories] = useState([]);
   const [showInput, setShowInput] = useState(false);
   const [formInfo, setFormInfo] = useState(false);
-  const [toChange, setToChange] = useState(true);
+  const [blob, setBlob] = useState('');
   let { id } = useParams();
-  
- 
+
   const toggleCategory = () => {
     setShowInput(!showInput);
     formik.setFieldValue('category', '');
   };
 
   useEffect(() => {
-   fetch("http://localhost:8000/uploads/service/service-1694891411207.jpeg").then((response) => {console.log(response)})
+    getImage('service/service-1694891411207.jpeg').then((response) => {
+      setBlob(response);
+    });
     getCategory()
       .then((data) => {
         const categoriesArray = data.data.categories;
@@ -52,39 +61,54 @@ const AddService = () => {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-      if (id) {
-        getService(id)
-          .then((data) => {
-            let newFormInfo = data.data.service;
-            setFormInfo(newFormInfo)
-            formik.setValues({
-              title: newFormInfo.title || '', 
-              description: newFormInfo.description || '',
-              price: newFormInfo.price || '',
-              category:  newFormInfo.category._id || '', 
-            });
-            newFormInfo.extra_props.length && setDescPlusArray(newFormInfo.extra_props)
-            newFormInfo.props.length && setDescArray(newFormInfo.props)
-            console.log(newFormInfo);
-            // const imageUrlsArray = newFormInfo.images.map((image) => image.url);
-            // setSelectedImages(imageUrlsArray);
-      
-              
+    if (id) {
+      getService(id)
+        .then((data) => {
+          let newFormInfo = data.data.service;
+          setFormInfo(newFormInfo);
+          const old_extra = newFormInfo.extra_props.map((prop) => ({
+            price: prop.price,
+            description: prop.description,
+          }));
 
-          })
-          .catch((error) => {
-            console.error('Error fetching data:', error);
+          console.log('old', old_extra);
+          newFormInfo.extra_props.length && setDescPlusArray(old_extra);
+          newFormInfo.props.length && setDescArray(newFormInfo.props);
+          console.log(newFormInfo);
+          formik.setValues({
+            title: newFormInfo.title || '',
+            description: newFormInfo.description || '',
+            price: newFormInfo.price || '',
+            category: newFormInfo.category._id || '',
+            descPlusArray: old_extra,
+            descArray: newFormInfo.props,
           });
-        }
-      }
 
-  , [id]);
+          // const imageUrlsArray = newFormInfo.images.map((image) => image.url);
+          // setSelectedImages(imageUrlsArray);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    } else {
+      formik.setValues({
+        title: '',
+        description: '',
+        descArray: descArray,
+        descPlusArray: descPlusArray,
+        price: '',
+        images: selectedImages,
+        category: '',
+      });
+    }
+  }, [id]);
+
   const formik = useFormik({
     initialValues: {
-      title: '' ,
+      title: '',
       description: '',
       descArray: descArray,
-      descPlusArray: [{ price: '', description: '' }],
+      descPlusArray: descPlusArray,
       price: '',
       images: selectedImages,
       category: '',
@@ -100,6 +124,7 @@ const AddService = () => {
           : [];
       values.props = values.descArray.map((item) => item);
       values.images = selectedImages;
+      console.log({ values });
       handleSubmit(values);
       setLoading(true);
       setMessage(`success`);
@@ -125,7 +150,9 @@ const AddService = () => {
   const handleRemoveDescArray = (index) => {
     const updatedDescArray = [...descArray];
     updatedDescArray.splice(index, 1);
+
     setDescArray(updatedDescArray);
+    formik.setFieldValue(`descArray`, updatedDescArray);
   };
 
   const handleAddDescriptionPlus = () => {
@@ -136,6 +163,7 @@ const AddService = () => {
     const updatedDescPlusArray = [...descPlusArray];
     updatedDescPlusArray.splice(index, 1);
     setDescPlusArray(updatedDescPlusArray);
+    formik.setFieldValue(`descPlusArray`, updatedDescPlusArray);
   };
 
   const handleFileChange = (event) => {
@@ -148,7 +176,7 @@ const AddService = () => {
     updatedImages.splice(index, 1);
     setSelectedImages(updatedImages);
   };
-  const   handleSubmit = async (values) => {
+  const handleSubmit = async (values) => {
     try {
       let extraPropsResponse;
       console.log('values.extra_props: ', values.extra_props);
@@ -172,7 +200,8 @@ const AddService = () => {
       formData.append('price', 500);
       // extraPropsResponse && formData.append('extra_props', extraProps);
       formData.append('category', categoryId);
-      formData.append('company', companyId);  
+      formData.append('company', companyId);
+      formData.append('images', blob);
       const imageFiles = values.images;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('images', imageFiles[i]);
@@ -187,8 +216,8 @@ const AddService = () => {
         formData.append('extra_props[]', extraProps[i]);
       }
 
-      console.log(formData)
-      const serviceResponse = await addNewService(formData, token);
+      console.log(formData);
+      const serviceResponse = id ? await editService(formData, token, id) : await addNewService(formData, token);
       console.log(serviceResponse);
       setLoading(false);
       setMessage('success');
@@ -234,40 +263,48 @@ const AddService = () => {
 
             {/* category */}
             <div className="flex  gap-3 my-2">
-              {id? formInfo && <Select
-                onChange={(selectedOption) => formik.setFieldValue('category', selectedOption?.value)}
-                className={`w-3/5 ${showInput ? 'hidden' : ''}  placeholder:dark:text-white`}
-                classNamePrefix="
+              {id ? (
+                formInfo && (
+                  <Select
+                    onChange={(selectedOption) => formik.setFieldValue('category', selectedOption?.value)}
+                    className={`w-3/5 ${showInput ? 'hidden' : ''}  placeholder:dark:text-white`}
+                    classNamePrefix="
                                 
                "
-                classNames={'dark:placeholder:text-red-500'}
-                placeholder="اختار تصنيف"
-                defaultValue={{value:formInfo?.category?._id , label:formInfo?.category?.name }}
-                isDisabled={loading || showInput}
-                isLoading={false}
-                isClearable
-                isRtl
-                isSearchable
-                id="category"
-                name="category"               
-                options={categories && categories.map((category) => ({ value: category._id, label: category.name }))}
-              />: <Select
-              onChange={(selectedOption) => formik.setFieldValue('category', selectedOption?.value)}
-              className={`w-3/5 ${showInput ? 'hidden' : ''}  placeholder:dark:text-white`}
-              classNamePrefix="
+                    classNames={'dark:placeholder:text-red-500'}
+                    placeholder="اختار تصنيف"
+                    defaultValue={{ value: formInfo?.category?._id, label: formInfo?.category?.name }}
+                    isDisabled={loading || showInput}
+                    isLoading={false}
+                    isClearable
+                    isRtl
+                    isSearchable
+                    id="category"
+                    name="category"
+                    options={
+                      categories && categories.map((category) => ({ value: category._id, label: category.name }))
+                    }
+                  />
+                )
+              ) : (
+                <Select
+                  onChange={(selectedOption) => formik.setFieldValue('category', selectedOption?.value)}
+                  className={`w-3/5 ${showInput ? 'hidden' : ''}  placeholder:dark:text-white`}
+                  classNamePrefix="
                               
              "
-              classNames={'dark:placeholder:text-red-500'}
-              placeholder="اختار تصنيف"
-              isDisabled={loading || showInput}
-              isLoading={false}
-              isClearable
-              isRtl
-              isSearchable
-              id="category"
-              name="category"               
-              options={categories && categories.map((category) => ({ value: category._id, label: category.name }))}
-            />}
+                  classNames={'dark:placeholder:text-red-500'}
+                  placeholder="اختار تصنيف"
+                  isDisabled={loading || showInput}
+                  isLoading={false}
+                  isClearable
+                  isRtl
+                  isSearchable
+                  id="category"
+                  name="category"
+                  options={categories && categories.map((category) => ({ value: category._id, label: category.name }))}
+                />
+              )}
 
               {showInput && (
                 <input
@@ -293,34 +330,19 @@ const AddService = () => {
             </div>
 
             {/* props */}
-            {descArray.map((desc, index) => (
-              <div className="flex gap-2 my-2" key={`descArray-${index}`}>
-                <input
-                  id={`descArray-${index}`}
-                  name={`descArray[${index}]`}
-                  placeholder=" وصف الخاصية"
-                  disabled={loading}
-                  onChange={(event) => {
-                    const updatedDescArray = [...formik.values.descArray];
-                    updatedDescArray[index] = event.target.value;
-
-                    formik.setFieldValue('descArray', updatedDescArray);
-                  }}
-                 
-                  {...(id ? { value: desc } : {})}
-                  className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
-                />
-
-                {index === 0 ? (
-                  <BehaviorButton
-                    color={'purple'}
-                    onClick={handleAddDescArray}
+            {descArray.map((desc, index) => {
+              return (
+                <div className="flex gap-2 my-2" key={`descArray-${index}`}>
+                  <input
+                    id={`descArray-${index}`}
+                    name={`descArray[${index}]`}
+                    placeholder=" وصف الخاصية"
                     disabled={loading}
-                    type="button"
-                    svg={'+'}
+                    {...formik.getFieldProps(`descArray[${index}]`)}
+                    className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2 "
                   />
-                ) : (
-                  <>
+
+                  {index === 0 ? (
                     <BehaviorButton
                       color={'purple'}
                       onClick={handleAddDescArray}
@@ -328,17 +350,27 @@ const AddService = () => {
                       type="button"
                       svg={'+'}
                     />
-                    <BehaviorButton
-                      color={'red'}
-                      onClick={() => handleRemoveDescArray(index)}
-                      disabled={loading}
-                      type="button"
-                      svg={'x'}
-                    />
-                  </>
-                )}
-              </div>
-            ))}
+                  ) : (
+                    <>
+                      <BehaviorButton
+                        color={'purple'}
+                        onClick={handleAddDescArray}
+                        disabled={loading}
+                        type="button"
+                        svg={'+'}
+                      />
+                      <BehaviorButton
+                        color={'red'}
+                        onClick={() => handleRemoveDescArray(index)}
+                        disabled={loading}
+                        type="button"
+                        svg={'x'}
+                      />
+                    </>
+                  )}
+                </div>
+              );
+            })}
 
             {/* extra_props */}
             {descPlusArray.map((item, index) => (
@@ -351,17 +383,16 @@ const AddService = () => {
                     disabled={loading}
                     {...formik.getFieldProps(`descPlusArray[${index}].description`)}
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
-                    {...(id && toChange ? { value: item.description } : {})}
-                    onChange={(e) => {
-                    if(toChange){
-                      e.target.removeAttribute('value');
-                    }else{
-                      e.target.setAttribute('value', e.target.value);
-                    }
-                      setToChange(false)
-                    }}
-                    
-                    />
+                    // {...(id && toChange ? { value: item.description } : {})}
+                    // onChange={(e) => {
+                    //   if (toChange) {
+                    //     e.target.removeAttribute('value');
+                    //   } else {
+                    //     e.target.setAttribute('value', e.target.value);
+                    //   }
+                    //   setToChange(false);
+                    // }}
+                  />
                   {formik.touched[`descPlusArray[${index}].description`] &&
                   formik.errors[`descPlusArray[${index}].description`] ? (
                     <div className="h-6 text-xs text-red-600 dark:text-red-400">
@@ -379,9 +410,8 @@ const AddService = () => {
                     disabled={loading}
                     {...formik.getFieldProps(`descPlusArray[${index}].price`)}
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
-                   
                     {...(id ? { value: item.price } : {})}
-                    />
+                  />
                 </div>
                 {index === 0 ? (
                   <BehaviorButton
@@ -441,20 +471,20 @@ const AddService = () => {
 
               <div className="flex gap-2">
                 {selectedImages.map((image, index) => (
-                  <div className='flex flex-col gap-1'>
-
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(image)}
-                    alt={`Image ${index}`}
-                    className="w-10 h-10 rounded object-cover"
-                  />
-                  <button type='button'
-        onClick={() => handleRemoveImage(index)} 
-        className=" text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red px-4 cursor-pointer  h-2/6"
-      >
-        x
-      </button>
+                  <div className="flex flex-col gap-1">
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(image)}
+                      alt={`Image ${index}`}
+                      className="w-10 h-10 rounded object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(index)}
+                      className=" text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red px-4 cursor-pointer  h-2/6"
+                    >
+                      x
+                    </button>
                   </div>
                 ))}
               </div>
@@ -479,14 +509,14 @@ const AddService = () => {
             </div>
 
             <div>
-            <input
-                    id={`price`}
-                    name={`price`}
-                    placeholder=" سعر الخدمه"
-                    disabled={loading}
-                    {...formik.getFieldProps(`price`)}
-                    className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
-                  />
+              <input
+                id={`price`}
+                name={`price`}
+                placeholder=" سعر الخدمه"
+                disabled={loading}
+                {...formik.getFieldProps(`price`)}
+                className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
+              />
             </div>
 
             {/* submit */}
