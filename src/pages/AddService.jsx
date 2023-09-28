@@ -41,7 +41,7 @@ const AddService = () => {
   const [categories, setCategories] = useState([]);
   const [showInput, setShowInput] = useState(false);
   const [formInfo, setFormInfo] = useState(false);
-  const [blob, setBlob] = useState('');
+  const [renderdImgs, setRenderdImgs] = useState([]);
   let { id } = useParams();
 
   const toggleCategory = () => {
@@ -50,9 +50,9 @@ const AddService = () => {
   };
 
   useEffect(() => {
-    getImage('service/service-1694891411207.jpeg').then((response) => {
-      setBlob(response);
-    });
+    // getImage('service/service-1694891411207.jpeg').then((response) => {
+    //   setBlob(response);
+    // });
     getCategory()
       .then((data) => {
         const categoriesArray = data.data.categories;
@@ -84,8 +84,15 @@ const AddService = () => {
             descArray: newFormInfo.props,
           });
 
-          // const imageUrlsArray = newFormInfo.images.map((image) => image.url);
-          // setSelectedImages(imageUrlsArray);
+          const imageUrlsArray = newFormInfo.images.map(async (image) => {
+            console.log(renderdImgs);
+            if (!renderdImgs.includes(image)) {
+              const res = await getImage(`service/${image}`);
+              setSelectedImages((prev) => [...prev, res]);
+              setRenderdImgs(image);
+            }
+          });
+          console.log(selectedImages);
         })
         .catch((error) => {
           console.error('Error fetching data:', error);
@@ -201,7 +208,7 @@ const AddService = () => {
       // extraPropsResponse && formData.append('extra_props', extraProps);
       formData.append('category', categoryId);
       formData.append('company', companyId);
-      formData.append('images', blob);
+      // formData.append('images', blob);
       const imageFiles = values.images;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('images', imageFiles[i]);

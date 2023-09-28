@@ -67,14 +67,14 @@ const addCategory = async (data, token) => {
   return response.json();
 };
 
-const getImage = async (path) => {
+const getImage = async (newPath) => {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/image/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      path: 'service/service-1694891411207.jpeg',
+      path: newPath,
     }),
   });
   console.log(response);
