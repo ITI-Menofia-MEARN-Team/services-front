@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../contexts/Auth';
 import { getOrders } from '../server/company';
+import { Link } from 'react-router-dom';
+import defaultImage from '../assets/service.png';
 
 const CompanyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -47,7 +49,7 @@ const CompanyOrders = () => {
                         <div className="relative hidden w-12 h-12 ml-3  md:block">
                           <img
                             className="object-cover w-full h-full rounded-full"
-                            src={order.user?.picture ? `http://localhost:8000/${order.user?.picture}` : defaultImage}
+                            src={order.user?.image ? `http://localhost:8000/uploads/user/${order.user?.image?.[0]}` : defaultImage}
                             alt=""
                             loading="lazy"
                           />
@@ -80,7 +82,7 @@ const CompanyOrders = () => {
                           رفض
                         </button>
                         <Link
-                          to={`/dashboard/service/${service._id}/fromService`}
+                          to={`/dashboard/service/${order?.service?._id}/fromService`}
                           className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                         >
                           عرض

@@ -33,10 +33,17 @@ function App() {
   const isAdmin = user?.user?.role === 'Admin';
   const isGuest = !isUser && !isCompany && !isAdmin;
 
+
+  if (!user?.user) return (
+    <div className='h-screen w-screen flex justify-between items-center ' >
+      <Spinner />
+    </div>
+  )
+
   // jsx
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
-      <ToastContainer />
+      < ToastContainer />
       <Routes>
         {/* User Routes */}
         <Route
@@ -113,7 +120,7 @@ function App() {
         {/* Redirect to Home for unmatched routes */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </div>
+    </div >
   );
 }
 

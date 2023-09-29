@@ -41,7 +41,7 @@ const Login = () => {
     onSubmit: (values) => {
       console.log(values);
       setLoading(true);
-      logInUser('http://localhost:8000/auth/login', values)
+      logInUser(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, values)
         .then((res) => {
           console.log('res: ', res);
           if (res.errors) {
