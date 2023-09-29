@@ -53,7 +53,7 @@ const CompanyService = () => {
                             className="object-cover w-full h-full rounded-full"
                             src={
                               service.images[0]
-                                ? `http://localhost:8000/uploads/service/${service.images[0]}`
+                                ? `${import.meta.env.VITE_API_BASE_URL}/uploads/service/${service.images[0]}`
                                 : defaultImage
                             }
                             alt=""
