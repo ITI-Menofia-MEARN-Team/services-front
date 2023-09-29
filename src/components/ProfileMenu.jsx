@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/Auth';
 import { toast } from 'react-toastify';
+import { getUserProfileData } from '../server/user';
 
 const ProfileMenu = () => {
   // route
@@ -17,12 +18,24 @@ const ProfileMenu = () => {
   const isCompany = user?.user?.role === 'Company';
   const isAdmin = user?.user?.role === 'Admin';
 
+  const [userProfile, setUserProfile] = useState({});
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const response = await getUserProfileData(user?.user?.id, user?.token);
+      console.log("🚀 ~ file: ProfileMenu.jsx:24 ~ getUserData ~ response:", response)
+      setUserProfile(response?.data?.user)
+    }
+    getUserData();
+
+  }, [user])
+
   return (
     <>
       <button onClick={toggleMenu} className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
         <img
           className="object-cover w-10 h-10 rounded-full"
-          src={`http://localhost:8000/uploads/user/profie.jpg`}
+          src={userProfile?.image?.[0] ? `${import.meta.env.VITE_API_BASE_URL}/uploads/user/${userProfile?.image?.[0]}` : `${import.meta.env.VITE_API_BASE_URL}/uploads/user/profie.jpg`}
           alt=""
         />
       </button>
@@ -44,7 +57,7 @@ const ProfileMenu = () => {
               >
                 <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
-              <span>{user?.user?.full_name}</span>
+              <span>{userProfile?.full_name}</span>
             </Link>
           </li>
 

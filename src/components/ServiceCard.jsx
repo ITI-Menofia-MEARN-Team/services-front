@@ -14,11 +14,11 @@ const ServiceCard = ({ service }) => {
         <div className="flex justify-between items-center my-2">
           <h6 className="text-gray-600 dark:text-gray-400 text-sm">{service.category?.name}</h6>
           <Link to={`/company/${service.company?._id}`} className="text-blue-800 cursor-pointer text-sm">
-            {service.company?.full_name.slice(0, 20)}..
+            {service.company?.full_name.slice(0, 30)}..
           </Link>
         </div>
         <h2 className="font-bold text-lg">{service.title}</h2>
-        <p className="text-gray-600 dark:text-gray-400 text-sm ">{service.description.slice(0, 50)}.....</p>
+        <p className="text-gray-600 dark:text-gray-400 text-sm ">{service.description.slice(0, 100)}.....</p>
         <Link to={`/service/${service._id}`} className="absolute bottom-1 left-2 ">
           <button className=" px-3 py-2 flex items-center justify-center gap-2 rounded bg-indigo-600 text-md font-medium transition hover:scale-105 text-white">
             <span> المزيد</span>

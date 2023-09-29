@@ -10,7 +10,8 @@ import { toast } from 'react-toastify';
 
 const Profile = ({ isCompany = false }) => {
   const [loading, setLoading] = useState(false);
-  const [profileData, setProfileData] = useState({});
+  const [profileData, setProfileData] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -18,19 +19,20 @@ const Profile = ({ isCompany = false }) => {
     const getProfile = async () => {
       const response = user && (await getUserProfileData(user?.user?.id, user?.token));
       setProfileData(response?.data?.user);
-      console.log('🚀 ~ file: Profile.jsx:8 ~ Profile ~ profileData:', profileData);
+      console.log('🚀 ~ file: Profile.jsx:8 ~ Profile ~ profileData:', response?.data?.user);
 
-      // profileForm.setFieldValue('full_name', response?.data?.user.full_name);
-      // // profileForm.setFieldValue('email', response?.data?.user.email);
-      // profileForm.setFieldValue('phone_number', response?.data?.user.phone_number);
-      // // profileForm.setFieldValue('username', response?.data?.user.username);
-      // profileForm.setFieldValue('social_links.facebook', response?.data?.user.social_links?.facebook);
-      // profileForm.setFieldValue('social_links.twitter', response?.data?.user.social_links?.twitter);
-      // profileForm.setFieldValue('social_links.instagram', response?.data?.user.social_links?.instagram);
-      // profileForm.setFieldValue('social_links.youtube', response?.data?.user.social_links?.youtube);
+      profileForm.setFieldValue('full_name', response?.data?.user.full_name);
+      profileForm.setFieldValue('email', response?.data?.user.email);
+      profileForm.setFieldValue('phone_number', response?.data?.user.phone_number);
+      profileForm.setFieldValue('username', response?.data?.user.username);
+      profileForm.setFieldValue('social_links.facebook', response?.data?.user.social_links?.facebook);
+      profileForm.setFieldValue('social_links.twitter', response?.data?.user.social_links?.twitter);
+      profileForm.setFieldValue('social_links.instagram', response?.data?.user.social_links?.instagram);
+      profileForm.setFieldValue('social_links.youtube', response?.data?.user.social_links?.youtube);
     };
     getProfile();
-  }, [user]);
+
+  }, [user, success]);
 
   const options = {
     year: 'numeric',
@@ -97,11 +99,15 @@ const Profile = ({ isCompany = false }) => {
       });
 
       const imageFiles = values.image;
-      for (let i = 0; i < imageFiles.length; i++) {
-        imageFiles[i] && formData.append('image', imageFiles[i]);
+
+
+      if (imageFiles) {
+        for (let i = 0; i < imageFiles.length; i++) {
+          imageFiles[i] && imageFiles[i] && formData.append('image', imageFiles[i]);
+        }
       }
 
-      console.log('formData: ', formData);
+      console.log('formData: ', formData.getAll('image'));
 
       updateUserProfile(formData, user?.token, user?.user?.id)
         .then((res) => {
@@ -113,15 +119,22 @@ const Profile = ({ isCompany = false }) => {
               })
             );
           }
-          if (res.status === 'failed') {
+          else if (res.status === 'failed') {
             toast.error(res.message, {
               position: toast.POSITION.TOP_LEFT,
             });
           }
-          if (res.data) {
-            toast.success('تم ارسال طلبك بنجاح', {
+          else if (res.data) {
+            toast.success('تم تغير البيانات بنجاح', {
               position: toast.POSITION.TOP_LEFT,
             });
+            setSuccess(!success);
+          }
+          else {
+            toast.success('تم تغير البيانات بنجاح', {
+              position: toast.POSITION.TOP_LEFT,
+            });
+            setSuccess(!success);
           }
           setLoading(false);
         })
@@ -135,7 +148,11 @@ const Profile = ({ isCompany = false }) => {
     },
   });
 
-  if (!profileData) return <Spinner />;
+  if (!profileData) return (
+    <div className='h-[90vh] w-full flex justify-between items-center ' >
+      <Spinner />
+    </div>
+  )
 
   return (
     <form
@@ -143,17 +160,17 @@ const Profile = ({ isCompany = false }) => {
       onSubmit={profileForm.handleSubmit}
       className="profile flex flex-col lg:flex-row gap-3 justify-evenly p-5 bg-gray-100 min-h-[91vh] dark:bg-gray-900 "
     >
-      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-4 md:mb-0">
+      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-2 ">
         <h3 className="userName mb-5  font-bold text-2xl"> {profileData.full_name} </h3>
         <p className="mb-4 text-sm">{profileData.username}@</p>
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 ">
           <img
             src={
               (profileForm.values?.image && URL.createObjectURL(profileForm.values?.image?.[0])) ||
-              `${import.meta.env.VITE_API_BASE_URL}/${profileData.picture}`
+              `${import.meta.env.VITE_API_BASE_URL}/uploads/user/${profileData.image?.[0]}`
             }
             alt=""
-            className="w-[70%] mx-auto"
+            className="w-56 h-56 md:w-20 md:h-20  mx-auto rounded-full"
           />
         </div>
 
@@ -195,7 +212,7 @@ const Profile = ({ isCompany = false }) => {
         </p>
       </div>
       {/* section - 2 */}
-      <div className="edit-info info px-10 py-7 w-full   lg:w-4/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
+      <div className="edit-info info px-10 py-3 w-full   lg:w-4/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
         <h1 className=" font-bold text-lg">{isCompany ? ' تعديل بيانات الشركة' : '    تعديل الملف الشخصي'}</h1>
         <div className="form w-full flex flex-wrap flex-col lg:flex-row justify-between  py-8 mb-8 bg-white rounded-lg  dark:bg-gray-800  dark:text-gray-300">
           <div className="w-full lg:w-2/5">
@@ -216,12 +233,12 @@ const Profile = ({ isCompany = false }) => {
               <div className="text-red-700 text-md mb-5">{profileForm.errors.username}</div>
             ) : null}
           </div>
-          <div className="w-full lg:w-2/5">
+          {/* <div className="w-full lg:w-2/5">
             <label htmlFor="password" className="text-md">
               الرقم السري
             </label>
             <input id="password" type="password" className={inputClasses} />
-          </div>
+          </div> */}
           <div className="w-full lg:w-2/5">
             <label htmlFor="email" className="text-md">
               البريد الالكترونى

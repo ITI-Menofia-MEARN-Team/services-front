@@ -25,4 +25,10 @@ const addJoinRequest = async (data) => {
   return response.json();
 };
 
-export { getAllServices, getAllCategories, getSingleService, addJoinRequest };
+//
+const searchForServicesOrCompanies = async (search) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/search?search=${search}`);
+  return response.json();
+};
+
+export { getAllServices, getAllCategories, getSingleService, addJoinRequest, searchForServicesOrCompanies };

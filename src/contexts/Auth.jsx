@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 // Create the Auth Context
 export const AuthContext = createContext();
 
+
+// 
+const initialValue = { user: { role: 'guest' } }
+
 // Create the Auth Provider Component
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -11,7 +15,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const cashedUser = JSON.parse(localStorage.getItem('user'));
     if (cashedUser) setUser(cashedUser);
-    else setUser(null);
+    else setUser(initialValue);
   }, []);
 
   // Function to log in the user
@@ -23,7 +27,7 @@ const AuthProvider = ({ children }) => {
   // Function to log out the user
   const logout = () => {
     localStorage.removeItem('user');
-    setUser(null);
+    setUser(initialValue);
   };
 
   // Provide the auth context values to the children components
