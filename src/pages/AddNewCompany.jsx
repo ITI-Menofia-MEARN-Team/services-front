@@ -12,19 +12,14 @@ const AddNewCompany = () => {
     initialValues: {
       full_name: '',
       email: '',
-      image: '',
+      password: '',
       phone_number: '',
       username: '',
-      social_links: {
-        facebook: '',
-        twitter: '',
-        instagram: '',
-        youtube: '',
-      },
     },
     validationSchema: Yup.object({
       full_name: Yup.string().min(3, 'الاسم يجب ان يحتوي علي 3 احرف او اكثر').required('مطلوب'),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').required('مطلوب'),
+      password: Yup.string().required('مطلوب'),
       phone_number: Yup.string().required('مطلوب'),
       username: Yup.string().required('مطلوب'),
     }),
@@ -35,6 +30,7 @@ const AddNewCompany = () => {
       formData.append('full_name', values.full_name);
       formData.append('username', values.username);
       formData.append('email', values.email);
+      formData.append('email', values.password);
       formData.append('phone_number', values.phone_number);
 
       console.log('formData: ', formData);
@@ -71,73 +67,72 @@ const AddNewCompany = () => {
     },
   });
 
+  const inputClasses =
+    ' text-md text-purple-500 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-purple-500 dark:focus:shadow-outline-gray form-input bg-gray-100 mt-2';
+
+
+
   return (
     <div className="mt-10">
-      <div className="form w-full p-8 flex flex-wrap flex-col md:flex-row justify-evenly  py-8 mb-8 bg-white rounded-lg  dark:bg-gray-800  dark:text-gray-300">
-        <div className="w-full md:w-2/5 mb-3">
-          <label htmlFor="fullName" className="text-md">
+      <div className="form w-full p-8 flex flex-wrap flex-col md:flex-row gap-x-5  py-8  bg-white rounded-lg  dark:bg-gray-800  dark:text-gray-300">
+
+        {/* full_name */}
+        <div className="w-full md:w-2/5 mb-5 flex flex-col">
+          <label htmlFor="name" className="text-md">
             اسم الشركة
           </label>
-          <input
-            id="fullName"
-            type="text"
-            className="block w-full  placeholder: text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input bg-gray-100 my-3"
-          />
+          <input {...formik.getFieldProps('full_name')} id="name" type="text" className={inputClasses} />
+          {formik.touched.full_name && formik.errors.full_name ? (
+            <div className="text-red-700 text-md mb-5">{formik.errors.full_name}</div>
+          ) : null}
         </div>
-        <div className="w-full md:w-2/5 mb-3">
-          <label htmlFor="userName" className="text-md">
+        {/* username */}
+        <div className='w-full md:w-2/5 mb-5 flex flex-col'>
+          <label htmlFor="name" className="text-md ">
             اسم المستخدم
           </label>
-          <input
-            id="userName"
-            type="text"
-            className="block w-full  placeholder: text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input bg-gray-100 my-3 "
-          />
+          <input {...formik.getFieldProps('username')} id="username" type="text" className={inputClasses} />
+          {formik.touched.username && formik.errors.username ? (
+            <div className="text-red-700 text-md mb-5">{formik.errors.username}</div>
+          ) : null}
         </div>
-        <div className="w-full md:w-2/5 mb-3">
-          <label htmlFor="password" className="text-md">
+
+        {/* Email */}
+        <div className="w-full md:w-2/5 mb-5 flex flex-col">
+          <label htmlFor="email" className="text-md ">
+            بريد الكتروني
+          </label>
+          <input {...formik.getFieldProps('email')} id="email" type="email" className={inputClasses} />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="text-red-700 text-md mb-5">{formik.errors.email}</div>
+          ) : null}
+        </div>
+
+        {/* Password */}
+        <div className="w-full md:w-2/5 mb-5 flex flex-col">
+          <label htmlFor="password" className="text-md ">
             الرقم السري
           </label>
-          <input
-            id="password"
-            type="password"
-            className="block w-full  placeholder: text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input bg-gray-100 my-3 "
-          />
+          <input {...formik.getFieldProps('password')} id="password" type="password" className={inputClasses} />
+          {formik.touched.password && formik.errors.password ? (
+            <div className="text-red-700 text-md mb-5">{formik.errors.password}</div>
+          ) : null}
         </div>
-        <div className="w-full md:w-2/5 mb-3">
-          <label htmlFor="email" className="text-md">
-            البريد الالكترونى
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="block w-full  placeholder: text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input bg-gray-100 my-3 "
-          />
-        </div>
-        <div className="w-full md:w-2/5 mb-3">
-          <label htmlFor="phone" className="text-md">
+
+        {/* Phone Number */}
+        <div className="w-full md:w-2/5 mb-5 flex flex-col">
+          <label htmlFor="phone_number" className=" text-md">
             رقم الهاتف
           </label>
-          <input
-            id="phone"
-            type="text"
-            className="block w-full  placeholder: text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input bg-gray-100 my-3 "
-          />
+          <input {...formik.getFieldProps('phone_number')} id="phone_number" type="text" className={inputClasses} />
+          {formik.touched.phone_number && formik.errors.phone_number ? (
+            <div className="text-red-700 text-md mb-5">{formik.errors.phone_number}</div>
+          ) : null}
         </div>
-        {/* <div className="w-full md:w-2/5 mb-1  self-end ">
-          <label htmlFor="picture" className="flex gap-2 items-center">
-            <label
-              htmlFor="picture"
-              className="py-2 mb-5 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple px-4 cursor-pointer"
-            >
-              شعار الشركة
-            </label>
-            <input type="file" id="picture" name="images" accept="image/*" className="hidden" multiple />
-          </label>
-        </div> */}
+
       </div>
-      <button className="py-2 mb-4 font-medium leading-5 transition-colors border border-transparent rounded-md focus:outline-none px-4  cursor-pointer placeholder:ease-in duration-300 hover:text-purple-600 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600 text-md">
-        أضف شركة
+      <button className="w-80 py-2 px-5 my-4 font-medium leading-5 transition-colors border border-transparent rounded-md focus:outline-none   cursor-pointer placeholder:ease-in duration-300 hover:text-purple-600 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600 text-xl">
+        إضافة شركة
       </button>
     </div>
   );

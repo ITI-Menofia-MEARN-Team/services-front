@@ -1,12 +1,13 @@
 import React from 'react';
 
 const Hero = ({ company }) => {
+  console.log('company: ', company);
   return (
     <div className="relative  flex items-center overflow-hidden bg-white dark:bg-gray-800">
       <div className="container relative flex px-6 py-16 mx-auto  gap-10 ">
         <div className="relative hidden sm:block sm:w-1/3 lg:w-2/5 rounded-md shadow-xl py-5 ">
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL}/uploads/user/${company?.picture} `}
+            src={`${import.meta.env.VITE_API_BASE_URL}/uploads/user/${company?.image?.[0]} `}
             className="max-w-xs m-auto md:max-w-sm h-56 object-contain  "
           />
         </div>

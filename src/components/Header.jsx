@@ -15,7 +15,7 @@ const Header = () => {
   console.log('user: ', user);
 
   useEffect(() => {
-    if (user?.user?.role !== 'guest') setIsLoggedIn(true);
+    if (user?.user?.role) setIsLoggedIn(true);
     else setIsLoggedIn(false);
   }, [user]);
 
