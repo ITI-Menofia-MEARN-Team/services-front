@@ -34,11 +34,11 @@ function App() {
   const isGuest = !isUser && !isCompany && !isAdmin;
 
 
-  if (!user?.user) return (
-    <div className='h-screen w-screen flex justify-between items-center ' >
-      <Spinner />
-    </div>
-  )
+  // if (!user?.user) return (
+  //   <div className='h-screen w-screen flex justify-between items-center ' >
+  //     <Spinner />
+  //   </div>
+  // )
 
   // jsx
   return (

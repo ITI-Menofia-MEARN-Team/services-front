@@ -85,27 +85,50 @@ const Aside = () => {
             </NavLink>
           </li>
           {user?.user?.role === 'Admin' && (
-            <li className="relative px-6 py-3">
-              {pathname === '/dashboard/add-new-company' && <ActiveLinkElement />}
-              <NavLink to={'/dashboard/add-new-company'} className={linkClassName}>
-                <svg
-                  className="w-5 h-5"
-                  aria-hidden="true"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="m21 3.998c0-.478-.379-1-1-1h-16c-.62 0-1 .519-1 1v16c0 .621.52 1 1 1h16c.478 0 1-.379 1-1zm-16.5.5h15v15h-15zm6.75 6.752h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-                <span className="mr-4">اضافة شركة جديدة</span>
-              </NavLink>
-            </li>
+            <>
+              <li className="relative px-6 py-3">
+                {pathname === '/dashboard/add-new-company' && <ActiveLinkElement />}
+                <NavLink to={'/dashboard/add-new-company'} className={linkClassName}>
+                  <svg
+                    className="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="m21 3.998c0-.478-.379-1-1-1h-16c-.62 0-1 .519-1 1v16c0 .621.52 1 1 1h16c.478 0 1-.379 1-1zm-16.5.5h15v15h-15zm6.75 6.752h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z"
+                      fillRule="nonzero"
+                    />
+                  </svg>
+                  <span className="mr-4">اضافة شركة جديدة</span>
+                </NavLink>
+              </li>
+              <li className="relative px-6 py-3">
+                {pathname === '/dashboard/add-new-company2' && <ActiveLinkElement />}
+                <NavLink to={'/dashboard/add-new-company2'} className={linkClassName}>
+                  <svg
+                    className="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="m22 8c0-.478-.379-1-1-1h-13c-.62 0-1 .519-1 1v13c0 .621.52 1 1 1h13c.478 0 1-.379 1-1zm-16-2h13.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-13.75c-.53 0-1 .47-1 1v13.75c0 .414.336.75.75.75s.75-.336.75-.75zm-2.5-2.5h13.75c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.25c-.53 0-1 .47-1 1v14.25c0 .414.336.75.75.75s.75-.336.75-.75z"
+                      fill-rule="nonzero"
+                    />
+                  </svg>
+                  <span className="mr-4">طلبات الانضمام</span>
+                </NavLink>
+              </li>
+            </>
           )}
         </ul>
         {/* <div className="px-6 my-6  ">

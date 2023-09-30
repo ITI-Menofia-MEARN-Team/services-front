@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const cashedUser = JSON.parse(localStorage.getItem('user'));
     if (cashedUser) setUser(cashedUser);
-    else setUser(initialValue);
+    else setUser(null);
   }, []);
 
   // Function to log in the user
@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
   // Function to log out the user
   const logout = () => {
     localStorage.removeItem('user');
-    setUser(initialValue);
+    setUser(null);
   };
 
   // Provide the auth context values to the children components
