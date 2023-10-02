@@ -108,8 +108,8 @@ const Aside = () => {
                 </NavLink>
               </li>
               <li className="relative px-6 py-3">
-                {pathname === '/dashboard/add-new-company2' && <ActiveLinkElement />}
-                <NavLink to={'/dashboard/add-new-company2'} className={linkClassName}>
+                {pathname === '/dashboard/joinRequests' && <ActiveLinkElement />}
+                <NavLink to={'/dashboard/joinRequests'} className={linkClassName}>
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"
