@@ -17,6 +17,7 @@ import {
   Profile,
   Register,
   ServiceDetails,
+  CompanyJoinRequests,
 } from './pages';
 import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
@@ -33,7 +34,6 @@ function App() {
   const isAdmin = user?.user?.role === 'Admin';
   const isGuest = !isUser && !isCompany && !isAdmin;
 
-
   // if (!user?.user) return (
   //   <div className='h-screen w-screen flex justify-between items-center ' >
   //     <Spinner />
@@ -43,7 +43,7 @@ function App() {
   // jsx
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
-      < ToastContainer />
+      <ToastContainer />
       <Routes>
         {/* User Routes */}
         <Route
@@ -100,17 +100,22 @@ function App() {
           <Route path="service/edit/:id" element={<AddService />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
-
           <Route path="orders/:user/:fromOrder" element={<ServiceDetails />} />
-
-//           <Route path="orders/:user" element={<ServiceDetails />} />
+          // <Route path="orders/:user" element={<ServiceDetails />} />
           <Route path="profile" element={<Profile isCompany />} />
-
           <Route
             path="add-new-company"
             element={
               <ProtectedRoute isAuth={isAdmin} redirectTo={'/dashboard'}>
                 <AddNewCompany />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="joinRequests"
+            element={
+              <ProtectedRoute isAuth={isAdmin} redirectTo={'/dashboard'}>
+                <CompanyJoinRequests />
               </ProtectedRoute>
             }
           />
@@ -120,7 +125,7 @@ function App() {
         {/* Redirect to Home for unmatched routes */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </div >
+    </div>
   );
 }
 
