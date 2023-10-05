@@ -49,7 +49,7 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute isAuth={isGuest || isUser} redirectTo={'/dashboard'}>
+            <ProtectedRoute isAuth={isGuest || isUser} redirectTo={'/dashboard/services'}>
               <LayoutHome />
             </ProtectedRoute>
           }
@@ -95,18 +95,18 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<CompanyService />} />
-          <Route path="service/:id/:fromService" element={<ServiceDetails />} />
+          <Route path="services" index element={<CompanyService />} />
+          <Route path="service/:id" element={<ServiceDetails />} />
           <Route path="service/edit/:id" element={<AddService />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
-          <Route path="orders/:user/:fromOrder" element={<ServiceDetails />} />
-          // <Route path="orders/:user" element={<ServiceDetails />} />
+          <Route path="order/:id/:username" element={<ServiceDetails />} />
+          {/* // <Route path="orders/:user" element={<ServiceDetails />} /> */}
           <Route path="profile" element={<Profile isCompany />} />
           <Route
             path="add-new-company"
             element={
-              <ProtectedRoute isAuth={isAdmin} redirectTo={'/dashboard'}>
+              <ProtectedRoute isAuth={isAdmin} redirectTo={'/dashboard/services'}>
                 <AddNewCompany />
               </ProtectedRoute>
             }
@@ -114,12 +114,12 @@ function App() {
           <Route
             path="joinRequests"
             element={
-              <ProtectedRoute isAuth={isAdmin} redirectTo={'/dashboard'}>
+              <ProtectedRoute isAuth={isAdmin} redirectTo={'/dashboard/services'}>
                 <CompanyJoinRequests />
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to={'/dashboard'} />} />
+          <Route path="*" element={<Navigate to={'/dashboard/services'} />} />
         </Route>
 
         {/* Redirect to Home for unmatched routes */}

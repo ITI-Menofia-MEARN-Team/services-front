@@ -40,6 +40,7 @@ const addNewService = async (data, token) => {
   });
   return response.json();
 };
+
 const editService = async (data, token, id) => {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/service/${id}`, {
     method: 'PATCH',
@@ -50,6 +51,7 @@ const editService = async (data, token, id) => {
   });
   return response.json();
 };
+
 const getCategory = async () => {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/category`);
   return response.json();
@@ -81,6 +83,26 @@ const getImage = async (newPath) => {
   return response.blob();
 };
 
+const deleteService = async (token, id) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/service/${id}`, {
+    method: 'DELETE',
+    headers: {
+      token: token,
+    },
+  });
+  return response;
+};
+
+const searchForServices = async (token, search) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/search/company?search=${search}`, {
+    method: 'GET',
+    headers: {
+      token: token,
+    },
+  });
+  return response.json();
+};
+
 export {
   getServices,
   getOrders,
@@ -91,4 +113,6 @@ export {
   getService,
   editService,
   getImage,
+  deleteService,
+  searchForServices,
 };

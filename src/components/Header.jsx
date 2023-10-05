@@ -12,7 +12,7 @@ const Header = () => {
   const [searchToggle, setSearchToggle] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log('user: ', user);
+
 
   useEffect(() => {
     if (user?.user?.role) setIsLoggedIn(true);
@@ -110,6 +110,7 @@ const Header = () => {
 
               {search?.companies && search?.companies.map(company => {
                 return <Link
+                  key={company._id}
                   to={`company/${company._id}`}
                   className="block rounded-lg px-4 py-2 text-sm    hover:bg-gray-50 hover:text-gray-700"
                   role="menuitem"
@@ -129,6 +130,7 @@ const Header = () => {
 
               {search?.services && search?.services.map(service => {
                 return <Link
+                  key={service._id}
                   to={`service/${service._id}`}
                   className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
                   role="menuitem"

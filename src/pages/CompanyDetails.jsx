@@ -3,6 +3,7 @@ import Services from '../components/Services';
 import { useLocation, useParams } from 'react-router-dom';
 import { getServices } from '../server/company';
 import { CompanyFooter, Hero, Spinner } from '../components';
+import { getCompanyByID } from '../server/guest';
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -13,25 +14,20 @@ const CompanyDetails = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await getServices(id);
-      console.log('response: ', response);
       const data = response.data;
-      console.log('data: ', data);
-      console.log('res.data?.services: ', data?.services);
       setServices(data?.services);
-      console.log('services: ', services);
-      setCompany(data?.services?.[0].company);
-      console.log('company: ', company);
+
+      const companyResponse = await getCompanyByID(id);
+      setCompany(companyResponse?.data.company);
+
     };
     getData();
   }, [pathname]);
 
-  // if (!company) return (
-  // <div className='h-screen w-screen flex justify-between items-center ' >
-  <Spinner />;
-  {
-    /* </div>
-    ) */
-  }
+  if (!company) return (
+    <div className='h-screen w-screen flex justify-between items-center ' >
+      <Spinner />
+    </div>);
 
   return (
     <div>
@@ -45,7 +41,7 @@ const CompanyDetails = () => {
         <Services servicesProp={services} />
       </div>
 
-      <CompanyFooter />
+      <CompanyFooter company={company} />
     </div>
   );
 };

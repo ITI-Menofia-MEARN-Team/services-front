@@ -107,7 +107,7 @@ const JoinRequest = () => {
   return (
     <form onSubmit={formik.handleSubmit} className="JoinRequest px-32 py-10">
       <div className="companyDetails flex flex-col md:flex-row py-1 px-6">
-        <h4 class="mb-4 md:w-[30%]  text-md	 font-semibold text-gray-600 dark:text-gray-300">تفاصيل عن الشركة</h4>
+        <h4 className="mb-4 md:w-[30%]  text-md	 font-semibold text-gray-600 dark:text-gray-300">تفاصيل عن الشركة</h4>
         <div className="form w-full flex flex-col  px-4 py-8 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800  dark:text-gray-300">
           {/* full_name */}
           <label htmlFor="name" className="text-md">
@@ -195,7 +195,7 @@ const JoinRequest = () => {
       {/* Social Media */}
       {/*  */}
       <div className="companyLinks flex flex-col md:flex-row py-2 px-6">
-        <h4 class="mb-4 md:w-[30%]  text-md	 font-semibold text-gray-600 dark:text-gray-300"> سوشيال ميديا</h4>
+        <h4 className="mb-4 md:w-[30%]  text-md	 font-semibold text-gray-600 dark:text-gray-300"> سوشيال ميديا</h4>
         <div className="form w-full flex flex-col  px-4 py-8 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800  dark:text-gray-300">
           {/* Facebook */}
           <label htmlFor="companyName" className="text-md">

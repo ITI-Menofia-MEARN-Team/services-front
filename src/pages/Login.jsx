@@ -39,11 +39,11 @@ const Login = () => {
       password: '',
     },
     onSubmit: (values) => {
-      console.log(values);
+
       setLoading(true);
       logInUser(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, values)
         .then((res) => {
-          console.log('res: ', res);
+
           if (res.errors) {
             setMessage('Error');
             res.errors.forEach((error) =>
@@ -68,7 +68,7 @@ const Login = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log('err: ', err);
+
           setMessage(JSON.stringify(err));
           toast.error(err.msg, {
             position: toast.POSITION.TOP_LEFT,

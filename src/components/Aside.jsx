@@ -39,15 +39,15 @@ const Aside = () => {
               >
                 <path
                   d="m22 8c0-.478-.379-1-1-1h-13c-.62 0-1 .519-1 1v13c0 .621.52 1 1 1h13c.478 0 1-.379 1-1zm-16-2h13.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-13.75c-.53 0-1 .47-1 1v13.75c0 .414.336.75.75.75s.75-.336.75-.75zm-2.5-2.5h13.75c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.25c-.53 0-1 .47-1 1v14.25c0 .414.336.75.75.75s.75-.336.75-.75z"
-                  fill-rule="nonzero"
+                  fillRule="nonzero"
                 />
               </svg>
               <span className="mr-4">طلبات</span>
             </NavLink>
           </li>
           <li className="relative px-6 py-3">
-            {pathname === '/dashboard' && <ActiveLinkElement />}
-            <NavLink to={'/dashboard'} className={linkClassName}>
+            {pathname === '/dashboard/services' && <ActiveLinkElement />}
+            <NavLink to={'/dashboard/services'} className={linkClassName}>
               <svg
                 className="w-5 h-5"
                 aria-hidden="true"
@@ -84,6 +84,8 @@ const Aside = () => {
               <span className="mr-4">اضافة خدمة جديدة</span>
             </NavLink>
           </li>
+
+          {/* admin navigation links  */}
           {user?.user?.role === 'Admin' && (
             <>
               <li className="relative px-6 py-3">
@@ -122,7 +124,7 @@ const Aside = () => {
                   >
                     <path
                       d="m22 8c0-.478-.379-1-1-1h-13c-.62 0-1 .519-1 1v13c0 .621.52 1 1 1h13c.478 0 1-.379 1-1zm-16-2h13.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-13.75c-.53 0-1 .47-1 1v13.75c0 .414.336.75.75.75s.75-.336.75-.75zm-2.5-2.5h13.75c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.25c-.53 0-1 .47-1 1v14.25c0 .414.336.75.75.75s.75-.336.75-.75z"
-                      fill-rule="nonzero"
+                      fillRule="nonzero"
                     />
                   </svg>
                   <span className="mr-4">طلبات الانضمام</span>
@@ -131,16 +133,7 @@ const Aside = () => {
             </>
           )}
         </ul>
-        {/* <div className="px-6 my-6  ">
-          <button className="flex items-center justify-between w-full px-4 py-2 text-lg font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-            تسجيل الخروج
-            <span className="mr-2" aria-hidden="true">
-              <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M10 2v2h12v16h-12v2h14v-20h-14zm0 7.408l2.963 2.592-2.963 2.592v-1.592h-8v-2h8v-1.592zm-2-4.408v4h-8v6h8v4l8-7-8-7z" />
-              </svg>
-            </span>
-          </button>
-        </div> */}
+
       </div>
     </aside>
   );

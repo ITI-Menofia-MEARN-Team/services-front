@@ -10,7 +10,6 @@ const AllServices = () => {
       const response = await getAllServices();
       const data = response.data;
       setServices(data?.services);
-      console.log('services: ', services);
     };
     getData();
   }, []);

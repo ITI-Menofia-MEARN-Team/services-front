@@ -28,7 +28,6 @@ const Register = () => {
       const responseData = await response.json();
       return responseData;
     } catch (error) {
-      console.error('An error occurred:', error);
       setMessage(error);
     }
   };
@@ -46,7 +45,7 @@ const Register = () => {
       setLoading(true);
       registerUser('http://localhost:8000/auth/register', values)
         .then((res) => {
-          console.log('res: ', res);
+
           if (res.errors) {
             setMessage('Error');
             res.errors.forEach((error) =>
@@ -75,18 +74,11 @@ const Register = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log('err: ', err);
           setMessage(JSON.stringify(err));
           toast.error(err.msg, {
             position: toast.POSITION.TOP_LEFT,
           });
         });
-
-      // setTimeout(() => {
-      //   formik.resetForm();
-
-      //   setMessage(null);
-      // }, 2000);
     },
     validationSchema: Yup.object({
       full_name: Yup.string().required('مطلوب'),
@@ -99,9 +91,6 @@ const Register = () => {
 
   return (
     <section id="Register">
-      {/* {message && (
-        <div className={`message ${message.includes('Error') ? 'bg-red-500' : 'bg-green-600'}`}>{message}</div>
-      )} */}
 
       <div className="flex justify-center items-center h-[90.8vh]">
         <div className=" w-1/3">

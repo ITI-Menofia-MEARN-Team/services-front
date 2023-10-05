@@ -31,4 +31,17 @@ const searchForServicesOrCompanies = async (search) => {
   return response.json();
 };
 
-export { getAllServices, getAllCategories, getSingleService, addJoinRequest, searchForServicesOrCompanies };
+//
+const getCompanyByID = async (companyID) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/company/${companyID}`);
+  return response.json();
+};
+
+export {
+  getAllServices,
+  getAllCategories,
+  getSingleService,
+  addJoinRequest,
+  searchForServicesOrCompanies,
+  getCompanyByID,
+};
