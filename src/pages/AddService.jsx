@@ -13,7 +13,7 @@ import {
   getService,
 } from '../server/company';
 import { Spinner } from '../components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const BehaviorButton = ({ classes, svg, color, onClick, disabled, type, ...props }) => (
   <button
@@ -43,6 +43,7 @@ const AddService = () => {
   const [formInfo, setFormInfo] = useState(false);
   const [renderdImgs, setRenderdImgs] = useState([]);
   let { id } = useParams();
+  const navigateToSerivces = useNavigate();
 
   const toggleCategory = () => {
     setShowInput(!showInput);
@@ -204,7 +205,7 @@ const AddService = () => {
 
       formData.append('title', values.title);
       formData.append('description', values.description);
-      formData.append('price', 500);
+      formData.append('price', values.price);
       // extraPropsResponse && formData.append('extra_props', extraProps);
       formData.append('category', categoryId);
       formData.append('company', companyId);
@@ -231,6 +232,7 @@ const AddService = () => {
       setTimeout(() => {
         formik.resetForm();
         setMessage(null);
+        navigateToSerivces('/dashboard/services');
       }, 2000);
     } catch (error) {
       console.error(error);
@@ -249,7 +251,7 @@ const AddService = () => {
 
       <div className=" mt-5 ">
         <div className="max-w-xl ">
-          <h1 className="text-4xl mb-4  dark:text-gray-400">اضافة خدمه جديده</h1>
+          <h1 className="text-4xl mb-4  dark:text-gray-400">{id ? 'تعديل الخدمه' : 'اضافة خدمه جديده'}</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             {/* title */}
             <div>
@@ -414,6 +416,7 @@ const AddService = () => {
                     id={`descPlus-${index}.price`}
                     name={`descPlusArray[${index}].price`}
                     placeholder=" سعرها "
+                    type="number"
                     disabled={loading}
                     {...formik.getFieldProps(`descPlusArray[${index}].price`)}
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
@@ -519,6 +522,7 @@ const AddService = () => {
               <input
                 id={`price`}
                 name={`price`}
+                type="number"
                 placeholder=" سعر الخدمه"
                 disabled={loading}
                 {...formik.getFieldProps(`price`)}
@@ -530,7 +534,7 @@ const AddService = () => {
             <BehaviorButton
               color={'purple'}
               disabled={loading}
-              svg={loading ? <Spinner /> : 'اضافه'}
+              svg={loading ? <Spinner /> : id ? 'تعديل' : 'اضافه'}
               type="submit"
               id="submitBtn"
               classes="w-full mt-5 "
