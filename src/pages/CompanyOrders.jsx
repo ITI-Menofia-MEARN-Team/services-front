@@ -82,7 +82,7 @@ const CompanyOrders = () => {
                           رفض
                         </button>
                         <Link
-                          to={`/dashboard/service/${order?.service?._id}/fromService`}
+                          to={`/dashboard/order/${order?.service?._id}/${order.user?.full_name}`}
                           className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                         >
                           عرض

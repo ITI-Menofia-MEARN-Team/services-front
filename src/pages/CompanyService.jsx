@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import defaultImage from '../assets/service.png';
 import { AuthContext } from '../contexts/Auth';
-import { getServices } from '../server/company';
+import { deleteService, getServices } from '../server/company';
 import { Link } from 'react-router-dom';
 
 const CompanyService = () => {
   const [data, setData] = useState([]);
+  const [deleteServiceState, setDeleteServiceState] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log('user: ', user);
+
 
   const services = data?.data?.services;
-  console.log('services: ', services);
+
 
   const options = {
     weekday: 'long',
@@ -25,7 +26,17 @@ const CompanyService = () => {
     getServices(user.user.id).then((response) => {
       setData(response);
     });
-  }, []);
+  }, [deleteServiceState]);
+
+
+  const handleDelete = async (serviceId) => {
+    const response = await deleteService(user.token, serviceId)
+    if (response.status === 204) {
+      setDeleteServiceState(prev => !prev)
+    }
+
+  }
+
 
   return (
     <div className="w-full overflow-hidden rounded-lg shadow-xs mt-5">
@@ -79,7 +90,7 @@ const CompanyService = () => {
                     <td className="px-4 py-3">
                       <div className="flex items-center space-x-4 text-sm">
                         <Link
-                          to={`/dashboard/orders/${service._id}/fromOrder`}
+                          to={`/dashboard/service/${service._id}`}
                           className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                         >
                           عرض
@@ -90,7 +101,7 @@ const CompanyService = () => {
                         >
                           تعديل
                         </Link>
-                        <button className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray">
+                        <button onClick={() => handleDelete(service._id)} className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray">
                           مسح
                         </button>
                       </div>

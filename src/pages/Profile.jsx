@@ -19,7 +19,7 @@ const Profile = ({ isCompany = false }) => {
     const getProfile = async () => {
       const response = user && (await getUserProfileData(user?.user?.id, user?.token));
       setProfileData(response?.data?.user);
-      console.log('🚀 ~ file: Profile.jsx:8 ~ Profile ~ profileData:', response?.data?.user);
+
 
       profileForm.setFieldValue('full_name', response?.data?.user.full_name);
       profileForm.setFieldValue('email', response?.data?.user.email);
@@ -71,7 +71,6 @@ const Profile = ({ isCompany = false }) => {
         .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
           if (file) {
             // Allow any image MIME type
-            console.log(file);
             return ['image/jpg', 'image/png', 'image/jpeg', 'image/svg', 'image/webp'].includes(file[0].type);
           }
           return true; // No file selected, so no type to check
@@ -86,7 +85,6 @@ const Profile = ({ isCompany = false }) => {
     }),
     onSubmit: (values) => {
       setLoading(true);
-      console.log('values: ', values);
       const formData = new FormData();
       values.full_name && formData.append('full_name', values.full_name);
       values.username && formData.append('username', values.username);
@@ -107,11 +105,10 @@ const Profile = ({ isCompany = false }) => {
         }
       }
 
-      console.log('formData: ', formData.getAll('image'));
 
       updateUserProfile(formData, user?.token, user?.user?.id)
         .then((res) => {
-          console.log(res);
+
           if (res.errors) {
             res.errors.forEach((error) =>
               toast.error(error.msg, {
@@ -139,7 +136,6 @@ const Profile = ({ isCompany = false }) => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
           toast.error(err.message, {
             position: toast.POSITION.TOP_LEFT,
           });

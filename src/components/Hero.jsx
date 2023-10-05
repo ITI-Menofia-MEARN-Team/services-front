@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Hero = ({ company }) => {
-  console.log('company: ', company);
+
   return (
     <div className="relative  flex items-center overflow-hidden bg-white dark:bg-gray-800">
       <div className="container relative flex px-6 py-16 mx-auto  gap-10 ">
@@ -22,14 +22,6 @@ const Hero = ({ company }) => {
             المتخصصين في مجموعة متنوعة من القطاعات والصناعات، مما يجعلنا قادرين على تلبية احتياجات عملائنا بكفاءة عالية
             وفعالية. نقدم مجموعة واسعة من الخدمات{' '}
           </p>
-          {/* <div className="flex mt-8">
-                        <a href="#" className="px-4 py-2 ml-4 text-white uppercase bg-pink-500 border-2 border-transparent rounded-lg text-md hover:bg-pink-400">
-                            Get started
-                        </a>
-                        <a href="#" className="px-4 py-2 text-pink-500 uppercase bg-transparent border-2 border-pink-500 rounded-lg dark:text-white hover:bg-pink-500 hover:text-white text-md">
-                            Read more
-                        </a>
-                    </div> */}
         </div>
       </div>
     </div>

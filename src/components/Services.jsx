@@ -15,8 +15,6 @@ const Services = ({ servicesProp, withCategory = false }) => {
   useEffect(() => {
     setMyArray(servicesProp);
     setServices(servicesProp);
-    console.log('myArray: ', myArray);
-    console.log('services: ', services);
   }, [pathname, servicesProp]);
 
   const handleFilter = (categoryID) => {

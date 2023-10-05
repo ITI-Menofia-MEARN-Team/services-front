@@ -23,7 +23,6 @@ const ProfileMenu = () => {
   useEffect(() => {
     const getUserData = async () => {
       const response = await getUserProfileData(user?.user?.id, user?.token);
-      console.log("🚀 ~ file: ProfileMenu.jsx:24 ~ getUserData ~ response:", response)
       setUserProfile(response?.data?.user)
     }
     getUserData();
