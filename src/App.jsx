@@ -18,6 +18,7 @@ import {
   Register,
   ServiceDetails,
   CompanyJoinRequests,
+  CompanyOrder,
 } from './pages';
 import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
@@ -100,8 +101,7 @@ function App() {
           <Route path="service/edit/:id" element={<AddService />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
-          <Route path="order/:id/:username" element={<ServiceDetails />} />
-          {/* // <Route path="orders/:user" element={<ServiceDetails />} /> */}
+          <Route path="order/:id/" element={<CompanyOrder />} />
           <Route path="profile" element={<Profile isCompany />} />
           <Route
             path="add-new-company"

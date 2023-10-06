@@ -25,12 +25,12 @@ const Services = ({ servicesProp, withCategory = false }) => {
     setServices(filteredArray);
   };
 
-
-  if (!services) return (
-    <div className='h-screen w-screen flex justify-between items-center ' >
-      <Spinner />
-    </div>
-  )
+  if (!services)
+    return (
+      <div className="h-screen w-screen flex justify-between items-center ">
+        <Spinner />
+      </div>
+    );
 
   return (
     <>

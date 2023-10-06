@@ -18,6 +18,15 @@ const getOrders = async (companyID, token) => {
   return response.json();
 };
 
+const getOrder = async (orderID, token) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/order/${orderID}`, {
+    headers: {
+      token: token,
+    },
+  });
+  return response.json();
+};
+
 const addNewExtraProps = async (data, token) => {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/extraProp/addMany`, {
     method: 'POST',
@@ -115,4 +124,5 @@ export {
   getImage,
   deleteService,
   searchForServices,
+  getOrder,
 };

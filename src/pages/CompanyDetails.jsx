@@ -19,15 +19,16 @@ const CompanyDetails = () => {
 
       const companyResponse = await getCompanyByID(id);
       setCompany(companyResponse?.data.company);
-
     };
     getData();
   }, [pathname]);
 
-  if (!company) return (
-    <div className='h-screen w-screen flex justify-between items-center ' >
-      <Spinner />
-    </div>);
+  if (!company)
+    return (
+      <div className="h-screen w-screen flex justify-between items-center ">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div>

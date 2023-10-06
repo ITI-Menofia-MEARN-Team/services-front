@@ -45,7 +45,6 @@ const Register = () => {
       setLoading(true);
       registerUser('http://localhost:8000/auth/register', values)
         .then((res) => {
-
           if (res.errors) {
             setMessage('Error');
             res.errors.forEach((error) =>
@@ -91,7 +90,6 @@ const Register = () => {
 
   return (
     <section id="Register">
-
       <div className="flex justify-center items-center h-[90.8vh]">
         <div className=" w-1/3">
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">التسجيل</h1>

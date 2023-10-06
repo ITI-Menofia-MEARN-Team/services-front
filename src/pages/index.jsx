@@ -1,6 +1,7 @@
 export { default as AddService } from './AddService';
 export { default as CompanyService } from './CompanyService';
 export { default as CompanyOrders } from './CompanyOrders';
+export { default as CompanyOrder } from './CompanyOrder';
 export { default as ErrorPage } from './ErrorPage';
 export { default as JoinRequest } from './JoinRequest';
 export { default as Profile } from './Profile';

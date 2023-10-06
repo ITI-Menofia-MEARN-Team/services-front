@@ -23,18 +23,21 @@ const ProfileMenu = () => {
   useEffect(() => {
     const getUserData = async () => {
       const response = await getUserProfileData(user?.user?.id, user?.token);
-      setUserProfile(response?.data?.user)
-    }
+      setUserProfile(response?.data?.user);
+    };
     getUserData();
-
-  }, [user])
+  }, [user]);
 
   return (
     <>
       <button onClick={toggleMenu} className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
         <img
           className="object-cover w-10 h-10 rounded-full"
-          src={userProfile?.image?.[0] ? `${import.meta.env.VITE_API_BASE_URL}/uploads/user/${userProfile?.image?.[0]}` : `${import.meta.env.VITE_API_BASE_URL}/uploads/user/profie.jpg`}
+          src={
+            userProfile?.image?.[0]
+              ? `${import.meta.env.VITE_API_BASE_URL}/uploads/user/${userProfile?.image?.[0]}`
+              : `${import.meta.env.VITE_API_BASE_URL}/uploads/user/profie.jpg`
+          }
           alt=""
         />
       </button>

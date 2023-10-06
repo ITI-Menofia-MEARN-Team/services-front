@@ -6,17 +6,15 @@ import { searchForServices } from '../server/company';
 import { Link } from 'react-router-dom';
 
 const AdminHeader = () => {
-
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [search, setSearch] = useState({});
   const [searchToggle, setSearchToggle] = useState(false);
 
   // search
   const setSearchedResults = async (querySearch) => {
     const result = await searchForServices(user.token, querySearch);
-    setSearch(result.data)
-  }
-
+    setSearch(result.data);
+  };
 
   // dark mode ?
   const lightModeIconPath =
@@ -56,19 +54,20 @@ const AdminHeader = () => {
             placeholder=" ابحث عن خدمة "
             onKeyUp={(e) => {
               setSearchToggle(true);
-              setSearchedResults(e?.target?.value)
+              setSearchedResults(e?.target?.value);
             }}
           />
 
           {/* search results */}
-          {searchToggle && <div
-            className="flex  overflow-y-scroll h-[50vh] absolute -end-[9%] z-10 mt-2 w-[50vw] divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-2xl dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white"
-            onMouseLeave={() => {
-              setSearchToggle(false)
-            }}
-          >
-            {/* orders */}
-            {/* <div className="p-2 flex-1">
+          {searchToggle && (
+            <div
+              className="flex  overflow-y-scroll h-[50vh] absolute -end-[9%] z-10 mt-2 w-[50vw] divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-2xl dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white"
+              onMouseLeave={() => {
+                setSearchToggle(false);
+              }}
+            >
+              {/* orders */}
+              {/* <div className="p-2 flex-1">
               <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">
                 شركات
               </strong>
@@ -88,28 +87,27 @@ const AdminHeader = () => {
 
 
             </div> */}
-            {/* services */}
-            <div className="p-2 flex-1">
-              <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">
-                خدمات
-              </strong>
+              {/* services */}
+              <div className="p-2 flex-1">
+                <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">خدمات</strong>
 
-              {search?.services && search?.services.map(service => {
-                return <Link
-                  key={service._id}
-                  to={`service/${service._id}`}
-                  className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
-                  role="menuitem"
-                  onClick={() => setSearchToggle(false)}
-                >
-                  {service.title}
-                </Link>
-              })}
+                {search?.services &&
+                  search?.services.map((service) => {
+                    return (
+                      <Link
+                        key={service._id}
+                        to={`service/${service._id}`}
+                        className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
+                        role="menuitem"
+                        onClick={() => setSearchToggle(false)}
+                      >
+                        {service.title}
+                      </Link>
+                    );
+                  })}
+              </div>
             </div>
-
-
-          </div>}
-
+          )}
         </div>
         {/*  */}
         <ul className="flex items-center flex-shrink-0 space-x-6 gap-5">

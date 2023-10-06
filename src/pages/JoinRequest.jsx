@@ -63,7 +63,6 @@ const JoinRequest = () => {
         formData.append(`social_links.${key}`, values.social_links[key]);
       });
 
-
       const imageFiles = values.image;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('image', imageFiles[i]);
@@ -86,10 +85,16 @@ const JoinRequest = () => {
               position: toast.POSITION.TOP_LEFT,
             });
           }
+          if (res.status === 'Error') {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
           if (res.data) {
             toast.success('تم ارسال طلبك بنجاح', {
               position: toast.POSITION.TOP_LEFT,
             });
+            formik.resetForm();
           }
           setLoading(false);
         })
@@ -135,7 +140,6 @@ const JoinRequest = () => {
             <div className="text-red-700 text-md mb-5">{formik.errors.email}</div>
           ) : null}
 
-
           {/* image */}
           <div className="logo flex items-center	mt-3 ">
             <label htmlFor="image" className="text-md font-bold">
@@ -167,7 +171,6 @@ const JoinRequest = () => {
               />
 
               <div>
-
                 {formik.values?.image?.[0] && (
                   <img
                     src={URL.createObjectURL(formik.values?.image?.[0])}

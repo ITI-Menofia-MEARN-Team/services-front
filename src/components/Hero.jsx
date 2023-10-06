@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Hero = ({ company }) => {
-
   return (
     <div className="relative  flex items-center overflow-hidden bg-white dark:bg-gray-800">
       <div className="container relative flex px-6 py-16 mx-auto  gap-10 ">

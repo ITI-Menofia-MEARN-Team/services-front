@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 
-
 const Profile = ({ isCompany = false }) => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -20,7 +19,6 @@ const Profile = ({ isCompany = false }) => {
       const response = user && (await getUserProfileData(user?.user?.id, user?.token));
       setProfileData(response?.data?.user);
 
-
       profileForm.setFieldValue('full_name', response?.data?.user.full_name);
       profileForm.setFieldValue('email', response?.data?.user.email);
       profileForm.setFieldValue('phone_number', response?.data?.user.phone_number);
@@ -31,7 +29,6 @@ const Profile = ({ isCompany = false }) => {
       profileForm.setFieldValue('social_links.youtube', response?.data?.user.social_links?.youtube);
     };
     getProfile();
-
   }, [user, success]);
 
   const options = {
@@ -98,36 +95,30 @@ const Profile = ({ isCompany = false }) => {
 
       const imageFiles = values.image;
 
-
       if (imageFiles) {
         for (let i = 0; i < imageFiles.length; i++) {
           imageFiles[i] && imageFiles[i] && formData.append('image', imageFiles[i]);
         }
       }
 
-
       updateUserProfile(formData, user?.token, user?.user?.id)
         .then((res) => {
-
           if (res.errors) {
             res.errors.forEach((error) =>
               toast.error(error.msg, {
                 position: toast.POSITION.TOP_LEFT,
               })
             );
-          }
-          else if (res.status === 'failed') {
+          } else if (res.status === 'failed') {
             toast.error(res.message, {
               position: toast.POSITION.TOP_LEFT,
             });
-          }
-          else if (res.data) {
+          } else if (res.data) {
             toast.success('تم تغير البيانات بنجاح', {
               position: toast.POSITION.TOP_LEFT,
             });
             setSuccess(!success);
-          }
-          else {
+          } else {
             toast.success('تم تغير البيانات بنجاح', {
               position: toast.POSITION.TOP_LEFT,
             });
@@ -144,11 +135,12 @@ const Profile = ({ isCompany = false }) => {
     },
   });
 
-  if (!profileData) return (
-    <div className='h-[90vh] w-full flex justify-between items-center ' >
-      <Spinner />
-    </div>
-  )
+  if (!profileData)
+    return (
+      <div className="h-[90vh] w-full flex justify-between items-center ">
+        <Spinner />
+      </div>
+    );
 
   return (
     <form
@@ -245,7 +237,6 @@ const Profile = ({ isCompany = false }) => {
             ) : null}
           </div>
           <div className="w-full lg:w-2/5">
-
             <label htmlFor="phone" className="text-md">
               رقم الهاتف
             </label>

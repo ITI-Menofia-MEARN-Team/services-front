@@ -13,17 +13,17 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user } = useContext(AuthContext);
 
-
   useEffect(() => {
     if (user?.user?.role) setIsLoggedIn(true);
     else setIsLoggedIn(false);
   }, [user]);
 
   const isActiveLink = ({ isActive }) => {
-    return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${isActive
-      ? 'font-bold text-purple-600 dark:text-purple-300  before:absolute before:top-[120%] before:w-full before:h-1 before:dark:bg-purple-300 before:bg-purple-600 '
-      : 'text-gray-900 dark:text-white  '
-      }`;
+    return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${
+      isActive
+        ? 'font-bold text-purple-600 dark:text-purple-300  before:absolute before:top-[120%] before:w-full before:h-1 before:dark:bg-purple-300 before:bg-purple-600 '
+        : 'text-gray-900 dark:text-white  '
+    }`;
   };
 
   // dark mode ?
@@ -33,12 +33,11 @@ const Header = () => {
     'M12 0c-1.109 0-2.178.162-3.197.444 3.826 5.933-2.026 13.496-8.781 11.128l-.022.428c0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12z';
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
-
   // search
   const setSearchedResults = async (querySearch) => {
     const result = await searchForServicesOrCompanies(querySearch);
-    setSearch(result.data)
-  }
+    setSearch(result.data);
+  };
 
   // jsx
   return (
@@ -92,58 +91,56 @@ const Header = () => {
             placeholder=" ابحث عن خدمة او شركة"
             onKeyUp={(e) => {
               setSearchToggle(true);
-              setSearchedResults(e?.target?.value)
+              setSearchedResults(e?.target?.value);
             }}
           />
 
           {/* search results */}
-          {searchToggle && <div
-            className="flex  overflow-y-scroll h-[50vh] absolute -end-[50%] z-10 mt-2 w-[50vw] divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-2xl dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white"
-            onMouseLeave={() => {
-              setSearchToggle(false)
-            }}
-          >
-            <div className="p-2 flex-1">
-              <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">
-                شركات
-              </strong>
+          {searchToggle && (
+            <div
+              className="flex  overflow-y-scroll h-[50vh] absolute -end-[50%] z-10 mt-2 w-[50vw] divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-2xl dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white"
+              onMouseLeave={() => {
+                setSearchToggle(false);
+              }}
+            >
+              <div className="p-2 flex-1">
+                <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">شركات</strong>
 
-              {search?.companies && search?.companies.map(company => {
-                return <Link
-                  key={company._id}
-                  to={`company/${company._id}`}
-                  className="block rounded-lg px-4 py-2 text-sm    hover:bg-gray-50 hover:text-gray-700"
-                  role="menuitem"
-                  onClick={() => setSearchToggle(false)}
-                >
-                  {company.full_name}
-                </Link>
-              })}
+                {search?.companies &&
+                  search?.companies.map((company) => {
+                    return (
+                      <Link
+                        key={company._id}
+                        to={`company/${company._id}`}
+                        className="block rounded-lg px-4 py-2 text-sm    hover:bg-gray-50 hover:text-gray-700"
+                        role="menuitem"
+                        onClick={() => setSearchToggle(false)}
+                      >
+                        {company.full_name}
+                      </Link>
+                    );
+                  })}
+              </div>
+              <div className="p-2 flex-1">
+                <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">خدمات</strong>
 
-
-
+                {search?.services &&
+                  search?.services.map((service) => {
+                    return (
+                      <Link
+                        key={service._id}
+                        to={`service/${service._id}`}
+                        className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
+                        role="menuitem"
+                        onClick={() => setSearchToggle(false)}
+                      >
+                        {service.title}
+                      </Link>
+                    );
+                  })}
+              </div>
             </div>
-            <div className="p-2 flex-1">
-              <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">
-                خدمات
-              </strong>
-
-              {search?.services && search?.services.map(service => {
-                return <Link
-                  key={service._id}
-                  to={`service/${service._id}`}
-                  className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
-                  role="menuitem"
-                  onClick={() => setSearchToggle(false)}
-                >
-                  {service.title}
-                </Link>
-              })}
-            </div>
-
-
-          </div>}
-
+          )}
         </div>
 
         {/*  */}
@@ -168,7 +165,7 @@ const Header = () => {
           )}
         </ul>
       </div>
-    </header >
+    </header>
   );
 };
 
