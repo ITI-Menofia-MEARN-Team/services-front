@@ -187,10 +187,15 @@ const AddService = () => {
   const handleSubmit = async (values) => {
     try {
       let extraPropsResponse;
-      console.log('values.extra_props: ', values.extra_props);
-      if (values.extra_props.length !== 0) {
+      if (
+        values.extra_props.length != 1 &&
+        values.extra_props[0].price != 0 &&
+        values.extra_props[0].description != ''
+      ) {
+        console.log('values.extra_props: ', values.extra_props);
         extraPropsResponse = await addNewExtraProps(values.extra_props, token);
       }
+
       const extraProps = extraPropsResponse?.data?.extraProps.map((item) => item._id);
 
       let categoryId;
@@ -220,8 +225,16 @@ const AddService = () => {
       }
 
       const extra_props = values.descPlusArray;
-      for (let i = 0; i < extra_props.length; i++) {
-        formData.append('extra_props[]', extraProps[i]);
+      console.log('values.extra_props: ', extra_props);
+      if (
+        values.extra_props.length != 1 &&
+        values.extra_props[0].price != 0 &&
+        values.extra_props[0].description != ''
+      ) {
+        console.log('values.extra_props: ', values.extra_props);
+        for (let i = 0; i < extra_props.length; i++) {
+          formData.append('extra_props[]', extraProps[i]);
+        }
       }
 
       console.log(formData);
