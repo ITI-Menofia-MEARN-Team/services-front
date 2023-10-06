@@ -397,15 +397,6 @@ const AddService = () => {
                     disabled={loading}
                     {...formik.getFieldProps(`descPlusArray[${index}].description`)}
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
-                    // {...(id && toChange ? { value: item.description } : {})}
-                    // onChange={(e) => {
-                    //   if (toChange) {
-                    //     e.target.removeAttribute('value');
-                    //   } else {
-                    //     e.target.setAttribute('value', e.target.value);
-                    //   }
-                    //   setToChange(false);
-                    // }}
                   />
                   {formik.touched[`descPlusArray[${index}].description`] &&
                   formik.errors[`descPlusArray[${index}].description`] ? (
@@ -425,7 +416,6 @@ const AddService = () => {
                     disabled={loading}
                     {...formik.getFieldProps(`descPlusArray[${index}].price`)}
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
-                    {...(id ? { value: item.price } : {})}
                   />
                 </div>
                 {index === 0 ? (
