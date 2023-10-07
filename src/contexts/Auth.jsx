@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 // Create the Auth Context
 export const AuthContext = createContext();
 
-
-// 
-const initialValue = { user: { role: 'guest' } }
+//
+const initialValue = { user: { role: 'guest' } };
 
 // Create the Auth Provider Component
 const AuthProvider = ({ children }) => {

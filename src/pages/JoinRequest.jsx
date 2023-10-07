@@ -63,7 +63,6 @@ const JoinRequest = () => {
         formData.append(`social_links.${key}`, values.social_links[key]);
       });
 
-
       const imageFiles = values.image;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('image', imageFiles[i]);
@@ -86,10 +85,16 @@ const JoinRequest = () => {
               position: toast.POSITION.TOP_LEFT,
             });
           }
+          if (res.status === 'Error') {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          }
           if (res.data) {
             toast.success('تم ارسال طلبك بنجاح', {
               position: toast.POSITION.TOP_LEFT,
             });
+            formik.resetForm();
           }
           setLoading(false);
         })
@@ -105,10 +110,10 @@ const JoinRequest = () => {
 
   // render
   return (
-    <form onSubmit={formik.handleSubmit} className="JoinRequest px-32 py-10">
-      <div className="companyDetails flex flex-col md:flex-row py-1 px-6">
+    <form onSubmit={formik.handleSubmit} className="w-[95%] md:w-[90%] mx-auto  py-10">
+      <div className="companyDetails flex flex-col md:flex-row py-1 ">
         <h4 className="mb-4 md:w-[30%]  text-md	 font-semibold text-gray-600 dark:text-gray-300">تفاصيل عن الشركة</h4>
-        <div className="form w-full flex flex-col  px-4 py-8 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800  dark:text-gray-300">
+        <div className="form md:w-2/3 flex flex-col  px-4 py-8 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800  dark:text-gray-300">
           {/* full_name */}
           <label htmlFor="name" className="text-md">
             اسم الشركة
@@ -134,7 +139,6 @@ const JoinRequest = () => {
           {formik.touched.email && formik.errors.email ? (
             <div className="text-red-700 text-md mb-5">{formik.errors.email}</div>
           ) : null}
-
 
           {/* image */}
           <div className="logo flex items-center	mt-3 ">
@@ -167,7 +171,6 @@ const JoinRequest = () => {
               />
 
               <div>
-
                 {formik.values?.image?.[0] && (
                   <img
                     src={URL.createObjectURL(formik.values?.image?.[0])}
@@ -194,9 +197,9 @@ const JoinRequest = () => {
       {/*  */}
       {/* Social Media */}
       {/*  */}
-      <div className="companyLinks flex flex-col md:flex-row py-2 px-6">
+      <div className="companyLinks flex flex-col md:flex-row py-2 ">
         <h4 className="mb-4 md:w-[30%]  text-md	 font-semibold text-gray-600 dark:text-gray-300"> سوشيال ميديا</h4>
-        <div className="form w-full flex flex-col  px-4 py-8 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800  dark:text-gray-300">
+        <div className="form md:w-2/3 w-full flex flex-col  px-4 py-8 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800  dark:text-gray-300">
           {/* Facebook */}
           <label htmlFor="companyName" className="text-md">
             رابط فيسبوك
@@ -263,7 +266,7 @@ const JoinRequest = () => {
       <button
         type="submit"
         // disabled={ }
-        className="block   placeholder: ease-in duration-300  hover:text-purple-600  active:text-purple-600    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-300 dark:text-purple-500 dark:focus:shadow-outline-gray form-input bg-purple-600 border rounded cursor-pointer hover:bg-transparent border-purple-600 mr-auto	ml-14 "
+        className="block  px-5 py-2 ease-in duration-300  hover:text-purple-600  active:text-purple-600    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-300 dark:text-purple-500 dark:focus:shadow-outline-gray form-input bg-purple-600 border rounded cursor-pointer hover:bg-transparent border-purple-600 mr-auto	ml-14 "
       >
         إرسال الطلب
       </button>

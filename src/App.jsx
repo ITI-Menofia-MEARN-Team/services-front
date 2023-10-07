@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ProtectedRoute, Spinner } from './components';
+import { Menu, ProtectedRoute, Spinner } from './components';
 import {
   AddNewCompany,
   AddService,
@@ -18,9 +18,11 @@ import {
   Register,
   ServiceDetails,
   CompanyJoinRequests,
+  CompanyOrder,
 } from './pages';
 import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
+import { MenuContext } from './contexts/Menu';
 
 function App() {
   // dark mode context
@@ -40,10 +42,14 @@ function App() {
   //   </div>
   // )
 
+  // menu
+  const { isMenu, toggleMenu } = useContext(MenuContext);
+
   // jsx
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
       <ToastContainer />
+      {isMenu && <Menu />}
       <Routes>
         {/* User Routes */}
         <Route
@@ -100,8 +106,7 @@ function App() {
           <Route path="service/edit/:id" element={<AddService />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="orders" element={<CompanyOrders />} />
-          <Route path="order/:id/:username" element={<ServiceDetails />} />
-          {/* // <Route path="orders/:user" element={<ServiceDetails />} /> */}
+          <Route path="order/:id/" element={<CompanyOrder />} />
           <Route path="profile" element={<Profile isCompany />} />
           <Route
             path="add-new-company"

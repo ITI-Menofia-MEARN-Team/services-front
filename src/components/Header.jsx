@@ -6,13 +6,13 @@ import { DarkModeContext } from '../contexts/DarkMode';
 import ProfileMenu from './ProfileMenu';
 import { AuthContext } from '../contexts/Auth';
 import { searchForServicesOrCompanies } from '../server/guest';
+import { MenuContext } from '../contexts/Menu';
 
 const Header = () => {
   const [search, setSearch] = useState({});
   const [searchToggle, setSearchToggle] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user } = useContext(AuthContext);
-
 
   useEffect(() => {
     if (user?.user?.role) setIsLoggedIn(true);
@@ -33,19 +33,22 @@ const Header = () => {
     'M12 0c-1.109 0-2.178.162-3.197.444 3.826 5.933-2.026 13.496-8.781 11.128l-.022.428c0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12z';
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
-
   // search
   const setSearchedResults = async (querySearch) => {
     const result = await searchForServicesOrCompanies(querySearch);
-    setSearch(result.data)
-  }
+    setSearch(result.data);
+  };
+
+  // Menu 
+  const { isMenu, toggleMenu } = useContext(MenuContext);
+
 
   // jsx
   return (
     <header className="z-10 py-1  bg-white shadow-md dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         {/*  */}
-        <button className="p-1 -ml-1 mr-5 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple">
+        <button onClick={toggleMenu} className="p-1 -ml-1 mr-5 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple">
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
@@ -55,7 +58,7 @@ const Header = () => {
           </svg>
         </button>
         {/* Logo */}
-        <a className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</a>
+        <Link to={'/'} className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</Link>
 
         {/* links */}
         <div className="hidden lg:block  mx-10">
@@ -87,63 +90,62 @@ const Header = () => {
             </svg>
           </div>
           <input
+            name='search'
             className="w-full pr-8 pl-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
             type="text"
             placeholder=" ابحث عن خدمة او شركة"
             onKeyUp={(e) => {
               setSearchToggle(true);
-              setSearchedResults(e?.target?.value)
+              setSearchedResults(e?.target?.value);
             }}
           />
 
           {/* search results */}
-          {searchToggle && <div
-            className="flex  overflow-y-scroll h-[50vh] absolute -end-[50%] z-10 mt-2 w-[50vw] divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-2xl dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white"
-            onMouseLeave={() => {
-              setSearchToggle(false)
-            }}
-          >
-            <div className="p-2 flex-1">
-              <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">
-                شركات
-              </strong>
+          {searchToggle && (
+            <div
+              className="flex  overflow-y-scroll h-[50vh] absolute -end-[50%] z-10 mt-2 w-[50vw] divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-2xl dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white"
+              onMouseLeave={() => {
+                setSearchToggle(false);
+              }}
+            >
+              <div className="p-2 flex-1">
+                <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">شركات</strong>
 
-              {search?.companies && search?.companies.map(company => {
-                return <Link
-                  key={company._id}
-                  to={`company/${company._id}`}
-                  className="block rounded-lg px-4 py-2 text-sm    hover:bg-gray-50 hover:text-gray-700"
-                  role="menuitem"
-                  onClick={() => setSearchToggle(false)}
-                >
-                  {company.full_name}
-                </Link>
-              })}
+                {search?.companies &&
+                  search?.companies.map((company) => {
+                    return (
+                      <Link
+                        key={company._id}
+                        to={`company/${company._id}`}
+                        className="block rounded-lg px-4 py-2 text-sm    hover:bg-gray-50 hover:text-gray-700"
+                        role="menuitem"
+                        onClick={() => setSearchToggle(false)}
+                      >
+                        {company.full_name}
+                      </Link>
+                    );
+                  })}
+              </div>
+              <div className="p-2 flex-1">
+                <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">خدمات</strong>
 
-
-
+                {search?.services &&
+                  search?.services.map((service) => {
+                    return (
+                      <Link
+                        key={service._id}
+                        to={`service/${service._id}`}
+                        className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
+                        role="menuitem"
+                        onClick={() => setSearchToggle(false)}
+                      >
+                        {service.title}
+                      </Link>
+                    );
+                  })}
+              </div>
             </div>
-            <div className="p-2 flex-1">
-              <strong className="block p-2 text-2xl font-medium uppercase text-gray-400">
-                خدمات
-              </strong>
-
-              {search?.services && search?.services.map(service => {
-                return <Link
-                  key={service._id}
-                  to={`service/${service._id}`}
-                  className="block rounded-lg px-4 py-2 text-sm  hover:bg-gray-50 hover:text-gray-700"
-                  role="menuitem"
-                  onClick={() => setSearchToggle(false)}
-                >
-                  {service.title}
-                </Link>
-              })}
-            </div>
-
-
-          </div>}
-
+          )}
         </div>
 
         {/*  */}
@@ -156,7 +158,7 @@ const Header = () => {
               </svg>
             </button>
           </li>
-          {isLoggedIn ? (
+          <div className='hidden md:block'>{isLoggedIn ? (
             <>
               {/* <!-- Profile menu --> */}
               <li className="relative">
@@ -165,10 +167,10 @@ const Header = () => {
             </>
           ) : (
             <AuthenticationButtons />
-          )}
+          )}</div>
         </ul>
       </div>
-    </header >
+    </header>
   );
 };
 

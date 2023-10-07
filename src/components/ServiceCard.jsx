@@ -7,7 +7,9 @@ const ServiceCard = ({ service }) => {
   return (
     <div className="h-80 bg-white rounded-lg dark:bg-gray-800 shadow-md text-gray-600 dark:text-gray-400 overflow-hidden">
       <img
-        src={service.images[0] ? `http://localhost:8000/uploads/service/${service.images[0]}` : defaultImage}
+        src={
+          service.images[0] ? `${import.meta.env.VITE_API_BASE_URL}/uploads/service/${service.images[0]}` : defaultImage
+        }
         className="w-full h-2/5 object-cover "
       />
       <div className="relative h-3/5 pt-3  px-1">
