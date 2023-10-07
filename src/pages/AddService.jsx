@@ -51,9 +51,6 @@ const AddService = () => {
   };
 
   useEffect(() => {
-    // getImage('service/service-1694891411207.jpeg').then((response) => {
-    //   setBlob(response);
-    // });
     getCategory()
       .then((data) => {
         const categoriesArray = data.data.categories;
@@ -85,12 +82,16 @@ const AddService = () => {
             descArray: newFormInfo.props,
           });
 
-          const imageUrlsArray = newFormInfo.images.map(async (image) => {
+          newFormInfo.images.map(async (image) => {
             console.log(renderdImgs);
+            console.log(image);
             if (!renderdImgs.includes(image)) {
               const res = await getImage(`service/${image}`);
               setSelectedImages((prev) => [...prev, res]);
-              setRenderdImgs(image);
+              setRenderdImgs((prev) => [...prev, image]);
+              renderdImgs.push(image);
+              console.log('inside');
+              console.log(renderdImgs);
             }
           });
           console.log(selectedImages);
@@ -99,13 +100,17 @@ const AddService = () => {
           console.error('Error fetching data:', error);
         });
     } else {
+      setDescPlusArray([{ price: '', description: '' }]);
+      setDescArray(['']);
+      setSelectedImages([]);
+
       formik.setValues({
         title: '',
         description: '',
-        descArray: descArray,
-        descPlusArray: descPlusArray,
+        descArray: [''],
+        descPlusArray: [{ price: '', description: '' }],
         price: '',
-        images: selectedImages,
+        images: [],
         category: '',
       });
     }
@@ -126,9 +131,9 @@ const AddService = () => {
       values.extra_props =
         typeof values.descPlusArray !== 'string'
           ? values.descPlusArray.map((item) => ({
-            price: Number(item.price),
-            description: item.description,
-          }))
+              price: Number(item.price),
+              description: item.description,
+            }))
           : [];
       values.props = values.descArray.map((item) => item);
       values.images = selectedImages;
@@ -187,7 +192,11 @@ const AddService = () => {
   const handleSubmit = async (values) => {
     try {
       let extraPropsResponse;
-      if (values.extra_props[0].price != 0 && values.extra_props[0].description != '') {
+      if (
+        values.extra_props.length > 0 &&
+        values.extra_props[0].price != 0 &&
+        values.extra_props[0].description != ''
+      ) {
         console.log('values.extra_props: ', values.extra_props);
         extraPropsResponse = await addNewExtraProps(values.extra_props, token);
       }
@@ -222,7 +231,7 @@ const AddService = () => {
 
       const extra_props = values.descPlusArray;
       console.log('values.extra_props: ', extra_props);
-      if (values.extra_props[0].price != 0 && values.extra_props[0].description != '') {
+      if (values.extra_props.length && values.extra_props[0].price != 0 && values.extra_props[0].description != '') {
         console.log('values.extra_props: ', values.extra_props);
         for (let i = 0; i < extra_props.length; i++) {
           formData.append('extra_props[]', extraProps[i]);
@@ -399,7 +408,7 @@ const AddService = () => {
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
                   />
                   {formik.touched[`descPlusArray[${index}].description`] &&
-                    formik.errors[`descPlusArray[${index}].description`] ? (
+                  formik.errors[`descPlusArray[${index}].description`] ? (
                     <div className="h-6 text-xs text-red-600 dark:text-red-400">
                       {formik.errors[`descPlusArray[${index}].description`]}
                     </div>
