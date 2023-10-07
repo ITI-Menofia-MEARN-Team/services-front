@@ -35,10 +35,10 @@ const Services = ({ servicesProp, withCategory = false }) => {
   return (
     <>
       {/* services */}
-      <div className=" w-[95%] flex flex-col md:flex-row justify-start items-start  gap-10 py-5 bg-gray-50	dark:bg-gray-900">
+      <div className=" w-[95%] mx-auto flex flex-col md:flex-row justify-start items-start  gap-10 py-5 bg-gray-50	dark:bg-gray-900">
         {withCategory && <Categories handleFilter={handleFilter} />}
 
-        <div className="w-full grid grid-cols-3  gap-2  text-gray-600 dark:text-gray-400">
+        <div className="w-full grid  lg:grid-cols-3 sm:grid-cols-2 gap-2  text-gray-600 dark:text-gray-400">
           {services && services.map((service) => <ServiceCard key={service._id} service={service} />)}
         </div>
       </div>

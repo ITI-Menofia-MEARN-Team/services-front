@@ -6,7 +6,7 @@ function LayoutHome() {
     <div className="bg-gray-50 dark:bg-gray-900">
       <Header />
 
-      <div className="min-h-[90.8vh] container mx-auto ">
+      <div className="min-h-[88.8vh] mt-[2vh] max-w-7xl mx-auto ">
         <Outlet />
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ProtectedRoute, Spinner } from './components';
+import { Menu, ProtectedRoute, Spinner } from './components';
 import {
   AddNewCompany,
   AddService,
@@ -22,6 +22,7 @@ import {
 } from './pages';
 import { LayoutCompany, LayoutHome } from './layouts';
 import { AuthContext, DarkModeContext } from './contexts';
+import { MenuContext } from './contexts/Menu';
 
 function App() {
   // dark mode context
@@ -41,10 +42,14 @@ function App() {
   //   </div>
   // )
 
+  // menu
+  const { isMenu, toggleMenu } = useContext(MenuContext);
+
   // jsx
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
       <ToastContainer />
+      {isMenu && <Menu />}
       <Routes>
         {/* User Routes */}
         <Route

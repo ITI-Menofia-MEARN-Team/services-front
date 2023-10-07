@@ -3,3 +3,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input,
+textarea {
+  padding: 20px 10px;
+  height: 20px;
+}
+
+/* [name='search'] {
+  background-color: red;
+} */
+/* input,
+textarea {
+  @apply border border-gray-500;
+} */

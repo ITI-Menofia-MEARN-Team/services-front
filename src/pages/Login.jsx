@@ -84,8 +84,8 @@ const Login = () => {
         <div className={`message ${message.includes('Error') ? 'bg-red-500' : 'bg-green-600'}`}>{message}</div>
       )} */}
 
-      <div className="flex justify-center items-center h-[90.8vh] ">
-        <div className="login__right w-1/3">
+      <div className="flex justify-center items-center h-[88.8vh] ">
+        <div className="w-5/6 md:w-2/3 lg:w-2/5">
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">تسجيل الدخول</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">
             <input

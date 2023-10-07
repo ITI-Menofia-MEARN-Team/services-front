@@ -32,7 +32,7 @@ const CompanyJoinRequests = () => {
 
   const handleRefuse = async (requestId) => {
     const response = await deleteJoinRequests(user.token, requestId);
-    toast.success(response.message, {
+    toast.success(response?.message, {
       position: toast.POSITION.TOP_CENTER,
     });
 
@@ -42,23 +42,23 @@ const CompanyJoinRequests = () => {
     const response = await acceptJoinRequests(user.token, requestId);
 
     if (response.errors) {
-      response.errors.forEach((error) =>
+      response?.errors.forEach((error) =>
         toast.error(error.msg, {
           position: toast.POSITION.TOP_CENTER,
         })
       );
     }
-    if (response.status === 'failed') {
+    if (response?.status === 'failed') {
       toast.error(response.message, {
         position: toast.POSITION.TOP_CENTER,
       });
     }
-    if (response.status === 'Error') {
+    if (response?.status === 'Error') {
       toast.error(response.message, {
         position: toast.POSITION.TOP_CENTER,
       });
     }
-    if (response.message) {
+    if (response?.message) {
       toast.success('تم اضفة الشركة بنجاح', {
         position: toast.POSITION.TOP_CENTER,
       });

@@ -6,6 +6,7 @@ import { DarkModeContext } from '../contexts/DarkMode';
 import ProfileMenu from './ProfileMenu';
 import { AuthContext } from '../contexts/Auth';
 import { searchForServicesOrCompanies } from '../server/guest';
+import { MenuContext } from '../contexts/Menu';
 
 const Header = () => {
   const [search, setSearch] = useState({});
@@ -19,11 +20,10 @@ const Header = () => {
   }, [user]);
 
   const isActiveLink = ({ isActive }) => {
-    return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${
-      isActive
-        ? 'font-bold text-purple-600 dark:text-purple-300  before:absolute before:top-[120%] before:w-full before:h-1 before:dark:bg-purple-300 before:bg-purple-600 '
-        : 'text-gray-900 dark:text-white  '
-    }`;
+    return `hover:text-purple-600 hover:dark:text-purple-300 transition text-lg relative ${isActive
+      ? 'font-bold text-purple-600 dark:text-purple-300  before:absolute before:top-[120%] before:w-full before:h-1 before:dark:bg-purple-300 before:bg-purple-600 '
+      : 'text-gray-900 dark:text-white  '
+      }`;
   };
 
   // dark mode ?
@@ -39,12 +39,16 @@ const Header = () => {
     setSearch(result.data);
   };
 
+  // Menu 
+  const { isMenu, toggleMenu } = useContext(MenuContext);
+
+
   // jsx
   return (
     <header className="z-10 py-1  bg-white shadow-md dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         {/*  */}
-        <button className="p-1 -ml-1 mr-5 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple">
+        <button onClick={toggleMenu} className="p-1 -ml-1 mr-5 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple">
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
@@ -54,7 +58,7 @@ const Header = () => {
           </svg>
         </button>
         {/* Logo */}
-        <a className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</a>
+        <Link to={'/'} className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</Link>
 
         {/* links */}
         <div className="hidden lg:block  mx-10">
@@ -86,6 +90,7 @@ const Header = () => {
             </svg>
           </div>
           <input
+            name='search'
             className="w-full pr-8 pl-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
             type="text"
             placeholder=" ابحث عن خدمة او شركة"
@@ -153,7 +158,7 @@ const Header = () => {
               </svg>
             </button>
           </li>
-          {isLoggedIn ? (
+          <div className='hidden md:block'>{isLoggedIn ? (
             <>
               {/* <!-- Profile menu --> */}
               <li className="relative">
@@ -162,7 +167,7 @@ const Header = () => {
             </>
           ) : (
             <AuthenticationButtons />
-          )}
+          )}</div>
         </ul>
       </div>
     </header>

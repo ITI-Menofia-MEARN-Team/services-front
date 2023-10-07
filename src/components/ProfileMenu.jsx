@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/Auth';
 import { toast } from 'react-toastify';
 import { getUserProfileData } from '../server/user';
+import { MenuContext } from '../contexts/Menu';
 
 const ProfileMenu = () => {
   // route
@@ -28,6 +29,11 @@ const ProfileMenu = () => {
     getUserData();
   }, [user]);
 
+
+  // floatingMenu 
+  const { isMenu, toggleMenu: tg, setIsMenu } = useContext(MenuContext);
+
+
   return (
     <>
       <button onClick={toggleMenu} className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
@@ -42,8 +48,11 @@ const ProfileMenu = () => {
         />
       </button>
       {menuOpen && (
-        <ul className="absolute z-50 left-0 w-40 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700">
-          <li className="flex">
+        <ul className="absolute z-50 right-0 md:right-[unset] md:left-0 w-40 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700">
+          <li onClick={() => {
+            setIsMenu(false)
+            setMenuOpen(false)
+          }} className="flex">
             <Link
               className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
               to={`${isAdmin || isCompany ? '/dashboard/profile' : '/profile'}`}
@@ -63,7 +72,10 @@ const ProfileMenu = () => {
             </Link>
           </li>
 
-          <li className="flex">
+          <li onClick={() => {
+            setIsMenu(false)
+            setMenuOpen(false)
+          }} className="flex">
             <Link
               className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
               to={'/'}
