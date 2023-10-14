@@ -90,7 +90,7 @@ const Profile = ({ isCompany = false }) => {
       // formData.append('image', values.image);
       // Append social_links to the FormData
       Object.keys(values.social_links).forEach((key) => {
-        values.social_links[key] && formData.append(`social_links.${key}`, values.social_links[key]);
+        formData.append(`social_links.${key}`, values.social_links[key]);
       });
 
       const imageFiles = values.image;
