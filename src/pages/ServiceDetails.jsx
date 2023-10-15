@@ -95,7 +95,7 @@ const ServiceDetails = () => {
 
   if (!service)
     return (
-      <div className="h-screen w-screen flex justify-between items-center ">
+      <div className="h-[50vh] w-screen flex justify-center items-center ">
         <Spinner />
       </div>
     );
@@ -132,7 +132,7 @@ const ServiceDetails = () => {
                         id={prop}
                         className="peer hidden [&:checked_+_label_svg]:block"
                         checked
-                        onChange={() => {}}
+                        onChange={() => { }}
                       />
 
                       <label
@@ -338,9 +338,8 @@ const ServiceDetails = () => {
                 key={index}
                 src={`${import.meta.env.VITE_API_BASE_URL}/uploads/service/${img}`}
                 alt="Thumbnail"
-                className={`w-28 h-16 object-cover  rounded cursor-pointer border-2 ${
-                  currentImageIndex === index ? 'border-green-600' : 'border-white'
-                }`}
+                className={`w-28 h-16 object-cover  rounded cursor-pointer border-2 ${currentImageIndex === index ? 'border-green-600' : 'border-white'
+                  }`}
                 onClick={() => handleClickThumbnail(index)}
               />
             ))}

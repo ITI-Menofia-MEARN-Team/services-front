@@ -1,5 +1,6 @@
 {
   "name": "services-front",
+  "homepage": "https://offers.softifytechs.com/home",
   "private": true,
   "version": "0.0.0",
   "type": "module",

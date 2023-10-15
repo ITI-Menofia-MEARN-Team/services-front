@@ -33,6 +33,8 @@ const CompanyOrder = () => {
       </div>
     );
 
+  // if(order.service)
+
   return (
     <div className="container mx-auto mt-8 p-8 bg-gray-50 text-black dark:bg-gray-800 dark:text-white rounded-md shadow-lg">
       {/* Customer Information */}
@@ -55,19 +57,19 @@ const CompanyOrder = () => {
       </section>
 
       {/* Product Information */}
-      <section className="mb-8">
-        <h2 className="text-3xl text-purple-500 font-bold mb-4"> الخدمة</h2>
+      <h2 className="text-3xl text-purple-500 font-bold mb-4"> الخدمة</h2>
+      {order.service ? <section className="mb-8">
         <div className="grid grid-cols-2 gap-4">
           <div className="flex justify-start items-center gap-5">
             <TagIcon className="w-5 h-5 text-purple-500 dark:text-white inline-block mr-2" />
-            <p className="dark:text-white ">{order.service.title}</p>
+            <p className="dark:text-white ">{order.service?.title}</p>
           </div>
           <div className="flex justify-start items-center gap-5">
             <CurrencyDollarIcon className="w-5 h-5 text-purple-500 dark:text-white inline-block mr-2" />
-            <p className="dark:text-white ">{order.service.price} جنيه</p>
+            <p className="dark:text-white ">{order.service?.price} جنيه</p>
           </div>
         </div>
-      </section>
+      </section> : <div className='my-3'> تم حذف الخدمة  تأكد من حذف هذا الطلب</div>}
 
       {/* Extra Options */}
       <section className="mb-8">

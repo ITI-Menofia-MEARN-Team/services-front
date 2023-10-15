@@ -43,7 +43,7 @@ const Register = () => {
     onSubmit: (values) => {
       console.log(values);
       setLoading(true);
-      registerUser('http://localhost:8000/auth/register', values)
+      registerUser(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, values)
         .then((res) => {
           if (res.errors) {
             setMessage('Error');

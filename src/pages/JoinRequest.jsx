@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { addJoinRequest } from '../server/guest';
 import { toast } from 'react-toastify';
+import { Spinner } from '../components';
 
 const JoinRequest = () => {
   const [loading, setLoading] = useState(false);
@@ -268,7 +269,7 @@ const JoinRequest = () => {
         // disabled={ }
         className="block  px-5 py-2 ease-in duration-300  hover:text-purple-600  active:text-purple-600    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-300 dark:text-purple-500 dark:focus:shadow-outline-gray form-input bg-purple-600 border rounded cursor-pointer hover:bg-transparent border-purple-600 mr-auto	ml-14 "
       >
-        إرسال الطلب
+        {loading ? <Spinner /> : 'إرسال الطلب'}
       </button>
     </form>
   );
