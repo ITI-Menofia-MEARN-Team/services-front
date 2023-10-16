@@ -12,3 +12,4 @@ export { default as AllServices } from './AllServices';
 export { default as AddNewCompany } from './AddNewCompany';
 export { default as CompanyDetails } from './CompanyDetails';
 export { default as CompanyJoinRequests } from './CompanyJoinRequests';
+export { default as Companies } from './Companies';
