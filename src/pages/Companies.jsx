@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { deleteUser, getAllUsers } from '../server/admin';
 import { AuthContext } from '../contexts';
+import { toast } from 'react-toastify';
 
 const Companies = () => {
   const { user } = useContext(AuthContext);
   const [allUsers, setAllUsers] = useState(null);
+  const [deleted, setDeleted] = useState(false);
 
   const options = {
     weekday: 'long',
@@ -30,11 +32,24 @@ const Companies = () => {
     };
 
     fetchAllUsers();
-  }, []);
+  }, [deleted]);
+
+
+  const handleDeletion = (id) => {
+    deleteUser(user.token, id).then(res => {
+
+      toast.success('تم حذف الشركة بنجاح', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+    }).catch(err => {
+      console.log(err)
+    })
+    setDeleted(prev => !prev)
+  }
 
   return (
     <div>
-      Companies
       <table className="w-full whitespace-no-wrap">
         <thead>
           <tr className="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
@@ -53,7 +68,7 @@ const Companies = () => {
                   <td className="px-4 py-3">
                     <div className="flex items-center text-sm">
                       <div className="relative hidden w-12 h-12 ml-3  md:block">
-                        <img className="object-cover w-full h-full rounded-full" src={user.image} loading="lazy" />
+                        <img className="object-cover w-full h-full rounded-full" src={`${import.meta.env.VITE_API_BASE_URL}/uploads/user/${user.image}`} loading="lazy" />
 
                         <div className="absolute inset-0 shadow-inner"></div>
                       </div>
@@ -72,8 +87,8 @@ const Companies = () => {
                   <td className="px-4 py-3">
                     <div className="flex items-center space-x-4 text-sm">
                       <button
-                        onClick={() => deleteUser(user.token, user._id)}
-                        className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                        onClick={() => handleDeletion(user._id)}
+                        className="py-1 px-2 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                       >
                         حذف
                       </button>
