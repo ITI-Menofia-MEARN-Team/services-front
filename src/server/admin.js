@@ -37,4 +37,22 @@ const acceptJoinRequests = async (token, requestId) => {
   return response.json();
 };
 
-export { addCompany, getJoinRequests, deleteJoinRequests, acceptJoinRequests };
+const getAllUsers = async (token) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user`, {
+    headers: {
+      token: token,
+    },
+  });
+  return response.json();
+};
+const deleteUser = async (token, id) => {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/${id}`, {
+    method: 'DELETE',
+    headers: {
+      token: token,
+    },
+  });
+  return response.json();
+};
+
+export { addCompany, getJoinRequests, deleteJoinRequests, acceptJoinRequests, getAllUsers, deleteUser };
