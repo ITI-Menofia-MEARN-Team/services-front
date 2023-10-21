@@ -97,7 +97,7 @@ const CompanyService = () => {
                       {new Intl.DateTimeFormat('ar-EG', options).format(new Date(service.updatedAt))}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex items-center space-x-4 text-sm gap-2">
+                      <div className="flex flex-col lg:flex-row items-center lg:space-x-4 text-sm gap-2">
                         <Link
                           to={`/dashboard/service/${service._id}`}
                           className="py-1 px-2 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "

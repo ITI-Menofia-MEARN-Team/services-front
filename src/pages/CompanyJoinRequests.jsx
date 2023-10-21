@@ -127,7 +127,7 @@ const CompanyJoinRequests = () => {
                   </td>
 
                   <td className="px-4 py-3">
-                    <div className="flex items-center space-x-4 text-sm gap-3">
+                    <div className="flex flex-col lg:flex-row items-center lg:space-x-4 text-sm gap-2">
                       <button
                         onClick={() => handleAccept(request._id)}
                         className="py-1 px-2 flex justify-center items-center  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
