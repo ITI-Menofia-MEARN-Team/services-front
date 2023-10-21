@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { deleteUser, getAllUsers } from '../server/admin';
 import { AuthContext } from '../contexts';
 import { toast } from 'react-toastify';
+import { Spinner } from '../components';
 
 const Companies = () => {
   const { user } = useContext(AuthContext);
@@ -48,9 +49,24 @@ const Companies = () => {
     setDeleted(prev => !prev)
   }
 
+  if (!allUsers)
+    return (
+      <div className="w-full min-h-[80vh] overflow-x-auto flex justify-center items-center  pt-5">
+        <Spinner />
+      </div>
+    );
+
+  if (allUsers?.length === 0)
+    return (
+      <div className="w-full min-h-[80vh] text-3xl overflow-x-auto flex justify-center items-center  pt-5">
+        لا توجد بيانات
+      </div>
+    );
+
+
   return (
     <div>
-      <table className="w-full whitespace-no-wrap">
+      <table className="w-full whitespace-no-wrap mt-4">
         <thead>
           <tr className="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
             <th className="px-4 py-3"> الشركة </th>

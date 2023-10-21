@@ -137,7 +137,7 @@ const Profile = ({ isCompany = false }) => {
 
   if (!profileData)
     return (
-      <div className="h-[90vh] w-full flex justify-between items-center ">
+      <div className="h-[90vh] w-full flex justify-center items-center ">
         <Spinner />
       </div>
     );
