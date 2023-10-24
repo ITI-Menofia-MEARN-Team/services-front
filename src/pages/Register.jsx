@@ -80,8 +80,15 @@ const Register = () => {
         });
     },
     validationSchema: Yup.object({
-      full_name: Yup.string().required('مطلوب'),
-      username: Yup.string().required('مطلوب'),
+      full_name: Yup.string()
+        .required('مطلوب')
+        .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
+        .min(3, 'يجب الا بقل الاسم عن 3 احرف على الاقل'),
+      username: Yup.string()
+        .required('مطلوب')
+        .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
+        .min(3, 'يجب الا بقل الاسم عن 3 احرف على الاقل')
+        .matches(/^[a-zA-Z]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
       password: Yup.string().required('مطلوب'),
       email: Yup.string().email('عنوان بريد إلكتروني غير صالح').required('مطلوب'),
       phone_number: Yup.string().required('مطلوب'),
@@ -90,7 +97,7 @@ const Register = () => {
 
   return (
     <section id="Register">
-      <div className="flex justify-center items-center h-[88.8vh]">
+      <div className="flex justify-center items-center min-h-[92vh]">
         <div className="w-5/6 md:w-2/3 lg:w-2/5">
           <h1 className="text-4xl mb-4 inline-flex items-center text-gray-600 dark:text-gray-400">التسجيل</h1>
           <form ref={formRef} onSubmit={formik.handleSubmit} className="w-full">

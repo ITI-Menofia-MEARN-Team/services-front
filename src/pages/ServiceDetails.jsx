@@ -103,7 +103,7 @@ const ServiceDetails = () => {
   return (
     <>
       {username && <div className="w-1/2 mx-auto my-5 font-bold text-lg">اسم العميل : {username}</div>}
-      <div className="flex flex-col lg:flex-row min-h-[90vh]  justify-center ">
+      <div className="flex flex-col lg:flex-row min-h-[92vh]  justify-center ">
         <div className="lg:w-1/2  p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -132,7 +132,7 @@ const ServiceDetails = () => {
                         id={prop}
                         className="peer hidden [&:checked_+_label_svg]:block"
                         checked
-                        onChange={() => { }}
+                        onChange={() => {}}
                       />
 
                       <label
@@ -338,8 +338,9 @@ const ServiceDetails = () => {
                 key={index}
                 src={`${import.meta.env.VITE_API_BASE_URL}/uploads/service/${img}`}
                 alt="Thumbnail"
-                className={`w-28 h-16 object-cover  rounded cursor-pointer border-2 ${currentImageIndex === index ? 'border-green-600' : 'border-white'
-                  }`}
+                className={`w-28 h-16 object-cover  rounded cursor-pointer border-2 ${
+                  currentImageIndex === index ? 'border-green-600' : 'border-white'
+                }`}
                 onClick={() => handleClickThumbnail(index)}
               />
             ))}

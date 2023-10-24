@@ -39,12 +39,12 @@ const JoinRequest = () => {
       }),
 
       image: Yup.mixed()
-        .required('برجاء رفع الصوره')
+        .required('برجاء رفع الصورة')
         .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
           if (file) {
             // Allow any image MIME type
             console.log(file);
-            return ['image/jpg', 'image/png', 'image/jpeg', 'image/svg', 'image/webp'].includes(file[0].type);
+            return ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'].includes(file[0].type);
           }
           return true; // No file selected, so no type to check
         }),
