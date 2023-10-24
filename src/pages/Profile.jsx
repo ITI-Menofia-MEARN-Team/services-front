@@ -65,8 +65,8 @@ const Profile = ({ isCompany = false }) => {
         .optional(),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').optional(),
       phone_number: Yup.string()
-        .min(10, 'يجب الا بقل رقم الهاتف عن 10 رقم')
-        .max(20, 'يجب الا يزيد رقم الهاتف عن 20 رقم')
+        .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم')
+
         .optional(),
       username: Yup.string()
         .required('مطلوب')
@@ -158,7 +158,7 @@ const Profile = ({ isCompany = false }) => {
       onSubmit={profileForm.handleSubmit}
       className="profile flex flex-col lg:flex-row gap-3 justify-evenly p-5 bg-gray-100 min-h-[92vh] dark:bg-gray-900 "
     >
-      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-2 ">
+      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-sm-2 ">
         <h3 className="userName mb-5  font-bold text-2xl"> {profileData.full_name} </h3>
         <p className="mb-4 text-sm">{profileData.username}@</p>
         <div className="text-center mb-10 ">
@@ -177,14 +177,9 @@ const Profile = ({ isCompany = false }) => {
           <label htmlFor="image">
             <label
               htmlFor="image"
-              className=" py-2  font-medium leading-5  transition-colors border border-transparent rounded-md   focus:outline-none w-full  px-2 cursor-pointer placeholder: ease-in duration-300
-                hover:text-purple-600 
-                 focus:border-purple-400 
-                focus:shadow-outline-purple text-gray-300 dark:text-purple-500 
-                hover:border-purple-600 
-                bg-purple-600     
-                hover:bg-transparent
-                border-purple-600 text-md"
+              className=" py-2  font-medium leading-5  transition-colors border border-transparent rounded-md   focus:outline-none w-full  px-2  placeholder: ease-in duration-300
+              cursor-pointer placeholder:ease-in  hover:text-purple-600 hover:border-purple-400 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600
+          text-md"
             >
               {isCompany ? 'ارفع شعار' : '   ارفع صورة'}{' '}
             </label>

@@ -91,7 +91,9 @@ const Register = () => {
         .matches(/^[a-zA-Z]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
       password: Yup.string().required('مطلوب'),
       email: Yup.string().email('عنوان بريد إلكتروني غير صالح').required('مطلوب'),
-      phone_number: Yup.string().required('مطلوب'),
+      phone_number: Yup.string()
+        .required('مطلوب')
+        .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم'),
     }),
   });
 

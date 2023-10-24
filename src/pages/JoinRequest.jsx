@@ -29,7 +29,9 @@ const JoinRequest = () => {
     validationSchema: Yup.object({
       full_name: Yup.string().min(3, 'الاسم يجب ان يحتوي علي 3 احرف او اكثر').required('مطلوب'),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').required('مطلوب'),
-      phone_number: Yup.string().required('مطلوب'),
+      phone_number: Yup.string()
+        .required('مطلوب')
+        .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم'),
       username: Yup.string().required('مطلوب'),
       social_links: Yup.object().shape({
         facebook: Yup.string().url('رابط فيسبوك يجب أن يكون رابط صحيح'),
@@ -150,13 +152,8 @@ const JoinRequest = () => {
               <label
                 htmlFor="image"
                 className=" py-2  font-medium leading-5  transition-colors     border border-transparent rounded-md   focus:outline-none   px-4 mr-6 cursor-pointer placeholder: ease-in duration-300
-                hover:text-purple-600 
-                 focus:border-purple-400 
-                focus:shadow-outline-purple text-gray-300 dark:text-purple-500 
-                hover:border-purple-600 
-                bg-purple-600     
-                hover:bg-transparent
-                border-purple-600 text-md"
+                 placeholder:ease-in  hover:text-purple-600 hover:border-purple-400 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600
+          text-md"
               >
                 رفع صوره
               </label>
@@ -267,7 +264,8 @@ const JoinRequest = () => {
       <button
         type="submit"
         // disabled={ }
-        className="block  px-5 py-2 ease-in duration-300  hover:text-purple-600  active:text-purple-600    focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-300 dark:text-purple-500 dark:focus:shadow-outline-gray form-input bg-purple-600 border rounded cursor-pointer hover:bg-transparent border-purple-600 mr-auto	ml-14 "
+        className="block  px-5 py-2 ease-in  cursor-pointer placeholder:ease-in  hover:text-purple-600 hover:border-purple-400 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600
+        text-md  mr-auto	me-10  "
       >
         {loading ? <Spinner /> : 'إرسال الطلب'}
       </button>
