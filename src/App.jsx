@@ -37,11 +37,11 @@ function App() {
   const isAdmin = user?.user?.role === 'Admin';
   const isGuest = !isUser && !isCompany && !isAdmin;
 
-  // if (!user?.user) return (
-  //   <div className='h-screen w-screen flex justify-between items-center ' >
-  //     <Spinner />
-  //   </div>
-  // )
+  if (user === undefined) return (
+    <div className='h-screen w-screen flex justify-center items-center ' >
+      <Spinner />
+    </div>
+  )
 
   // menu
   const { isMenu, toggleMenu } = useContext(MenuContext);

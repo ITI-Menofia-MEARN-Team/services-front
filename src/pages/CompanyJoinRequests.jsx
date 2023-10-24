@@ -59,7 +59,7 @@ const CompanyJoinRequests = () => {
       });
     }
     if (response?.message) {
-      toast.success('تم اضفة الشركة بنجاح', {
+      toast.success('تم اضافة الشركة بنجاح', {
         position: toast.POSITION.TOP_CENTER,
       });
     }
@@ -127,16 +127,16 @@ const CompanyJoinRequests = () => {
                   </td>
 
                   <td className="px-4 py-3">
-                    <div className="flex items-center space-x-4 text-sm">
+                    <div className="flex flex-col lg:flex-row items-center lg:space-x-4 text-sm gap-2">
                       <button
                         onClick={() => handleAccept(request._id)}
-                        className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                        className="py-1 px-2 flex justify-center items-center  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                       >
                         قبول
                       </button>
                       <button
                         onClick={() => handleRefuse(request._id)}
-                        className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
+                        className="py-1 px-2 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                       >
                         رفض
                       </button>

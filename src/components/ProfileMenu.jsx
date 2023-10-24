@@ -24,7 +24,9 @@ const ProfileMenu = () => {
   useEffect(() => {
     const getUserData = async () => {
       const response = await getUserProfileData(user?.user?.id, user?.token);
-      setUserProfile(response?.data?.user);
+      if (response.status === 401) return logout();
+      const res = await response.json()
+      setUserProfile(res?.data?.user);
     };
     getUserData();
   }, [user]);
