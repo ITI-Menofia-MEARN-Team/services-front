@@ -90,18 +90,18 @@ const CompanyOrders = () => {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center space-x-4 text-sm">
-                        <button
+                        {/* <button
                           to={'/'}
                           className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                         >
                           قبول
                         </button>
-                        <button className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray">
+                        <button className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg focus:outline-none focus:shadow-outline-gray">
                           رفض
-                        </button>
+                        </button> */}
                         <Link
                           to={`/dashboard/order/${order?._id}`}
-                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                          className="py-1 px-2 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:blue-blue-500 focus:blue-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:blue-2 focus:blue-offset-2  rounded-lg"
                         >
                           عرض
                         </Link>

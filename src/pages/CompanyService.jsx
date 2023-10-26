@@ -93,31 +93,26 @@ const CompanyService = () => {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-sm">{service.price} جنيه </td>
-                    {/* <td className="px-4 py-3 text-xs">
-                      <span className="px-2 py-1 font-semibold text-gray-600 dark:text-gray-400">
-                        {service.description.slice(0, 20)}....
-                      </span>
-                    </td> */}
                     <td className="px-4 py-3 text-sm">
                       {new Intl.DateTimeFormat('ar-EG', options).format(new Date(service.updatedAt))}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex items-center space-x-4 text-sm">
+                      <div className="flex flex-col lg:flex-row items-center lg:space-x-4 text-sm gap-2">
                         <Link
                           to={`/dashboard/service/${service._id}`}
-                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                          className="py-1 px-2 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                         >
                           عرض
                         </Link>
                         <Link
                           to={`/dashboard/service/edit/${service._id}`}
-                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-yellow-400 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                          className="py-1 px-2 flex justify-center items-center  bg-yellow-400 hover:bg-yellow-600 focus:ring-yellow-500 focus:ring-offset-yellow-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                         >
                           تعديل
                         </Link>
                         <button
                           onClick={() => handleDelete(service._id)}
-                          className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
+                          className="py-1 px-2 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                         >
                           مسح
                         </button>

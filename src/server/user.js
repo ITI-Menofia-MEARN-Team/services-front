@@ -19,7 +19,7 @@ const getUserProfileData = async (userID, token) => {
       token: token,
     },
   });
-  return response.json();
+  return response;
 };
 
 //

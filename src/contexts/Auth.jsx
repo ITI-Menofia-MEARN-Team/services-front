@@ -9,7 +9,7 @@ const initialValue = { user: { role: 'guest' } };
 
 // Create the Auth Provider Component
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
     const cashedUser = JSON.parse(localStorage.getItem('user'));

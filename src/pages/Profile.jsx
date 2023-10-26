@@ -12,12 +12,14 @@ const Profile = ({ isCompany = false }) => {
   const [profileData, setProfileData] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   useEffect(() => {
     const getProfile = async () => {
       const response = user && (await getUserProfileData(user?.user?.id, user?.token));
-      setProfileData(response?.data?.user);
+      if (response.status === 401) return logout();
+      const res = await response.json()
+      setProfileData(res?.data?.user);
 
       profileForm.setFieldValue('full_name', response?.data?.user.full_name);
       profileForm.setFieldValue('email', response?.data?.user.email);
@@ -147,7 +149,7 @@ const Profile = ({ isCompany = false }) => {
 
   if (!profileData)
     return (
-      <div className="h-[92vh] w-full flex justify-between items-center ">
+      <div className="h-[90vh] w-full flex justify-center items-center ">
         <Spinner />
       </div>
     );
