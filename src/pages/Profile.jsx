@@ -17,18 +17,21 @@ const Profile = ({ isCompany = false }) => {
   useEffect(() => {
     const getProfile = async () => {
       const response = user && (await getUserProfileData(user?.user?.id, user?.token));
+
       if (response.status === 401) return logout();
+
       const res = await response.json()
       setProfileData(res?.data?.user);
+      console.log('res?.data?.user: ', res?.data?.user);
 
-      profileForm.setFieldValue('full_name', response?.data?.user.full_name);
-      profileForm.setFieldValue('email', response?.data?.user.email);
-      profileForm.setFieldValue('phone_number', response?.data?.user.phone_number);
-      profileForm.setFieldValue('username', response?.data?.user.username);
-      profileForm.setFieldValue('social_links.facebook', response?.data?.user.social_links?.facebook);
-      profileForm.setFieldValue('social_links.twitter', response?.data?.user.social_links?.twitter);
-      profileForm.setFieldValue('social_links.instagram', response?.data?.user.social_links?.instagram);
-      profileForm.setFieldValue('social_links.youtube', response?.data?.user.social_links?.youtube);
+      profileForm.setFieldValue('full_name', res?.data?.user.full_name);
+      profileForm.setFieldValue('email', res?.data?.user.email);
+      profileForm.setFieldValue('phone_number', res?.data?.user.phone_number);
+      profileForm.setFieldValue('username', res?.data?.user.username);
+      profileForm.setFieldValue('social_links.facebook', res?.data?.user.social_links?.facebook);
+      profileForm.setFieldValue('social_links.twitter', res?.data?.user.social_links?.twitter);
+      profileForm.setFieldValue('social_links.instagram', res?.data?.user.social_links?.instagram);
+      profileForm.setFieldValue('social_links.youtube', res?.data?.user.social_links?.youtube);
     };
     getProfile();
   }, [user, success]);
@@ -66,24 +69,25 @@ const Profile = ({ isCompany = false }) => {
         .max(24, 'يجب الا يزيد الاسم عن 24حرف')
         .optional(),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').optional(),
-      phone_number: Yup.string()
+      phone_number: Yup.string().optional()
         .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم')
 
-        .optional(),
+      ,
       username: Yup.string()
         .required('مطلوب')
         .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
         .min(3, 'يجب الا بقل الاسم عن 3 احرف')
-        .matches(/^[a-z A-Z]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
+        .matches(/^[a-zA-Z0-9_-]{3,20}$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
       image: Yup.mixed()
         .optional()
-        .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
-          if (file) {
-            // Allow any image MIME type
-            return ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'].includes(file[0].type);
-          }
-          return true; // No file selected, so no type to check
-        }),
+        .test('fileType', 'الملف غير صالح. يجب أن يكون صورة',
+          (file) => {
+            if (file) {
+              // Allow any image MIME type
+              return ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'].includes(file[0].type);
+            }
+            return true; // No file selected, so no type to check
+          }),
 
       social_links: Yup.object().shape({
         facebook: Yup.string().url('رابط فيسبوك يجب أن يكون رابط صحيح'),
@@ -93,12 +97,13 @@ const Profile = ({ isCompany = false }) => {
       }),
     }),
     onSubmit: (values) => {
+      console.log('values: ', values);
       setLoading(true);
       const formData = new FormData();
       values.full_name && formData.append('full_name', values.full_name);
       values.username && formData.append('username', values.username);
       values.email && formData.append('email', values.email);
-      values.phone_number && formData.append('phone_number', values.phone_number);
+      formData.append('phone_number', values.phone_number);
       // formData.append('image', values.image);
       // Append social_links to the FormData
       Object.keys(values.social_links).forEach((key) => {
@@ -115,6 +120,7 @@ const Profile = ({ isCompany = false }) => {
 
       updateUserProfile(formData, user?.token, user?.user?.id)
         .then((res) => {
+          console.log('res: ', res);
           if (res.errors) {
             res.errors.forEach((error) =>
               toast.error(error.msg, {
@@ -122,6 +128,10 @@ const Profile = ({ isCompany = false }) => {
               })
             );
           } else if (res.status === 'failed') {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_LEFT,
+            });
+          } else if (res.status === 'Error') {
             toast.error(res.message, {
               position: toast.POSITION.TOP_LEFT,
             });

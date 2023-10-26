@@ -10,10 +10,30 @@ textarea {
   height: 20px;
 }
 
-/* [name='search'] {
-  background-color: red;
-} */
-/* input,
-textarea {
-  @apply border border-gray-500;
-} */
+body {
+  @apply font-cairo; /* Apply the Cairo font */
+}
+
+body::-webkit-scrollbar {
+  @apply w-3 bg-transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply bg-purple-300 dark:bg-purple-800 rounded-full; /* Apply the background color for thumb in dark mode */
+}
+
+body::-webkit-scrollbar-track {
+  @apply bg-transparent; /* Apply the background color for track in dark mode */
+}
+
+.scroll::-webkit-scrollbar {
+  @apply h-2 bg-transparent;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  @apply bg-purple-300 dark:bg-purple-800 rounded-full; /* Apply the background color for thumb in dark mode */
+}
+
+.scroll::-webkit-scrollbar-track {
+  @apply bg-transparent; /* Apply the background color for track in dark mode */
+}

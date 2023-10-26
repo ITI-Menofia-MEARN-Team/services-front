@@ -61,7 +61,7 @@ const CompanyService = () => {
               <th className="px-4 py-3">الخدمة</th>
               <th className="px-4 py-3">السعر</th>
               {/* <th className="px-4 py-3">الوصف</th> */}
-              <th className="px-4 py-3"> اخر تعديل</th>
+              <th className="px-4 py-3 hidden sm:block"> اخر تعديل</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
@@ -93,7 +93,7 @@ const CompanyService = () => {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-sm">{service.price} جنيه </td>
-                    <td className="px-4 py-3 text-sm">
+                    <td className="px-4 py-3 text-sm hidden sm:block">
                       {new Intl.DateTimeFormat('ar-EG', options).format(new Date(service.updatedAt))}
                     </td>
                     <td className="px-4 py-3">

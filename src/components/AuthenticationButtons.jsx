@@ -10,7 +10,7 @@ const AuthenticationButtons = () => {
   const linkStyle = 'rounded border border-purple-600 px-6 py-1 font-medium focus:outline-none text-center max-w-[200px]';
 
   return (
-    <div className="auth-buttons flex flex-col md:flex-row justify-center md:items-center gap-5">
+    <div className="flex flex-col md:flex-row justify-start md:items-center gap-5">
       <Link
         onClick={() => setIsMenu(false)}
         to={'/login'}

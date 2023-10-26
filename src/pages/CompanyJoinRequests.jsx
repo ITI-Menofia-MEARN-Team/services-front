@@ -81,14 +81,14 @@ const CompanyJoinRequests = () => {
     );
 
   return (
-    <div className="w-full overflow-x-auto  pt-5">
-      <table className="w-full whitespace-no-wrap">
+    <div className="w-full overflow-x-auto  pt-5 scroll">
+      <table className="w-full  ">
         <thead>
           <tr className="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
             <th className="px-4 py-3">الشركة</th>
             <th className="px-4 py-3">البريد الالكتروني</th>
-            <th className="px-4 py-3">الهاتف</th>
-            <th className="px-4 py-3">التاريخ</th>
+            {/* <th className="px-4 py-3">الهاتف</th> */}
+            <th className="px-4 py-3 hidden lg:block">التاريخ</th>
             <th className="px-4 py-3"></th>
           </tr>
         </thead>
@@ -115,14 +115,14 @@ const CompanyJoinRequests = () => {
                   </td>
 
                   <td className="px-4 py-3 text-lg"> {request.email} </td>
-
+                  {/* 
                   <td className="px-4 py-3 text-xs">
                     <span className="px-2 py-1 font-semibold text-gray-600 dark:text-gray-400">
                       {request.phone_number}
                     </span>
-                  </td>
+                  </td> */}
 
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-4 py-3 text-sm hidden md:inline-block mt-3 ">
                     {new Intl.DateTimeFormat('ar-EG', options).format(new Date(request.createdAt))}
                   </td>
 

@@ -4,12 +4,20 @@ import DashHeader from '../components/AdminHeader';
 
 const LayoutCompany = () => {
   return (
-    <div className={`flex h-screen bg-gray-50 dark:bg-gray-900`}>
-      <Aside />
-      <div className="flex flex-col flex-1">
+    <div className={`flex  bg-gray-50 dark:bg-gray-900 h-auto`}>
+      <div className='hidden md:block'>
+        <Aside />
+      </div>
+      <div className="flex flex-col flex-1 min-h-screen bg-gray-50 dark:bg-gray-900 h-auto">
         <DashHeader />
-        <main className="h-full pb-16 overflow-y-scroll scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-900">
-          <div className="container px-6 mx-auto grid ">
+        <main
+          className="h-full pb-16 "
+
+        >
+          <div
+            className="container px-6 mx-auto grid "
+
+          >
             <Outlet />
           </div>
         </main>

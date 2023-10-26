@@ -65,22 +65,22 @@ const Companies = () => {
 
 
   return (
-    <div>
-      <table className="w-full whitespace-no-wrap mt-5">
+    <div className="w-full overflow-x-auto  pt-5">
+      <table className="w-full whitespace-no-wrap">
         <thead>
           <tr className="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
             <th className="px-4 py-3"> الشركة </th>
             <th className="px-4 py-3"> البريد الاكترونى </th>
-            <th className="px-4 py-3">تاريخ الانضمام</th>
+            <th className="px-4 py-3 hidden lg:block">تاريخ الانضمام</th>
             <th className="px-4 py-3">الحالة</th>
           </tr>
         </thead>
 
-        <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tbody className="bg-white dark:divide-gray-700 dark:bg-gray-800">
           {allUsers &&
             allUsers.map((user) => {
               return (
-                <tr key={user.id} className="text-gray-700 dark:text-gray-400">
+                <tr key={user._id} className="text-gray-700 dark:text-gray-400">
                   <td className="px-4 py-3">
                     <div className="flex items-center text-sm">
                       <div className="relative hidden w-12 h-12 ml-3  md:block">
@@ -96,7 +96,7 @@ const Companies = () => {
 
                   <td className="px-4 py-3 text-lg"> {user.email} </td>
 
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-4 py-3 text-sm hidden lg:block">
                     {new Intl.DateTimeFormat('ar-EG', options).format(new Date(user.createdAt))}
                   </td>
 

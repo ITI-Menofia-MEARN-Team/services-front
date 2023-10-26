@@ -45,7 +45,7 @@ const Header = () => {
 
   // jsx
   return (
-    <header className="z-10 py-1  bg-white shadow-md dark:bg-gray-800">
+    <header className="z-10  py-2  bg-white shadow-md dark:bg-gray-800" style={{}}>
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         {/*  */}
         <button onClick={toggleMenu} className="p-1 -ml-1 mr-5 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple">
@@ -58,7 +58,7 @@ const Header = () => {
           </svg>
         </button>
         {/* Logo */}
-        <Link to={'/'} className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</Link>
+        <Link to={'/'} className="hidden lg:block mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</Link>
 
         {/* links */}
         <div className="hidden lg:block  mx-10">
@@ -79,7 +79,7 @@ const Header = () => {
         </div>
 
         {/* Search */}
-        <div className="hidden lg:block relative w-1/4 max-w-xl  focus-within:text-purple-500 mx-3">
+        <div className="block relative w-full lg:w-1/4 max-w-xl  focus-within:text-purple-500 mx-3">
           <div className="absolute inset-y-0 flex items-center pr-2">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -152,21 +152,23 @@ const Header = () => {
         <ul className="flex items-center flex-shrink-0 space-x-6 gap-5">
           {/* toggle */}
           <li onClick={toggleDarkMode} className="relative">
-            <button className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple">
+            <button className="relative align-middle rounded-md focus:ring-0 transition-all duration-500">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d={`${isDarkMode ? darkModeIconPath : lightModeIconPath}`} />
               </svg>
             </button>
           </li>
-          <div className='hidden md:block'>{isLoggedIn ? (
+          <div className='block'>{isLoggedIn ? (
             <>
               {/* <!-- Profile menu --> */}
-              <li className="relative">
+              <li className="">
                 <ProfileMenu />
               </li>
             </>
           ) : (
-            <AuthenticationButtons />
+            <div className='hidden lg:flex'>
+              <AuthenticationButtons />
+            </div>
           )}</div>
         </ul>
       </div>

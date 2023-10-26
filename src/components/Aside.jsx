@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts';
+import { MenuContext } from '../contexts/Menu';
 
 const Aside = () => {
   const { user } = useContext(AuthContext);
@@ -19,11 +20,14 @@ const Aside = () => {
     return `${linkStyle} ${isActive ? activeLinkStyle : ''}`;
   };
 
+  // menu
+  const { setIsMenu } = useContext(MenuContext);
+
   return (
-    <aside className="z-20 min-h-screen  hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block ">
+    <aside className="z-20 min-h-screen  h-full w-64 overflow-y-auto bg-purple-50 dark:bg-gray-900 lg:bg-white lg:dark:bg-gray-800 block  ">
       <div className="h-full  grid grid-rows-[50px_1fr_100px]  py-4 text-gray-500 dark:text-gray-400">
         <a className="mr-6 text-5xl font-bold text-gray-800 dark:text-gray-200">خدمات</a>
-        <ul className=" mt-10">
+        <ul className=" mt-10" onClick={() => setIsMenu(false)}>
           <li className="relative px-6 py-3">
             {pathname === '/dashboard/orders' && <ActiveLinkElement />}
             <NavLink to={'/dashboard/orders'} className={linkClassName}>
