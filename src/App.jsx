@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Menu, ProtectedRoute, Spinner } from './components';
+import { AdminMenu, Menu, ProtectedRoute, Spinner } from './components';
 import {
   AddNewCompany,
   AddService,
@@ -50,7 +50,7 @@ function App() {
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} font-cairo bg-gray-50 dark:bg-gray-900 overflow-y-auto`}>
       <ToastContainer />
-      {isMenu && <Menu />}
+      {isAdmin ? <AdminMenu /> : <Menu />}
       <Routes>
         {/* User Routes */}
         <Route

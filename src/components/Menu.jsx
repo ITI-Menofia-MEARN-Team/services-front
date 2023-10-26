@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MenuContext } from '../contexts/Menu';
 import { XIcon } from '@heroicons/react/solid';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../contexts';
-import ProfileMenu from './ProfileMenu';
 import AuthenticationButtons from './AuthenticationButtons';
-import Categories from './Categories';
+
 
 const Menu = () => {
     // menu
@@ -34,13 +33,13 @@ const Menu = () => {
 
 
     return (
-        <div className={`fixed h-screen md:w-[50vw] w-screen z-50 top-0 px-10 right-0 bg-purple-50 0	dark:bg-gray-900 shadow-lg ${isMenu ? 'block' : 'hidden'}`}>
+        <div className={`transform  transition-transform duration-300 block lg:hidden fixed h-screen w-64 z-50 top-0 px-10 right-0 bg-purple-50 dark:bg-gray-900 shadow-lg ${isMenu ? 'translate-x-0' : 'translate-x-full'}`}>
             <button onClick={toggleMenu}>
                 <XIcon className="absolute top-5 left-10 w-10 h-10 text-red-600" />
             </button>
-            <div className="mt-10 ml-5">
+            <div className="flex justify-center items-start h-screen mt-20">
 
-                <nav className="mt-5">
+                <nav className="z-20 w-64 ">
                     <ul className='flex flex-col gap-10'>
                         <li onClick={toggleMenu}>
                             <NavLink className={isActiveLink} to={'/'}>
@@ -53,19 +52,11 @@ const Menu = () => {
                             </NavLink>
                         </li>
                     </ul>
+                    <div className="mt-10">
+                        {!isLoggedIn && <AuthenticationButtons />}
+                    </div>
+
                 </nav>
-                {/* auth */}
-                <div className="block md:hidden mt-10">{isLoggedIn ? (
-                    <>
-                        {/* <!-- Profile menu --> */}
-                        <div className="relative">
-                            <ProfileMenu />
-                        </div>
-                    </>
-                ) : (
-                    <AuthenticationButtons />
-                )}
-                </div>
 
             </div>
         </div>

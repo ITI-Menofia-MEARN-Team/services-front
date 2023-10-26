@@ -48,7 +48,7 @@ const CompanyOrders = () => {
               <th className="px-4 py-3">المستخدم</th>
               <th className="px-4 py-3">الخدمه</th>
               {/* <th className="px-4 py-3">الوصف</th> */}
-              <th className="px-4 py-3">التاريخ</th>
+              <th className="px-4 py-3 hidden lg:block">التاريخ</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
@@ -85,7 +85,7 @@ const CompanyOrders = () => {
                         {order.service?.description.slice(0, 20)}....
                       </span>
                     </td> */}
-                    <td className="px-4 py-3 text-sm">
+                    <td className="px-4 py-3 text-sm hidden lg:block">
                       {new Intl.DateTimeFormat('ar-EG', options).format(new Date(order.createdAt))}
                     </td>
                     <td className="px-4 py-3">

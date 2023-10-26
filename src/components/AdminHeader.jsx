@@ -4,6 +4,7 @@ import ProfileMenu from './ProfileMenu';
 import { AuthContext } from '../contexts/Auth';
 import { searchForServices } from '../server/company';
 import { Link } from 'react-router-dom';
+import { MenuContext } from '../contexts/Menu';
 
 const AdminHeader = () => {
   const { user } = useContext(AuthContext);
@@ -23,11 +24,14 @@ const AdminHeader = () => {
     'M12 0c-1.109 0-2.178.162-3.197.444 3.826 5.933-2.026 13.496-8.781 11.128l-.022.428c0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12z';
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
+  // menu
+  const { isMenu, toggleMenu } = useContext(MenuContext);
+
   // jsx
   return (
-    <header className="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+    <header className="z-10 py-4  bg-white shadow-md dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
-        <button className="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple">
+        <button onClick={toggleMenu} className="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple">
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
@@ -114,7 +118,7 @@ const AdminHeader = () => {
         <ul className="flex items-center flex-shrink-0 space-x-6 gap-5">
           {/* toggle */}
           <li onClick={toggleDarkMode} className="relative">
-            <button className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple">
+            <button className="relative align-middle rounded-md focus:ring-0 transition-all duration-500">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d={`${isDarkMode ? darkModeIconPath : lightModeIconPath}`} />
               </svg>
