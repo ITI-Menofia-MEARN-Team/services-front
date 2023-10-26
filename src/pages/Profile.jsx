@@ -61,16 +61,26 @@ const Profile = ({ isCompany = false }) => {
       },
     },
     validationSchema: Yup.object({
-      full_name: Yup.string().min(3, 'الاسم يجب ان يحتوي علي 3 احرف او اكثر').optional(),
+      full_name: Yup.string()
+        .min(3, 'الاسم يجب ان يحتوي علي 3 احرف او اكثر')
+        .max(24, 'يجب الا يزيد الاسم عن 24حرف')
+        .optional(),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').optional(),
-      phone_number: Yup.string().optional(),
-      username: Yup.string().optional(),
+      phone_number: Yup.string()
+        .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم')
+
+        .optional(),
+      username: Yup.string()
+        .required('مطلوب')
+        .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
+        .min(3, 'يجب الا بقل الاسم عن 3 احرف')
+        .matches(/^[a-z A-Z]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
       image: Yup.mixed()
         .optional()
         .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
           if (file) {
             // Allow any image MIME type
-            return ['image/jpg', 'image/png', 'image/jpeg', 'image/svg', 'image/webp'].includes(file[0].type);
+            return ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'].includes(file[0].type);
           }
           return true; // No file selected, so no type to check
         }),
@@ -148,9 +158,9 @@ const Profile = ({ isCompany = false }) => {
     <form
       autoComplete="off"
       onSubmit={profileForm.handleSubmit}
-      className="profile flex flex-col lg:flex-row gap-3 justify-evenly p-5 bg-gray-100 min-h-[91vh] dark:bg-gray-900 "
+      className="profile flex flex-col lg:flex-row gap-3 justify-evenly p-5 bg-gray-100 min-h-[92vh] dark:bg-gray-900 "
     >
-      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-2 ">
+      <div className="info p-2 py-5 text-center w-full  lg:w-1/5  bg-white   dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-sm-2 ">
         <h3 className="userName mb-5  font-bold text-2xl"> {profileData.full_name} </h3>
         <p className="mb-4 text-sm">{profileData.username}@</p>
         <div className="text-center mb-10 ">
@@ -169,14 +179,9 @@ const Profile = ({ isCompany = false }) => {
           <label htmlFor="image">
             <label
               htmlFor="image"
-              className=" py-2  font-medium leading-5  transition-colors     border border-transparent rounded-md   focus:outline-none w-full  px-2 cursor-pointer placeholder: ease-in duration-300
-                hover:text-purple-600 
-                 focus:border-purple-400 
-                focus:shadow-outline-purple text-gray-300 dark:text-purple-500 
-                hover:border-purple-600 
-                bg-purple-600     
-                hover:bg-transparent
-                border-purple-600 text-md"
+              className=" py-2  font-medium leading-5  transition-colors border border-transparent rounded-md   focus:outline-none w-full  px-2  placeholder: ease-in duration-300
+              cursor-pointer placeholder:ease-in  hover:text-purple-600 hover:border-purple-400 focus:border-purple-400 focus:shadow-outline-purple text-gray-300 dark:text-gray-300hover:border-purple-600  bg-purple-600 hover:bg-transparent border-purple-600
+          text-md"
             >
               {isCompany ? 'ارفع شعار' : '   ارفع صورة'}{' '}
             </label>
