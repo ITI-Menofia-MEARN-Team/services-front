@@ -20,7 +20,7 @@ const Profile = ({ isCompany = false }) => {
 
       if (response.status === 401) return logout();
 
-      const res = await response.json()
+      const res = await response.json();
       setProfileData(res?.data?.user);
       console.log('res?.data?.user: ', res?.data?.user);
 
@@ -69,25 +69,24 @@ const Profile = ({ isCompany = false }) => {
         .max(24, 'يجب الا يزيد الاسم عن 24حرف')
         .optional(),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').optional(),
-      phone_number: Yup.string().optional()
-        .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم')
+      phone_number: Yup.string()
+        .optional()
+        .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم'),
 
-      ,
       username: Yup.string()
         .required('مطلوب')
         .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
         .min(3, 'يجب الا بقل الاسم عن 3 احرف')
-        .matches(/^[a-zA-Z0-9_-]{3,20}$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
+        .matches(/^[a-zA-Z_-]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
       image: Yup.mixed()
         .optional()
-        .test('fileType', 'الملف غير صالح. يجب أن يكون صورة',
-          (file) => {
-            if (file) {
-              // Allow any image MIME type
-              return ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'].includes(file[0].type);
-            }
-            return true; // No file selected, so no type to check
-          }),
+        .test('fileType', 'الملف غير صالح. يجب أن يكون صورة', (file) => {
+          if (file) {
+            // Allow any image MIME type
+            return ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'].includes(file[0].type);
+          }
+          return true; // No file selected, so no type to check
+        }),
 
       social_links: Yup.object().shape({
         facebook: Yup.string().url('رابط فيسبوك يجب أن يكون رابط صحيح'),

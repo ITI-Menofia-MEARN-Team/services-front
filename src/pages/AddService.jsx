@@ -44,7 +44,6 @@ const AddService = () => {
   const [formInfo, setFormInfo] = useState(false);
   const [renderdImgs, setRenderdImgs] = useState([]);
 
-
   let { id } = useParams();
   const navigateToSerivces = useNavigate();
 
@@ -135,9 +134,9 @@ const AddService = () => {
       values.extra_props =
         typeof values.descPlusArray !== 'string'
           ? values.descPlusArray.map((item) => ({
-            price: Number(item.price),
-            description: item.description,
-          }))
+              price: Number(item.price),
+              description: item.description,
+            }))
           : [];
       values.props = values.descArray.map((item) => item);
       values.images = selectedImages;
@@ -148,14 +147,15 @@ const AddService = () => {
       formik.resetForm();
 
       setMessage(null);
-
     },
     validationSchema: Yup.object({
       title: Yup.string().required('مطلوب'),
       // desc: Yup.string().required('مطلوب'),
-      // price: Yup.string().required('مطلوب'),
+      price: Yup.string().required('مطلوب'),
       description: Yup.string().required('مطلوب'),
       // picture: Yup.mixed().required('رجاء رفع صور'),
+
+      category: Yup.string().required('مطلوب'),
     }),
   });
 
@@ -259,15 +259,15 @@ const AddService = () => {
         position: toast.POSITION.TOP_LEFT,
       });
       navigateToSerivces('/dashboard/services');
-
     }
   };
 
-  if (loading) return (
-    <div className="h-[50vh] w-full flex justify-center items-center ">
-      <Spinner />
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="h-[50vh] w-full flex justify-center items-center ">
+        <Spinner />
+      </div>
+    );
 
   return (
     <section id="AddService">
@@ -352,11 +352,6 @@ const AddService = () => {
                   {...formik.getFieldProps('category')}
                 />
               )}
-              {formik.touched.category && formik.errors.category ? (
-                <div className="">{formik.errors.category}</div>
-              ) : (
-                <div className=""></div>
-              )}
 
               <BehaviorButton
                 color={showInput ? 'red' : 'purple'}
@@ -365,7 +360,11 @@ const AddService = () => {
                 svg={showInput ? 'x' : 'تصنيف جديد'}
               />
             </div>
-
+            {formik.touched.category && formik.errors.category ? (
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.category}</div>
+            ) : (
+              <div></div>
+            )}
             {/* props */}
             {descArray.map((desc, index) => {
               return (
@@ -422,7 +421,7 @@ const AddService = () => {
                     className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
                   />
                   {formik.touched[`descPlusArray[${index}].description`] &&
-                    formik.errors[`descPlusArray[${index}].description`] ? (
+                  formik.errors[`descPlusArray[${index}].description`] ? (
                     <div className="h-6 text-xs text-red-600 dark:text-red-400">
                       {formik.errors[`descPlusArray[${index}].description`]}
                     </div>
@@ -547,6 +546,12 @@ const AddService = () => {
                 className="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input border-gray-300 border-2"
               />
             </div>
+
+            {formik.touched.price && formik.errors.price ? (
+              <div className="h-6 text-xs text-red-600 dark:text-red-400">{formik.errors.price}</div>
+            ) : (
+              <div></div>
+            )}
 
             {/* submit */}
             <BehaviorButton

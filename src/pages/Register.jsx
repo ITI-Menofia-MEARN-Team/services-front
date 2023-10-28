@@ -88,7 +88,7 @@ const Register = () => {
         .required('مطلوب')
         .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
         .min(3, 'يجب الا بقل الاسم عن 3 احرف على الاقل')
-        .matches(/^[a-zA-Z]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
+        .matches(/^[a-zA-Z_-]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
       password: Yup.string().required('مطلوب'),
       email: Yup.string().email('عنوان بريد إلكتروني غير صالح').required('مطلوب'),
       phone_number: Yup.string()
