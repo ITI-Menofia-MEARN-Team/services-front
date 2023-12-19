@@ -27,12 +27,20 @@ const JoinRequest = () => {
       },
     },
     validationSchema: Yup.object({
-      full_name: Yup.string().min(3, 'الاسم يجب ان يحتوي علي 3 احرف او اكثر').required('مطلوب'),
+      full_name: Yup.string()
+        .required('مطلوب')
+        .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
+        .min(3, 'يجب الا بقل الاسم عن 3 احرف على الاقل'),
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').required('مطلوب'),
       phone_number: Yup.string()
         .required('مطلوب')
         .matches(/^(?:(\+2015|\+2011|\+2012|\+2010|011|012|010|015)[0-9]{8})$/, 'برجاء ادخال رقم مصرى مكون من 11رقم'),
-      username: Yup.string().required('مطلوب'),
+      username: Yup.string()
+        .required('مطلوب')
+        .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
+        .min(3, 'يجب الا بقل الاسم عن 3 احرف على الاقل')
+        .matches(/^[a-zA-Z0-9_-]{3,16}$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية والارقام  و - _ '),
+
       social_links: Yup.object().shape({
         facebook: Yup.string().url('رابط فيسبوك يجب أن يكون رابط صحيح'),
         twitter: Yup.string().url('رابط تويتر يجب أن يكون رابط صحيح'),

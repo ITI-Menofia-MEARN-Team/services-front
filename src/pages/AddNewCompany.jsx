@@ -27,7 +27,11 @@ const AddNewCompany = () => {
       email: Yup.string().email('البريد الالكتروني يجب أن يكون صحيح ').required('مطلوب'),
       password: Yup.string().required('مطلوب'),
       phone_number: Yup.string().required('مطلوب'),
-      username: Yup.string().required('مطلوب'),
+      username: Yup.string()
+        .required('مطلوب')
+        .max(24, 'يجب الا يزيد الاسم عن 24 حرفا')
+        .min(3, 'يجب الا بقل الاسم عن 3 احرف على الاقل')
+        .matches(/^[a-zA-Z_-]+$/, 'يجب ان يكون اسم المستخدم باللغه الانجليزية فقط'),
     }),
     onSubmit: (values) => {
       setLoading(true);
