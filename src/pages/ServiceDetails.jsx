@@ -27,7 +27,7 @@ const ServiceDetails = () => {
     setLoading(true);
 
     if (user === null) {
-      toast.error('لازم تسجل الاول ', {
+      toast.error('يجب عليك تسجيل الدخول اولا', {
         position: toast.POSITION.TOP_LEFT,
       });
       return navigate('/login');
